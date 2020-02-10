@@ -371,6 +371,13 @@
             <summary>If TRUE draws path gizmos in Unity Editor (if the gizmos button is active).
             Deactivate this if you want to avoid gizmos overhead while in Unity Editor</summary>
         </member>
+        <member name="F:DG.Tweening.DOTween.debugMode">
+            <summary>If TRUE activates various debug options</summary>
+        </member>
+        <member name="P:DG.Tweening.DOTween.debugStoreTargetId">
+            <summary>Stores the target id so it can be used to give more info in case of safeMode error capturing.
+            Only active if both <code>debugMode</code> and <code>useSafeMode</code> are TRUE</summary>
+        </member>
         <member name="F:DG.Tweening.DOTween.defaultUpdateType">
             <summary>Default updateType for new tweens.
             <para>Default: UpdateType.Normal</para></summary>
@@ -1004,6 +1011,18 @@
         <member name="F:DG.Tweening.LinkBehaviour.KillOnDestroy">
             <summary>Kills the tween when the link target is destroyed (becomes NULL). This is always active even if another behaviour is chosen</summary>
         </member>
+        <member name="F:DG.Tweening.LinkBehaviour.CompleteOnDisable">
+            <summary>Completes the tween when the link target is disabled</summary>
+        </member>
+        <member name="F:DG.Tweening.LinkBehaviour.CompleteAndKillOnDisable">
+            <summary>Completes and kills the tween when the link target is disabled</summary>
+        </member>
+        <member name="F:DG.Tweening.LinkBehaviour.RewindOnDisable">
+            <summary>Rewinds the tween (delay excluded) when the link target is disabled</summary>
+        </member>
+        <member name="F:DG.Tweening.LinkBehaviour.RewindAndKillOnDisable">
+            <summary>Rewinds and kills the tween when the link target is disabled</summary>
+        </member>
         <member name="T:DG.Tweening.PathMode">
             <summary>
             Path mode (used to determine correct LookAt orientation)
@@ -1172,12 +1191,12 @@
         </member>
         <member name="M:DG.Tweening.TweenExtensions.Restart(DG.Tweening.Tween,System.Boolean,System.Single)">
             <summary>Restarts the tween from the beginning</summary>
-            <param name="includeDelay">If TRUE includes the eventual tween delay, otherwise skips it</param>
-            <param name="changeDelayTo">If >= 0 changes the startup delay to this value, otherwise doesn't touch it</param>
+            <param name="includeDelay">Ignored in case of Sequences. If TRUE includes the eventual tween delay, otherwise skips it</param>
+            <param name="changeDelayTo">Ignored in case of Sequences. If >= 0 changes the startup delay to this value, otherwise doesn't touch it</param>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.Rewind(DG.Tweening.Tween,System.Boolean)">
             <summary>Rewinds and pauses the tween</summary>
-            <param name="includeDelay">If TRUE includes the eventual tween delay, otherwise skips it</param>
+            <param name="includeDelay">Ignored in case of Sequences. If TRUE includes the eventual tween delay, otherwise skips it</param>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.SmoothRewind(DG.Tweening.Tween)">
             <summary>Smoothly rewinds the tween (delays excluded).
@@ -2438,8 +2457,10 @@
             <param name="setImmediately">If TRUE sets the target to from value immediately, otherwise waits for the tween to start</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetDelay``1(``0,System.Single)">
-            <summary>Sets a delayed startup for the tween.
-            <para>Has no effect on Sequences or if the tween has already started</para></summary>
+            <summary>Sets a delayed startup for the tween.<para/>
+            In case of Sequences behaves the same as <see cref="M:DG.Tweening.TweenSettingsExtensions.PrependInterval(DG.Tweening.Sequence,System.Single)"/>,
+            which means the delay will repeat in case of loops (while with tweens it's ignored after the first loop cycle).<para/>
+            Has no effect on Sequences or if the tween has already started</summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetRelative``1(``0)">
             <summary>Sets the tween as relative
@@ -2633,6 +2654,11 @@
         </member>
         <member name="P:DG.Tweening.Tween.isRelative">
             <summary>Tweeners-only (ignored by Sequences), returns TRUE if the tween was set as relative</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.debugTargetId">
+            <summary>
+            Set by SetTarget if DOTween's Debug Mode is on (see DOTween Utility Panel -> "Store GameObject's ID" debug option
+            </summary>
         </member>
         <member name="P:DG.Tweening.Tween.active">
             <summary>FALSE when tween is (or should be) despawned - set only by TweenManager</summary>
