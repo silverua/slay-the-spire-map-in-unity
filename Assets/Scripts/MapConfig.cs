@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MapConfig : MonoBehaviour
+[CreateAssetMenu]
+public class MapConfig : ScriptableObject
 {
-    public int initialNodes;
+    
 }
