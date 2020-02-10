@@ -19,6 +19,8 @@ public class NodeBlueprint : ScriptableObject
 
     public void EnterNode()
     {
+        Debug.Log("Entering node: " + nodeType);
+        // load appropriate scene with context based on nodeType:
         switch (nodeType)
         {
             case NodeType.MinorEnemy:
