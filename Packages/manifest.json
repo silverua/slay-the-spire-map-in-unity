@@ -12,6 +12,8 @@
     "com.unity.textmeshpro": "2.0.1",
     "com.unity.timeline": "1.2.10",
     "com.unity.ugui": "1.0.0",
+    "st.one-line": "https://github.com/slavniyteo/one-line.git#master",
+    "st.rect-ex": "https://github.com/slavniyteo/rect-ex.git#master",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
@@ -43,5 +45,15 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
+  },
+  "lock": {
+    "st.rect-ex": {
+      "revision": "master",
+      "hash": "c8c32b33ce250aa927de7f6c79ae7c0b6eab36cb"
+    },
+    "st.one-line": {
+      "revision": "master",
+      "hash": "321188262e4cb7bfd8a5bf14611fd3dbeb37a98c"
+    }
   }
 }
