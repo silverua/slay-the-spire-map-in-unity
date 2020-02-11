@@ -12,3 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21f71146b25f5f4faa3957f18d627ba, type: 3}
   m_Name: DefaultMapConfig
   m_EditorClassIdentifier: 
+  layers:
+    array:
+    - node: {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
+      distanceFromPreviousLayer: 0
+      nodesApartDistance: 0
+      randomizePosition: 0
+      randomizeNodes: 0

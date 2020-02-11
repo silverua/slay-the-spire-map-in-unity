@@ -10,10 +10,12 @@ public class MapNode : MonoBehaviour
     public List<MapNode> outgoingConnections;
 
     public NodeBlueprint Blueprint { get; private set; }
+    public int LayerIndex { get; private set; }
 
-    public void ApplyBlueprint(NodeBlueprint blueprint)
+    public void SetUp(NodeBlueprint blueprint, int layerIndex)
     {
         Blueprint = blueprint;
+        LayerIndex = layerIndex;
         sr.sprite = blueprint.sprite;
     }
 
