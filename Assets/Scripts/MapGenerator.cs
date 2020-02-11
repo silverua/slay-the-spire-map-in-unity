@@ -70,13 +70,13 @@ public class MapGenerator : MonoBehaviour
         var layer = config.layers[layerIndex];
         var layerParentObject = new GameObject("Layer " + layerIndex + " Parent");
         layerParentObject.transform.SetParent(mapParent.transform);
-        layerParentObject.transform.localPosition = new Vector3(0f, GetDistanceToLayer(layerIndex), 0f);
         var nodesOnThisLayer = new List<MapNode>();
         for (var i = 0; i < layer.numOfNodes.GetValue(); i++)
         {
             var nodeObject = Instantiate(nodePrefab, layerParentObject.transform);
             nodeObject.transform.localPosition = new Vector3(i * layer.nodesApartDistance, 0f, 0f);
             var node = nodeObject.GetComponent<MapNode>();
+            nodesOnThisLayer.Add(node);
             var blueprint = Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.node;
             node.SetUp(blueprint, layerIndex);
         }
@@ -85,8 +85,12 @@ public class MapGenerator : MonoBehaviour
         // offset of this layer to make all the nodes centered:
         var offset = (nodesOnThisLayer[nodesOnThisLayer.Count - 1].transform.localPosition.x -
                       nodesOnThisLayer[0].transform.localPosition.x) / 2f;
-        layerParentObject.transform.localPosition = new Vector3(offset, 0f, 0f);
+        layerParentObject.transform.localPosition = new Vector3(- offset, GetDistanceToLayer(layerIndex), 0f);
+    }
 
+    private void SetUpConnections()
+    {
+        
     }
 
     private NodeBlueprint GetRandomNode()

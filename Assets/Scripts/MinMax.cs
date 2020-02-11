@@ -20,6 +20,6 @@ public class IntMinMax
 
     public int GetValue()
     {
-        return Random.Range(min, max);
+        return Random.Range(min, max + 1);
     }
 }
