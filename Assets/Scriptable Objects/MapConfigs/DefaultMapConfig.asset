@@ -22,7 +22,7 @@ MonoBehaviour:
         min: 0
         max: 0
       nodesApartDistance: 2
-      randomizePosition: 0.176
+      randomizePosition: 0
       randomizeNodes: 0
     - node: {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
       numOfNodes:

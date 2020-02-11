@@ -51,6 +51,10 @@ public class MapGenerator : MonoBehaviour
         
         for (var i = 0; i < config.layers.Count; i++)
             PlaceLayer(i);
+        
+        RandomizeNodePositions();
+        
+        SetUpConnections();
     }
 
     private void GenerateLayerDistances()
@@ -62,6 +66,8 @@ public class MapGenerator : MonoBehaviour
 
     private float GetDistanceToLayer(int layerIndex)
     {
+        if (layerIndex < 0 || layerIndex > layerDistances.Count) return 0f;
+        
         return layerDistances.Take(layerIndex + 1).Sum();
     }
 
@@ -86,6 +92,30 @@ public class MapGenerator : MonoBehaviour
         var offset = (nodesOnThisLayer[nodesOnThisLayer.Count - 1].transform.localPosition.x -
                       nodesOnThisLayer[0].transform.localPosition.x) / 2f;
         layerParentObject.transform.localPosition = new Vector3(- offset, GetDistanceToLayer(layerIndex), 0f);
+    }
+
+    private void RandomizeNodePositions()
+    {
+        for (var index = 0; index < nodes.Count; index++)
+        {
+            var list = nodes[index];
+            var layer = config.layers[index];
+            var distToNextLayer = index + 1 >= layerDistances.Count
+                ? 0f
+                : layerDistances[index + 1];
+            var distToPreviousLayer = layerDistances[index];
+            
+            foreach (var node in list)
+            {
+                var xRnd = Random.Range(-1f, 1f);
+                var yRnd = Random.Range(-1f, 1f);
+
+                var x = xRnd * layer.nodesApartDistance / 2f;
+                var y = yRnd < 0 ? distToPreviousLayer * yRnd / 2f : distToNextLayer * yRnd / 2f;
+
+                node.transform.localPosition += new Vector3(x, y, 0) * layer.randomizePosition;
+            }
+        }
     }
 
     private void SetUpConnections()
