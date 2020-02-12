@@ -33,7 +33,18 @@ public class MapNode : MonoBehaviour
             return;
 
         OutgoingConnections.Add(node);
-        MapGenerator.Instance.AddLineConnection(this, node);
+    }
+    
+    public void RemoveIncoming(MapNode node)
+    {
+        if(IncomingConnections.Contains(node))
+            IncomingConnections.Remove(node);
+    }
+
+    public void RemoveOutgoing(MapNode node)
+    {
+        if(OutgoingConnections.Contains(node))
+            OutgoingConnections.Remove(node);
     }
 
     public bool HasNoConnections()

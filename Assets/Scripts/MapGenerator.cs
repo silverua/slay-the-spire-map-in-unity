@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -11,7 +12,8 @@ public class MapGenerator : MonoBehaviour
         RightToLeft,
         LeftToRight
     }
-    
+
+    public bool generateInStart = true;
     public MapConfig config;
     public MapOrientation orientation;
     public List<NodeBlueprint> randomNodes;
@@ -23,17 +25,11 @@ public class MapGenerator : MonoBehaviour
     private List<List<Point>> paths;
     // ALL nodes by layer:
     private readonly List<List<MapNode>> nodes = new List<List<MapNode>>();
-    
-    public static MapGenerator Instance;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     private void Start()
     {
-        Generate();
+        if (generateInStart)
+            Generate();
     }
 
     private void ClearMap()
@@ -46,6 +42,12 @@ public class MapGenerator : MonoBehaviour
 
     public void Generate()
     {
+        if (config == null)
+        {
+            Debug.LogWarning("Config was null in MapGenerator.Generate()");
+            return;
+        }
+
         ClearMap();
         
         mapParent = new GameObject("MapParent");
@@ -61,15 +63,46 @@ public class MapGenerator : MonoBehaviour
         
         SetUpConnections();
         
-        HideNodesWithoutConnections();
+        RemoveCrossConnections();
+        
+        SetOrientation();
+        
+        HideNodesWithoutConnectionsAndDrawLines();
     }
 
-    private void HideNodesWithoutConnections()
+    private void SetOrientation()
     {
-        foreach (var layer in nodes)
-        foreach (var node in layer)
+        switch (orientation)
+        {
+            case MapOrientation.BottomToTop:
+                // do nothing
+                break;
+            case MapOrientation.TopToBottom:
+                mapParent.transform.eulerAngles = new Vector3(0, 0, 180);
+                break;
+            case MapOrientation.RightToLeft:
+                mapParent.transform.eulerAngles = new Vector3(0, 0, 90);
+                break;
+            case MapOrientation.LeftToRight:
+                mapParent.transform.eulerAngles = new Vector3(0, 0, -90);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    private void HideNodesWithoutConnectionsAndDrawLines()
+    {
+        foreach (var node in nodes.SelectMany(layer => layer))
             if (node.HasNoConnections())
                 node.gameObject.SetActive(false);
+            else
+            {
+                // reset rotation to fix after orientation changes:
+                node.transform.rotation = Quaternion.identity;
+                foreach (var connection in node.OutgoingConnections)
+                    AddLineConnection(node, connection);
+            }
     }
 
     private void GenerateLayerDistances()
@@ -98,7 +131,7 @@ public class MapGenerator : MonoBehaviour
             nodeObject.transform.localPosition = new Vector3(i * layer.nodesApartDistance, 0f, 0f);
             var node = nodeObject.GetComponent<MapNode>();
             nodesOnThisLayer.Add(node);
-            var blueprint = Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.node;
+            var blueprint = UnityEngine.Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.node;
             node.SetUp(blueprint, layerIndex);
         }
 
@@ -122,8 +155,8 @@ public class MapGenerator : MonoBehaviour
             
             foreach (var node in list)
             {
-                var xRnd = Random.Range(-1f, 1f);
-                var yRnd = Random.Range(-1f, 1f);
+                var xRnd = UnityEngine.Random.Range(-1f, 1f);
+                var yRnd = UnityEngine.Random.Range(-1f, 1f);
 
                 var x = xRnd * layer.nodesApartDistance / 2f;
                 var y = yRnd < 0 ? distToPreviousLayer * yRnd / 2f : distToNextLayer * yRnd / 2f;
@@ -159,6 +192,57 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    private void RemoveCrossConnections()
+    {
+        for (var i = 0; i< config.gridWidth-1; i++)
+        for (var j = 0; j < config.layers.Count-1; j++)
+        {
+            var node = GetNode(new Point(i, j));
+            if (node == null || !node.gameObject.activeInHierarchy) continue;
+            var right = GetNode(new Point(i + 1, j));
+            if (right == null || !right.gameObject.activeInHierarchy) continue;
+            var top = GetNode(new Point(i, j + 1));
+            if (top == null || !top.gameObject.activeInHierarchy) continue;
+            var topRight = GetNode(new Point(i + 1, j + 1));
+            if (topRight == null || !topRight.gameObject.activeInHierarchy) continue;
+
+            if (!node.OutgoingConnections.Contains(topRight))continue;
+            if (!right.OutgoingConnections.Contains(top)) continue;
+
+            // we managed to find a cross node:
+            // 1) add direct connections:
+            node.AddOutgoing(top);
+            top.AddIncoming(node);
+            
+            right.AddOutgoing(topRight);
+            topRight.AddIncoming(right);
+            
+            var rnd = UnityEngine.Random.Range(0f, 1f);
+            if (rnd < 0.2f)
+            {
+                // remove both cross connections:
+                // a) 
+                node.RemoveOutgoing(topRight);
+                topRight.RemoveIncoming(node);
+                // b) 
+                right.RemoveOutgoing(top);
+                top.RemoveIncoming(right);
+            }
+            else if (rnd < 0.6f)
+            {
+                // a) 
+                node.RemoveOutgoing(topRight);
+                topRight.RemoveIncoming(node);
+            }
+            else
+            {
+                // b) 
+                right.RemoveOutgoing(top);
+                top.RemoveIncoming(right);
+            }
+        }
+    }
+
     public void AddLineConnection(MapNode from, MapNode to)
     {
         var lineObject = Instantiate(linePrefab, mapParent.transform);
@@ -169,6 +253,9 @@ public class MapGenerator : MonoBehaviour
 
     private MapNode GetNode(Point p)
     {
+        if (p.y >= nodes.Count) return null;
+        if (p.x >= nodes[p.y].Count) return null;
+        
         return nodes[p.y][p.x];
     }
 
@@ -178,7 +265,7 @@ public class MapGenerator : MonoBehaviour
         if (config.gridWidth % 2 == 1)
             return new Point(config.gridWidth / 2 + 1, y);
 
-        return Random.Range(0, 2) == 0
+        return UnityEngine.Random.Range(0, 2) == 0
             ? new Point(config.gridWidth / 2 + 1, y)
             : new Point(config.gridWidth / 2, y);
     }
@@ -238,7 +325,7 @@ public class MapGenerator : MonoBehaviour
             // right
             if (lastPoint.x + 1 < width) candidateXs.Add(lastPoint.x + 1);
             
-            var nextPoint = new Point(candidateXs[Random.Range(0, candidateXs.Count)], lastPoint.y + direction);
+            var nextPoint = new Point(candidateXs[UnityEngine.Random.Range(0, candidateXs.Count)], lastPoint.y + direction);
             path.Add(nextPoint);
         }
 
@@ -247,6 +334,6 @@ public class MapGenerator : MonoBehaviour
 
     private NodeBlueprint GetRandomNode()
     {
-        return randomNodes.Count == 0 ? null : randomNodes[Random.Range(0, randomNodes.Count)];
+        return randomNodes.Count == 0 ? null : randomNodes[UnityEngine.Random.Range(0, randomNodes.Count)];
     }
 }

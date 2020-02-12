@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21f71146b25f5f4faa3957f18d627ba, type: 3}
   m_Name: DefaultMapConfig
   m_EditorClassIdentifier: 
-  gridWidth: 8
+  gridWidth: 5
   numOfStartingNodes:
     min: 3
     max: 4
@@ -25,31 +25,31 @@ MonoBehaviour:
       nodesApartDistance: 2
       randomizePosition: 0
       randomizeNodes: 0
+    - node: {fileID: 11400000, guid: e1635866d1c2f154e8c9045bd0e000f2, type: 2}
+      distanceFromPreviousLayer:
+        min: 2
+        max: 3
+      nodesApartDistance: 2
+      randomizePosition: 0.176
+      randomizeNodes: 0.728
+    - node: {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
+      distanceFromPreviousLayer:
+        min: 2
+        max: 3
+      nodesApartDistance: 2
+      randomizePosition: 0.176
+      randomizeNodes: 0.739
     - node: {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
       distanceFromPreviousLayer:
         min: 2
         max: 3
       nodesApartDistance: 2
       randomizePosition: 0.176
-      randomizeNodes: 0.172
-    - node: {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
+      randomizeNodes: 0
+    - node: {fileID: 11400000, guid: 3cd24b2e276b6dc48a3c3842ff38a96c, type: 2}
       distanceFromPreviousLayer:
         min: 2
         max: 3
       nodesApartDistance: 2
       randomizePosition: 0.176
-      randomizeNodes: 0.172
-    - node: {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
-      distanceFromPreviousLayer:
-        min: 2
-        max: 3
-      nodesApartDistance: 2
-      randomizePosition: 0.176
-      randomizeNodes: 0.172
-    - node: {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
-      distanceFromPreviousLayer:
-        min: 2
-        max: 3
-      nodesApartDistance: 2
-      randomizePosition: 0.176
-      randomizeNodes: 0.172
+      randomizeNodes: 0
