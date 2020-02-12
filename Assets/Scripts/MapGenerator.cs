@@ -14,9 +14,6 @@ public class MapGenerator : MonoBehaviour
     }
     
     public MapConfig config;
-    public int gridWidth = 8;
-    [OneLineWithHeader]
-    public IntMinMax numOfStartingNodes;
     public MapOrientation orientation;
     public List<NodeBlueprint> randomNodes;
     public GameObject nodePrefab;
@@ -24,7 +21,8 @@ public class MapGenerator : MonoBehaviour
 
     private List<float> layerDistances;
     private GameObject mapParent;
-    // nodes by layer:
+    private List<List<Point>> paths;
+    // ALL nodes by layer:
     private readonly List<List<MapNode>> nodes = new List<List<MapNode>>();
     
     public static MapGenerator Instance;
@@ -58,9 +56,21 @@ public class MapGenerator : MonoBehaviour
         for (var i = 0; i < config.layers.Count; i++)
             PlaceLayer(i);
         
+        GeneratePaths();
+        
         RandomizeNodePositions();
         
         SetUpConnections();
+        
+        HideNodesWithoutConnections();
+    }
+
+    private void HideNodesWithoutConnections()
+    {
+        foreach (var layer in nodes)
+        foreach (var node in layer)
+            if (node.HasNoConnections())
+                node.gameObject.SetActive(false);
     }
 
     private void GenerateLayerDistances()
@@ -83,7 +93,7 @@ public class MapGenerator : MonoBehaviour
         var layerParentObject = new GameObject("Layer " + layerIndex + " Parent");
         layerParentObject.transform.SetParent(mapParent.transform);
         var nodesOnThisLayer = new List<MapNode>();
-        for (var i = 0; i < gridWidth; i++)
+        for (var i = 0; i < config.gridWidth; i++)
         {
             var nodeObject = Instantiate(nodePrefab, layerParentObject.transform);
             nodeObject.transform.localPosition = new Vector3(i * layer.nodesApartDistance, 0f, 0f);
@@ -126,18 +136,63 @@ public class MapGenerator : MonoBehaviour
 
     private void SetUpConnections()
     {
-        if(nodes.Count < 2)
-            return;
+        foreach (var path in paths)
+        {
+            for (var i = 0; i < path.Count; i++)
+            {
+                var node = GetNode(path[i]);
+                
+                if (i > 0)
+                {
+                    // previous because the path is flipped
+                    var nextNode = GetNode(path[i - 1]);
+                    nextNode.AddIncoming(node);
+                    node.AddOutgoing(nextNode);
+                }
 
-        for (var i = 0; i < nodes.Count - 1; i++)
-            ConnectLayers(i, i + 1);
+                if (i < path.Count - 1)
+                {
+                    var previousNode = GetNode(path[i + 1]);
+                    previousNode.AddOutgoing(node);
+                    node.AddIncoming(previousNode);
+                }
+            }
+        }
     }
 
-    private void ConnectLayers(int index1, int index2)
+    private MapNode GetNode(Point p)
     {
-        
+        return nodes[p.y][p.x];
     }
-    
+
+    private Point GetFinalNode()
+    {
+        var y = config.layers.Count - 1;
+        if (config.gridWidth % 2 == 1)
+            return new Point(config.gridWidth / 2 + 1, y);
+
+        return Random.Range(0, 2) == 0
+            ? new Point(config.gridWidth / 2 + 1, y)
+            : new Point(config.gridWidth / 2, y);
+    }
+
+    private void GeneratePaths()
+    {
+        var finalNode = GetFinalNode();
+        paths = new List<List<Point>>();
+        var numOfStartingNodes = config.numOfStartingNodes.GetValue();
+        while (!PathsLeadToNDifferentPoints(paths, numOfStartingNodes))
+        {
+            var path = Path(finalNode, 0, config.gridWidth);
+            paths.Add(path);
+        }
+    }
+
+    private bool PathsLeadToNDifferentPoints(IEnumerable<List<Point>> paths, int n)
+    {
+        return (from path in paths select path[path.Count - 1].x).Distinct().Count() == n;
+    }
+
     private class Point
     {
         public int x; 

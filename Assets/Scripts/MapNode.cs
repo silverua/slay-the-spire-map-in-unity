@@ -19,6 +19,27 @@ public class MapNode : MonoBehaviour
         sr.sprite = blueprint.sprite;
     }
 
+    public void AddIncoming(MapNode node)
+    {
+        if(IncomingConnections.Contains(node))
+            return;
+
+        IncomingConnections.Add(node);
+    }
+
+    public void AddOutgoing(MapNode node)
+    {
+        if(OutgoingConnections.Contains(node))
+            return;
+
+        OutgoingConnections.Add(node);
+    }
+
+    public bool HasNoConnections()
+    {
+        return IncomingConnections.Count == 0 && OutgoingConnections.Count == 0;
+    }
+
     public void SetAttainable(bool attainable)
     {
         sr.color = attainable ? attainableColor : lockedColor;
