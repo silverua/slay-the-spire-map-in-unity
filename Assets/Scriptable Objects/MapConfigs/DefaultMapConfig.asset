@@ -27,29 +27,29 @@ MonoBehaviour:
       randomizeNodes: 0
     - node: {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
       distanceFromPreviousLayer:
-        min: 4
-        max: 6
+        min: 2
+        max: 3
       nodesApartDistance: 2
       randomizePosition: 0.176
       randomizeNodes: 0.172
     - node: {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
       distanceFromPreviousLayer:
-        min: 4
-        max: 6
+        min: 2
+        max: 3
       nodesApartDistance: 2
       randomizePosition: 0.176
       randomizeNodes: 0.172
     - node: {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
       distanceFromPreviousLayer:
-        min: 4
-        max: 6
+        min: 2
+        max: 3
       nodesApartDistance: 2
       randomizePosition: 0.176
       randomizeNodes: 0.172
     - node: {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
       distanceFromPreviousLayer:
-        min: 4
-        max: 6
+        min: 2
+        max: 3
       nodesApartDistance: 2
       randomizePosition: 0.176
       randomizeNodes: 0.172

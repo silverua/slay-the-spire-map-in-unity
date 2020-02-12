@@ -161,7 +161,7 @@ public class MapGenerator : MonoBehaviour
 
     public void AddLineConnection(MapNode from, MapNode to)
     {
-        var lineObject = Instantiate(linePrefab);
+        var lineObject = Instantiate(linePrefab, mapParent.transform);
         var lineRenderer = lineObject.GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, from.transform.position);
         lineRenderer.SetPosition(1, to.transform.position);
