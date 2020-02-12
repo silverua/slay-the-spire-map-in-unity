@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using OneLine;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
@@ -160,6 +159,14 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+    public void AddLineConnection(MapNode from, MapNode to)
+    {
+        var lineObject = Instantiate(linePrefab);
+        var lineRenderer = lineObject.GetComponent<LineRenderer>();
+        lineRenderer.SetPosition(0, from.transform.position);
+        lineRenderer.SetPosition(1, to.transform.position);
+    }
+
     private MapNode GetNode(Point p)
     {
         return nodes[p.y][p.x];
@@ -181,11 +188,15 @@ public class MapGenerator : MonoBehaviour
         var finalNode = GetFinalNode();
         paths = new List<List<Point>>();
         var numOfStartingNodes = config.numOfStartingNodes.GetValue();
-        while (!PathsLeadToNDifferentPoints(paths, numOfStartingNodes))
+        var attempts = 0;
+        while (!PathsLeadToNDifferentPoints(paths, numOfStartingNodes) && attempts < 100)
         {
             var path = Path(finalNode, 0, config.gridWidth);
             paths.Add(path);
+            attempts++;
         }
+
+        Debug.Log("Attempts to generate paths: " + attempts);
     }
 
     private bool PathsLeadToNDifferentPoints(IEnumerable<List<Point>> paths, int n)
