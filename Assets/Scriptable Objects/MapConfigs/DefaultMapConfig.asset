@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: DefaultMapConfig
   m_EditorClassIdentifier: 
   gridWidth: 5
+  numOfPreBossNodes:
+    min: 4
+    max: 5
   numOfStartingNodes:
     min: 3
     max: 4

@@ -5,7 +5,10 @@ using UnityEngine;
 [CreateAssetMenu]
 public class MapConfig : ScriptableObject
 {
-    public int gridWidth = 8;
+    public int GridWidth => Mathf.Max(numOfPreBossNodes.max, numOfStartingNodes.max);
+
+    [OneLineWithHeader] 
+    public IntMinMax numOfPreBossNodes;
     [OneLineWithHeader]
     public IntMinMax numOfStartingNodes;
     [Reorderable]

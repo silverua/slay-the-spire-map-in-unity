@@ -125,7 +125,7 @@ public class MapGenerator : MonoBehaviour
         var layerParentObject = new GameObject("Layer " + layerIndex + " Parent");
         layerParentObject.transform.SetParent(mapParent.transform);
         var nodesOnThisLayer = new List<MapNode>();
-        for (var i = 0; i < config.gridWidth; i++)
+        for (var i = 0; i < config.GridWidth; i++)
         {
             var nodeObject = Instantiate(nodePrefab, layerParentObject.transform);
             nodeObject.transform.localPosition = new Vector3(i * layer.nodesApartDistance, 0f, 0f);
@@ -194,7 +194,7 @@ public class MapGenerator : MonoBehaviour
 
     private void RemoveCrossConnections()
     {
-        for (var i = 0; i< config.gridWidth-1; i++)
+        for (var i = 0; i< config.GridWidth-1; i++)
         for (var j = 0; j < config.layers.Count-1; j++)
         {
             var node = GetNode(new Point(i, j));
@@ -262,12 +262,12 @@ public class MapGenerator : MonoBehaviour
     private Point GetFinalNode()
     {
         var y = config.layers.Count - 1;
-        if (config.gridWidth % 2 == 1)
-            return new Point(config.gridWidth / 2 + 1, y);
+        if (config.GridWidth % 2 == 1)
+            return new Point(config.GridWidth / 2, y);
 
         return UnityEngine.Random.Range(0, 2) == 0
-            ? new Point(config.gridWidth / 2 + 1, y)
-            : new Point(config.gridWidth / 2, y);
+            ? new Point(config.GridWidth / 2, y)
+            : new Point(config.GridWidth / 2 - 1, y);
     }
 
     private void GeneratePaths()
@@ -275,10 +275,31 @@ public class MapGenerator : MonoBehaviour
         var finalNode = GetFinalNode();
         paths = new List<List<Point>>();
         var numOfStartingNodes = config.numOfStartingNodes.GetValue();
+        var numOfPreBossNodes = config.numOfPreBossNodes.GetValue();
+
+        var candidateXs = new List<int>();
+        for (var i = 0; i < config.GridWidth; i++)
+            candidateXs.Add(i);
+        
+        candidateXs.Shuffle();
+        var preBossXs = candidateXs.Take(numOfPreBossNodes);
+        var preBossPoints = (from x in preBossXs select new Point(x, finalNode.y - 1)).ToList();
         var attempts = 0;
-        while (!PathsLeadToNDifferentPoints(paths, numOfStartingNodes) && attempts < 100)
+        
+        // start by generating paths from each of the preBossPoints to the 1st layer:
+        foreach (var point in preBossPoints)
         {
-            var path = Path(finalNode, 0, config.gridWidth, firstStepUnconstrained: true);
+            var path = Path(point, 0, config.GridWidth);
+            path.Insert(0, finalNode);
+            paths.Add(path);
+            attempts++;
+        }
+
+        while (!PathsLeadToAtLeastNDifferentPoints(paths, numOfStartingNodes) && attempts < 100)
+        {
+            var randomPreBossPoint = preBossPoints[UnityEngine.Random.Range(0, preBossPoints.Count)];
+            var path = Path(randomPreBossPoint, 0, config.GridWidth);
+            path.Insert(0, finalNode);
             paths.Add(path);
             attempts++;
         }
@@ -286,9 +307,9 @@ public class MapGenerator : MonoBehaviour
         Debug.Log("Attempts to generate paths: " + attempts);
     }
 
-    private bool PathsLeadToNDifferentPoints(IEnumerable<List<Point>> paths, int n)
+    private bool PathsLeadToAtLeastNDifferentPoints(IEnumerable<List<Point>> paths, int n)
     {
-        return (from path in paths select path[path.Count - 1].x).Distinct().Count() == n;
+        return (from path in paths select path[path.Count - 1].x).Distinct().Count() >= n;
     }
 
     private class Point: IEquatable<Point>
