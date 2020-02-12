@@ -278,7 +278,7 @@ public class MapGenerator : MonoBehaviour
         var attempts = 0;
         while (!PathsLeadToNDifferentPoints(paths, numOfStartingNodes) && attempts < 100)
         {
-            var path = Path(finalNode, 0, config.gridWidth);
+            var path = Path(finalNode, 0, config.gridWidth, firstStepUnconstrained: true);
             paths.Add(path);
             attempts++;
         }
@@ -291,7 +291,7 @@ public class MapGenerator : MonoBehaviour
         return (from path in paths select path[path.Count - 1].x).Distinct().Count() == n;
     }
 
-    private class Point
+    private class Point: IEquatable<Point>
     {
         public int x; 
         public int y;
@@ -301,9 +301,32 @@ public class MapGenerator : MonoBehaviour
             this.x = x;
             this.y = y;
         }
+
+        public bool Equals(Point other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return x == other.x && y == other.y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Point) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (x * 397) ^ y;
+            }
+        }
     }
 
-    private List<Point> Path(Point from, int toY, int width)
+    private List<Point> Path(Point from, int toY, int width, bool firstStepUnconstrained = false)
     {
         if (from.y == toY)
         {
@@ -318,13 +341,22 @@ public class MapGenerator : MonoBehaviour
         while (path[path.Count - 1].y != toY)
         {
             var lastPoint = path[path.Count - 1];
-            // forward
-            var candidateXs = new List<int> {lastPoint.x};
-            // left
-            if (lastPoint.x - 1 >= 0) candidateXs.Add(lastPoint.x - 1);
-            // right
-            if (lastPoint.x + 1 < width) candidateXs.Add(lastPoint.x + 1);
-            
+            var candidateXs = new List<int> ();
+            if (firstStepUnconstrained && lastPoint.Equals(from))
+            {
+                for (var i = 0; i < width; i++)
+                    candidateXs.Add(i);
+            }
+            else
+            {
+                // forward
+                candidateXs.Add(lastPoint.x);
+                // left
+                if (lastPoint.x - 1 >= 0) candidateXs.Add(lastPoint.x - 1);
+                // right
+                if (lastPoint.x + 1 < width) candidateXs.Add(lastPoint.x + 1);
+            }
+
             var nextPoint = new Point(candidateXs[UnityEngine.Random.Range(0, candidateXs.Count)], lastPoint.y + direction);
             path.Add(nextPoint);
         }
