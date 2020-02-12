@@ -1,16 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using OneLine;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
     public enum MapOrientation
     {
+        BottomToTop,
         TopToBottom,
+        RightToLeft,
         LeftToRight
     }
     
     public MapConfig config;
+    public int gridWidth = 8;
+    [OneLineWithHeader]
+    public IntMinMax numOfStartingNodes;
     public MapOrientation orientation;
     public List<NodeBlueprint> randomNodes;
     public GameObject nodePrefab;
@@ -77,7 +83,7 @@ public class MapGenerator : MonoBehaviour
         var layerParentObject = new GameObject("Layer " + layerIndex + " Parent");
         layerParentObject.transform.SetParent(mapParent.transform);
         var nodesOnThisLayer = new List<MapNode>();
-        for (var i = 0; i < layer.numOfNodes.GetValue(); i++)
+        for (var i = 0; i < gridWidth; i++)
         {
             var nodeObject = Instantiate(nodePrefab, layerParentObject.transform);
             nodeObject.transform.localPosition = new Vector3(i * layer.nodesApartDistance, 0f, 0f);
@@ -126,53 +132,51 @@ public class MapGenerator : MonoBehaviour
         for (var i = 0; i < nodes.Count - 1; i++)
             ConnectLayers(i, i + 1);
     }
-    
-    private class NodeConnection
-    {
-        public MapNode previous;
-        public MapNode next;
-
-        public NodeConnection(MapNode previous, MapNode next)
-        {
-            this.previous = previous;
-            this.next = next;
-        }
-    }
 
     private void ConnectLayers(int index1, int index2)
     {
-        var layer1Nodes = nodes[index1];
-        var layer2Nodes = nodes[index2];
+        
+    }
+    
+    private class Point
+    {
+        public int x; 
+        public int y;
 
-        var connections = new List<NodeConnection>();
-        do
+        public Point(int x, int y)
         {
-            connections.Clear();
-            foreach (var node in layer1Nodes)
-            {
-                // pick a random node from layer2 and make a connection:
-                var connection = new NodeConnection(node, layer2Nodes[Random.Range(0, layer2Nodes.Count)]);
-                connections.Add(connection);
-            }
-
-            while (NotConnectedNodes(layer2Nodes, connections).Count > 0)
-            {
-                // make a connection to a random layer 1 node:
-                var connection = new NodeConnection(layer1Nodes[Random.Range(0, layer1Nodes.Count)],
-                    NotConnectedNodes(layer2Nodes, connections)[0]);
-                connections.Add(connection);
-            }
-
-        } while
-        (
-            // TODO: while there are lines that intersect:
-            false
-        );
+            this.x = x;
+            this.y = y;
+        }
     }
 
-    private List<MapNode> NotConnectedNodes(List<MapNode> layer2Nodes, List<NodeConnection> connections)
+    private List<Point> Path(Point from, int toY, int width)
     {
-        return layer2Nodes.Where(node => connections.All(connection => connection.next != node)).ToList();
+        if (from.y == toY)
+        {
+            Debug.LogError("Points are on same layers, return");
+            return null;
+        }
+        
+        // making one y step in this direction with each move
+        var direction = from.y > toY ? -1 : 1;
+        
+        var path = new List<Point> {from};
+        while (path[path.Count - 1].y != toY)
+        {
+            var lastPoint = path[path.Count - 1];
+            // forward
+            var candidateXs = new List<int> {lastPoint.x};
+            // left
+            if (lastPoint.x - 1 >= 0) candidateXs.Add(lastPoint.x - 1);
+            // right
+            if (lastPoint.x + 1 < width) candidateXs.Add(lastPoint.x + 1);
+            
+            var nextPoint = new Point(candidateXs[Random.Range(0, candidateXs.Count)], lastPoint.y + direction);
+            path.Add(nextPoint);
+        }
+
+        return path;
     }
 
     private NodeBlueprint GetRandomNode()
