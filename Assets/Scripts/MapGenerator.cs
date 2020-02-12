@@ -120,7 +120,59 @@ public class MapGenerator : MonoBehaviour
 
     private void SetUpConnections()
     {
-        
+        if(nodes.Count < 2)
+            return;
+
+        for (var i = 0; i < nodes.Count - 1; i++)
+            ConnectLayers(i, i + 1);
+    }
+    
+    private class NodeConnection
+    {
+        public MapNode previous;
+        public MapNode next;
+
+        public NodeConnection(MapNode previous, MapNode next)
+        {
+            this.previous = previous;
+            this.next = next;
+        }
+    }
+
+    private void ConnectLayers(int index1, int index2)
+    {
+        var layer1Nodes = nodes[index1];
+        var layer2Nodes = nodes[index2];
+
+        var connections = new List<NodeConnection>();
+        do
+        {
+            connections.Clear();
+            foreach (var node in layer1Nodes)
+            {
+                // pick a random node from layer2 and make a connection:
+                var connection = new NodeConnection(node, layer2Nodes[Random.Range(0, layer2Nodes.Count)]);
+                connections.Add(connection);
+            }
+
+            while (NotConnectedNodes(layer2Nodes, connections).Count > 0)
+            {
+                // make a connection to a random layer 1 node:
+                var connection = new NodeConnection(layer1Nodes[Random.Range(0, layer1Nodes.Count)],
+                    NotConnectedNodes(layer2Nodes, connections)[0]);
+                connections.Add(connection);
+            }
+
+        } while
+        (
+            // TODO: while there are lines that intersect:
+            false
+        );
+    }
+
+    private List<MapNode> NotConnectedNodes(List<MapNode> layer2Nodes, List<NodeConnection> connections)
+    {
+        return layer2Nodes.Where(node => connections.All(connection => connection.next != node)).ToList();
     }
 
     private NodeBlueprint GetRandomNode()
