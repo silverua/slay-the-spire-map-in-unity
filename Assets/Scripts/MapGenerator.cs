@@ -263,11 +263,11 @@ public class MapGenerator : MonoBehaviour
     {
         var y = config.layers.Count - 1;
         if (config.gridWidth % 2 == 1)
-            return new Point(config.gridWidth / 2 + 1, y);
+            return new Point(config.gridWidth / 2, y);
 
         return UnityEngine.Random.Range(0, 2) == 0
-            ? new Point(config.gridWidth / 2 + 1, y)
-            : new Point(config.gridWidth / 2, y);
+            ? new Point(config.gridWidth / 2, y)
+            : new Point(config.gridWidth / 2 - 1, y);
     }
 
     private void GeneratePaths()
