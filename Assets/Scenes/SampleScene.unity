@@ -244,8 +244,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dfb2651849bbba640970aec1f4b8601f, type: 2}
   nodePrefab: {fileID: 6746199761131337685, guid: 621ccae6afb8e8949ba963674577578a,
     type: 3}
-  linePrefab: {fileID: 5857439060437771865, guid: f353f6e27b7f79f458cbf2e8e46553f1,
+  linePrefab: {fileID: 5857439060437771865, guid: 71ba31cc6fc8c2748afbb475b9f1307a,
     type: 3}
+  linePointsCount: 10
+  offsetFromNodes: 0.3
 --- !u!4 &1950262108
 Transform:
   m_ObjectHideFlags: 0

@@ -18,8 +18,11 @@ public class MapGenerator : MonoBehaviour
     public MapOrientation orientation;
     public List<NodeBlueprint> randomNodes;
     public GameObject nodePrefab;
+    [Header("Line settings")]
     public GameObject linePrefab;
-
+    public int linePointsCount = 10;
+    public float offsetFromNodes = 0.5f;
+    
     private List<float> layerDistances;
     private GameObject mapParent;
     private List<List<Point>> paths;
@@ -247,8 +250,20 @@ public class MapGenerator : MonoBehaviour
     {
         var lineObject = Instantiate(linePrefab, mapParent.transform);
         var lineRenderer = lineObject.GetComponent<LineRenderer>();
-        lineRenderer.SetPosition(0, from.transform.position);
-        lineRenderer.SetPosition(1, to.transform.position);
+        var fromPoint = from.transform.position +
+                        (to.transform.position - from.transform.position).normalized * offsetFromNodes;
+
+        var toPoint = to.transform.position +
+                      (from.transform.position - to.transform.position).normalized * offsetFromNodes;
+
+        // line renderer with 2 points only does not handle transparency properly:
+        lineRenderer.positionCount = linePointsCount;
+        for (var i = 0; i < linePointsCount; i++)
+        {
+            lineRenderer.SetPosition(i,
+                Vector3.Lerp(fromPoint, toPoint, (float) i / (linePointsCount - 1)));
+        }
+        
         var dottedLine = lineObject.GetComponent<DottedLineRenderer>();
         if(dottedLine != null) dottedLine.ScaleMaterial();
     }

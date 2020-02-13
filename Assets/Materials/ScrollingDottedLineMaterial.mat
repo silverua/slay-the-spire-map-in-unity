@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DottedLineMaterial
-  m_Shader: {fileID: 10721, guid: 0000000000000000f000000000000000, type: 0}
+  m_Name: ScrollingDottedLineMaterial
+  m_Shader: {fileID: 4800000, guid: 6bd04197f2541274fa5e47dfecc78cc1, type: 3}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -97,7 +97,7 @@ Material:
     - _Parallax: 0.02
     - _Scroll2X: 1
     - _Scroll2Y: 0
-    - _ScrollX: -20
+    - _ScrollX: -15
     - _ScrollY: 0
     - _SineAmplX: 0
     - _SineAmplX2: 0
