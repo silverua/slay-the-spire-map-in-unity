@@ -249,6 +249,8 @@ public class MapGenerator : MonoBehaviour
         var lineRenderer = lineObject.GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, from.transform.position);
         lineRenderer.SetPosition(1, to.transform.position);
+        var dottedLine = lineObject.GetComponent<DottedLineRenderer>();
+        if(dottedLine != null) dottedLine.ScaleMaterial();
     }
 
     private MapNode GetNode(Point p)

@@ -244,7 +244,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dfb2651849bbba640970aec1f4b8601f, type: 2}
   nodePrefab: {fileID: 6746199761131337685, guid: 621ccae6afb8e8949ba963674577578a,
     type: 3}
-  linePrefab: {fileID: 5857439060437771865, guid: e7c8e8fa5d8088e429499a625329800b,
+  linePrefab: {fileID: 5857439060437771865, guid: f353f6e27b7f79f458cbf2e8e46553f1,
     type: 3}
 --- !u!4 &1950262108
 Transform:
