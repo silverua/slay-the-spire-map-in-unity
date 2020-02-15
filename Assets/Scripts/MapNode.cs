@@ -1,12 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+
+public enum NodeStates
+{
+    Locked, 
+    Visited,
+    Attainable
+}
 
 public class MapNode : MonoBehaviour
 {
     public SpriteRenderer sr;
     public SpriteRenderer visitedCircle;
-    public Color32 attainableColor = Color.white;
+    public Color32 visitedColor = Color.white;
     public Color32 lockedColor = Color.gray;
     public readonly List<MapNode> IncomingConnections = new List<MapNode>();
     public readonly List<MapNode> OutgoingConnections = new List<MapNode>();
@@ -23,8 +31,9 @@ public class MapNode : MonoBehaviour
         LayerIndex = layerIndex;
         sr.sprite = blueprint.sprite;
         initialScale = sr.transform.localScale.x;
-        visitedCircle.color = attainableColor;
+        visitedCircle.color = visitedColor;
         visitedCircle.gameObject.SetActive(false);
+        SetState(NodeStates.Locked);
     }
 
     public void AddIncoming(MapNode node)
@@ -60,9 +69,27 @@ public class MapNode : MonoBehaviour
         return IncomingConnections.Count == 0 && OutgoingConnections.Count == 0;
     }
 
-    public void SetAttainable(bool attainable)
+    public void SetState(NodeStates state)
     {
-        sr.color = attainable ? attainableColor : lockedColor;
+        switch (state)
+        {
+            case NodeStates.Locked:
+                sr.DOKill();
+                sr.color = lockedColor;
+                break;
+            case NodeStates.Visited:
+                sr.DOKill();
+                sr.color = visitedColor;
+                break;
+            case NodeStates.Attainable:
+                // start pulsating from visited to locked color:
+                sr.color = lockedColor;
+                sr.DOKill();
+                sr.DOColor(visitedColor, 0.5f).SetLoops(-1, LoopType.Yoyo);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(state), state, null);
+        }
     }
 
     private void OnMouseEnter()

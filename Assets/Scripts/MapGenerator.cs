@@ -71,6 +71,14 @@ public class MapGenerator : MonoBehaviour
         SetOrientation();
         
         HideNodesWithoutConnectionsAndDrawLines();
+
+        SetFirstLayerAttainable();
+    }
+
+    private void SetFirstLayerAttainable()
+    {
+        foreach (var node in nodes[0])
+            node.SetState(NodeStates.Attainable);
     }
 
     private void SetOrientation()
