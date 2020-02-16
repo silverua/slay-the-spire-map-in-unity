@@ -1,14 +1,14 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(MapGenerator))]
-public class MapGeneratorInspector : Editor
+[CustomEditor(typeof(MapView))]
+public class MapViewInspector : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
         
-        var myScript = (MapGenerator) target;
+        var myScript = (MapView) target;
 
         GUILayout.Space(10);
 
