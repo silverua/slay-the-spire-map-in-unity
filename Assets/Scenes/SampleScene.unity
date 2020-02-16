@@ -213,7 +213,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1950262108}
-  - component: {fileID: 1950262107}
   - component: {fileID: 1950262109}
   m_Layer: 0
   m_Name: MapView
@@ -222,33 +221,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1950262107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1950262106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e40bcb933f5eda479369d1d04c94570, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  generateInStart: 1
-  config: {fileID: 11400000, guid: 19bf411c79e522b4b8e54f82b0140314, type: 2}
-  orientation: 3
-  randomNodes:
-  - {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
-  - {fileID: 11400000, guid: 97a3dd99dcf39e9428d65410797a0ff4, type: 2}
-  - {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
-  - {fileID: 11400000, guid: e1635866d1c2f154e8c9045bd0e000f2, type: 2}
-  - {fileID: 11400000, guid: dfb2651849bbba640970aec1f4b8601f, type: 2}
-  nodePrefab: {fileID: 6746199761131337685, guid: 621ccae6afb8e8949ba963674577578a,
-    type: 3}
-  linePrefab: {fileID: 5857439060437771865, guid: 71ba31cc6fc8c2748afbb475b9f1307a,
-    type: 3}
-  linePointsCount: 10
-  offsetFromNodes: 0.3
 --- !u!4 &1950262108
 Transform:
   m_ObjectHideFlags: 0
