@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using UnityEngine;
@@ -18,32 +19,30 @@ public class Node
         this.point = point;
     }
     
-    public void AddIncoming(Point node)
+    public void AddIncoming(Point p)
     {
-        if(incoming.Contains(node))
+        if(incoming.Any(element => element.Equals(p)))
             return;
 
-        incoming.Add(node);
+        incoming.Add(p);
     }
 
-    public void AddOutgoing(Point node)
+    public void AddOutgoing(Point p)
     {
-        if(outgoing.Contains(node))
+        if(outgoing.Any(element => element.Equals(p)))
             return;
 
-        outgoing.Add(node);
+        outgoing.Add(p);
     }
     
-    public void RemoveIncoming(Point node)
+    public void RemoveIncoming(Point p)
     {
-        if(incoming.Contains(node))
-            incoming.Remove(node);
+        incoming.RemoveAll(element => element.Equals(p));
     }
 
-    public void RemoveOutgoing(Point node)
+    public void RemoveOutgoing(Point p)
     {
-        if(outgoing.Contains(node))
-            outgoing.Remove(node);
+        outgoing.RemoveAll(element => element.Equals(p));
     }
     
     public bool HasNoConnections()

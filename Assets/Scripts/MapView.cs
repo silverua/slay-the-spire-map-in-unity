@@ -21,7 +21,6 @@ public class MapView : MonoBehaviour
     public int linePointsCount = 10;
     public float offsetFromNodes = 0.5f;
     
-    private List<float> layerDistances;
     private GameObject mapParent;
     private List<List<Point>> paths;
     // ALL nodes by layer:
@@ -74,12 +73,16 @@ public class MapView : MonoBehaviour
 
     private MapNode CreateMapNode(Node node)
     {
-        return null;
+        var mapNodeObject = Instantiate(nodePrefab, mapParent.transform);
+        var mapNode = mapNodeObject.GetComponent<MapNode>();
+        mapNode.SetUp(node);
+        mapNode.transform.localPosition = node.position;
+        return mapNode;
     }
 
     private void SetFirstLayerAttainable()
     {
-        foreach (var node in mapNodes.Where(n => n.Node.point.x == 0))
+        foreach (var node in mapNodes.Where(n => n.Node.point.y == 0))
             node.SetState(NodeStates.Attainable);
     }
 
@@ -114,37 +117,6 @@ public class MapView : MonoBehaviour
                 AddLineConnection(node, GetNode(connection));
         }
     }
-
-    private float GetDistanceToLayer(int layerIndex)
-    {
-        if (layerIndex < 0 || layerIndex > layerDistances.Count) return 0f;
-        
-        return layerDistances.Take(layerIndex + 1).Sum();
-    }
-
-    /*
-    private void PlaceLayer(int layerIndex)
-    {
-        var layer = config.layers[layerIndex];
-        var layerParentObject = new GameObject("Layer " + layerIndex + " Parent");
-        layerParentObject.transform.SetParent(mapParent.transform);
-        var nodesOnThisLayer = new List<MapNode>();
-        for (var i = 0; i < config.GridWidth; i++)
-        {
-            var nodeObject = Instantiate(nodePrefab, layerParentObject.transform);
-            nodeObject.transform.localPosition = new Vector3(i * layer.nodesApartDistance, 0f, 0f);
-            var node = nodeObject.GetComponent<MapNode>();
-            nodesOnThisLayer.Add(node);
-            var blueprint = UnityEngine.Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.node;
-            node.SetUp(blueprint, layerIndex);
-        }
-
-        nodes.Add(nodesOnThisLayer);
-        // offset of this layer to make all the nodes centered:
-        var offset = (nodesOnThisLayer[nodesOnThisLayer.Count - 1].transform.localPosition.x -
-                      nodesOnThisLayer[0].transform.localPosition.x) / 2f;
-        layerParentObject.transform.localPosition = new Vector3(- offset, GetDistanceToLayer(layerIndex), 0f);
-    }*/
 
     public void AddLineConnection(MapNode from, MapNode to)
     {

@@ -17,15 +17,13 @@ public class MapNode : MonoBehaviour
     public Color32 lockedColor = Color.gray;
 
     public Node Node { get; private set; }
-    public int LayerIndex { get; private set; }
 
     private float initialScale;
     private const float HoverScaleFactor = 1.2f;
     
-    public void SetUp(Node node, int layerIndex)
+    public void SetUp(Node node)
     {
         Node = node;
-        LayerIndex = layerIndex;
         sr.sprite = MapView.Instance.GetBlueprint(node.nodeType).sprite;
         initialScale = sr.transform.localScale.x;
         visitedCircle.color = visitedColor;
