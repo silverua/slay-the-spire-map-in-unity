@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 public class Map
 {
@@ -12,8 +13,18 @@ public class Map
         this.path = path;
     }
 
+    public Node GetBossNode()
+    {
+        return nodes.FirstOrDefault(n => n.nodeType == NodeType.Boss);
+    }
+
     public Node GetNode(Point point)
     {
         return nodes.FirstOrDefault(n => n.point.Equals(point));
+    }
+
+    public string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
     }
 }

@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using UnityEngine;
 
 public class Node
 {
     public Point point;
-    public List<Point> incoming;
-    public List<Point> outgoing;
+    public List<Point> incoming = new List<Point>();
+    public List<Point> outgoing = new List<Point>();
+    [JsonConverter(typeof(StringEnumConverter))]
     public NodeType nodeType;
     public Vector2 position;
 

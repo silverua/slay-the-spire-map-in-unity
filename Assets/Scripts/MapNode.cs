@@ -19,17 +19,18 @@ public class MapNode : MonoBehaviour
     public readonly List<MapNode> IncomingConnections = new List<MapNode>();
     public readonly List<MapNode> OutgoingConnections = new List<MapNode>();
 
-    public NodeBlueprint Blueprint { get; private set; }
+    public Node Node { get; private set; }
     public int LayerIndex { get; private set; }
 
     private float initialScale;
     private const float HoverScaleFactor = 1.2f;
     
-    public void SetUp(NodeBlueprint blueprint, int layerIndex)
+    public void SetUp(Node node, int layerIndex)
     {
-        Blueprint = blueprint;
+        Node = node;
         LayerIndex = layerIndex;
-        sr.sprite = blueprint.sprite;
+        // TODO: set up configs by name, get sprite from a config by name:
+        // sr.sprite = blueprint.sprite;
         initialScale = sr.transform.localScale.x;
         visitedCircle.color = visitedColor;
         visitedCircle.gameObject.SetActive(false);

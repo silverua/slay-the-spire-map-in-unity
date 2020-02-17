@@ -21,7 +21,8 @@ public static class MapGenerator
             Debug.LogWarning("Config was null in MapGenerator.Generate()");
             return null;
         }
-        
+
+        MapGenerator.config = config; 
         nodes.Clear();
 
         GenerateLayerDistances();
