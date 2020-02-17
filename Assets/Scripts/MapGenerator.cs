@@ -14,20 +14,20 @@ public static class MapGenerator
     // ALL nodes by layer:
     private static readonly List<List<Node>> nodes = new List<List<Node>>();
 
-    public static Map GetMap(MapConfig config)
+    public static Map GetMap(MapConfig conf)
     {
-        if (config == null)
+        if (conf == null)
         {
             Debug.LogWarning("Config was null in MapGenerator.Generate()");
             return null;
         }
 
-        MapGenerator.config = config; 
+        config = conf; 
         nodes.Clear();
 
         GenerateLayerDistances();
         
-        for (var i = 0; i < config.layers.Count; i++)
+        for (var i = 0; i < conf.layers.Count; i++)
             PlaceLayer(i);
         
         GeneratePaths();
@@ -141,11 +141,14 @@ public static class MapGenerator
             var top = GetNode(new Point(i, j + 1));
             if (top == null || top.HasNoConnections()) continue;
             var topRight = GetNode(new Point(i + 1, j + 1));
-            if (topRight == null || !topRight.HasNoConnections()) continue;
+            if (topRight == null || topRight.HasNoConnections()) continue;
 
-            if (!node.outgoing.Contains(topRight.point))continue;
-            if (!right.outgoing.Contains(top.point)) continue;
+            // Debug.Log("Inspecting node for connections: " + node.point);
+            if (!node.outgoing.Any(element => element.Equals(topRight.point)))continue;
+            if (!right.outgoing.Any(element => element.Equals(top.point))) continue;
 
+            // Debug.Log("Found a cross node: " + node.point);
+            
             // we managed to find a cross node:
             // 1) add direct connections:
             node.AddOutgoing(top.point);
@@ -272,7 +275,7 @@ public static class MapGenerator
                 if (lastPoint.x + 1 < width) candidateXs.Add(lastPoint.x + 1);
             }
 
-            var nextPoint = new Point(candidateXs[UnityEngine.Random.Range(0, candidateXs.Count)], lastPoint.y + direction);
+            var nextPoint = new Point(candidateXs[Random.Range(0, candidateXs.Count)], lastPoint.y + direction);
             path.Add(nextPoint);
         }
 

@@ -35,4 +35,9 @@ public class Point: IEquatable<Point>
         }
     }
     // * End of Auto generated
+
+    public override string ToString()
+    {
+        return $"({x}, {y})";
+    }
 }

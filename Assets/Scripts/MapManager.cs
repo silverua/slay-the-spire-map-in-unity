@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MapManager : MonoBehaviour
@@ -13,7 +14,8 @@ public class MapManager : MonoBehaviour
         {
             var mapJson = PlayerPrefs.GetString("Map");
             var map = JsonUtility.FromJson<Map>(mapJson);
-            if (map.path.Contains(map.GetBossNode().point))
+            // using this instead of .Contains()
+            if (map.path.Any(p => p.Equals(map.GetBossNode().point)))
             {
                 // payer has already reached the boss, generate a new map
                 GenerateNewMap();
