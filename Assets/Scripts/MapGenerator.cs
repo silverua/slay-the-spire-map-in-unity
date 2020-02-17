@@ -1,60 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MapGenerator : MonoBehaviour
+public static class MapGenerator
 {
-    public enum MapOrientation
-    {
-        BottomToTop,
-        TopToBottom,
-        RightToLeft,
-        LeftToRight
-    }
+    private static MapConfig config;
 
-    public bool generateInStart = true;
-    public MapConfig config;
-    public MapOrientation orientation;
-    public List<NodeBlueprint> randomNodes;
-    public GameObject nodePrefab;
-    [Header("Line settings")]
-    public GameObject linePrefab;
-    public int linePointsCount = 10;
-    public float offsetFromNodes = 0.5f;
-    
-    private List<float> layerDistances;
-    private GameObject mapParent;
-    private List<List<Point>> paths;
+    private static readonly List<NodeType> RandomNodes = new List<NodeType>
+        {NodeType.Mystery, NodeType.Store, NodeType.Treasure, NodeType.MinorEnemy, NodeType.RestSite};
+
+    private static List<float> layerDistances;
+    private static List<List<Point>> paths;
     // ALL nodes by layer:
-    private readonly List<List<MapNode>> nodes = new List<List<MapNode>>();
+    private static readonly List<List<Node>> nodes = new List<List<Node>>();
 
-    private void Start()
-    {
-        if (generateInStart)
-            Generate();
-    }
-
-    private void ClearMap()
-    {
-        if (mapParent != null)
-            Destroy(mapParent);
-        
-        nodes.Clear();
-    }
-
-    public void Generate()
+    public static Map GetMap(MapConfig config)
     {
         if (config == null)
         {
             Debug.LogWarning("Config was null in MapGenerator.Generate()");
-            return;
+            return null;
         }
+        
+        nodes.Clear();
 
-        ClearMap();
-        
-        mapParent = new GameObject("MapParent");
-        
         GenerateLayerDistances();
         
         for (var i = 0; i < config.layers.Count; i++)
@@ -67,93 +36,49 @@ public class MapGenerator : MonoBehaviour
         SetUpConnections();
         
         RemoveCrossConnections();
-        
-        SetOrientation();
-        
-        HideNodesWithoutConnectionsAndDrawLines();
 
-        SetFirstLayerAttainable();
+        // select all the nodes with connections:
+        var nodesList = nodes.SelectMany(n => n).Where(n => n.incoming.Count > 0 || n.outgoing.Count > 0).ToList();
+
+        return new Map(nodesList, new List<Point>());
     }
 
-    private void SetFirstLayerAttainable()
-    {
-        foreach (var node in nodes[0])
-            node.SetState(NodeStates.Attainable);
-    }
-
-    private void SetOrientation()
-    {
-        switch (orientation)
-        {
-            case MapOrientation.BottomToTop:
-                // do nothing
-                break;
-            case MapOrientation.TopToBottom:
-                mapParent.transform.eulerAngles = new Vector3(0, 0, 180);
-                break;
-            case MapOrientation.RightToLeft:
-                mapParent.transform.eulerAngles = new Vector3(0, 0, 90);
-                break;
-            case MapOrientation.LeftToRight:
-                mapParent.transform.eulerAngles = new Vector3(0, 0, -90);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-
-    private void HideNodesWithoutConnectionsAndDrawLines()
-    {
-        foreach (var node in nodes.SelectMany(layer => layer))
-            if (node.HasNoConnections())
-                node.gameObject.SetActive(false);
-            else
-            {
-                // reset rotation to fix after orientation changes:
-                node.transform.rotation = Quaternion.identity;
-                foreach (var connection in node.OutgoingConnections)
-                    AddLineConnection(node, connection);
-            }
-    }
-
-    private void GenerateLayerDistances()
+    private static void GenerateLayerDistances()
     {
         layerDistances = new List<float>();
         foreach (var layer in config.layers)
             layerDistances.Add(layer.distanceFromPreviousLayer.GetValue());
     }
 
-    private float GetDistanceToLayer(int layerIndex)
+    private static float GetDistanceToLayer(int layerIndex)
     {
         if (layerIndex < 0 || layerIndex > layerDistances.Count) return 0f;
         
         return layerDistances.Take(layerIndex + 1).Sum();
     }
 
-    private void PlaceLayer(int layerIndex)
+    private static void PlaceLayer(int layerIndex)
     {
         var layer = config.layers[layerIndex];
-        var layerParentObject = new GameObject("Layer " + layerIndex + " Parent");
-        layerParentObject.transform.SetParent(mapParent.transform);
-        var nodesOnThisLayer = new List<MapNode>();
+        var nodesOnThisLayer = new List<Node>();
+        
+        // offset of this layer to make all the nodes centered:
+        var offset = layer.nodesApartDistance * config.GridWidth / 2f;
+
         for (var i = 0; i < config.GridWidth; i++)
         {
-            var nodeObject = Instantiate(nodePrefab, layerParentObject.transform);
-            nodeObject.transform.localPosition = new Vector3(i * layer.nodesApartDistance, 0f, 0f);
-            var node = nodeObject.GetComponent<MapNode>();
+            var nodeType = Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.node.nodeType;
+            var node = new Node(nodeType, new Point(i, layerIndex))
+            {
+                position = new Vector2(-offset + i * layer.nodesApartDistance, GetDistanceToLayer(layerIndex))
+            };
             nodesOnThisLayer.Add(node);
-            var blueprint = UnityEngine.Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.node;
-            node.SetUp(blueprint, layerIndex);
         }
 
         nodes.Add(nodesOnThisLayer);
-        // offset of this layer to make all the nodes centered:
-        var offset = (nodesOnThisLayer[nodesOnThisLayer.Count - 1].transform.localPosition.x -
-                      nodesOnThisLayer[0].transform.localPosition.x) / 2f;
-        layerParentObject.transform.localPosition = new Vector3(- offset, GetDistanceToLayer(layerIndex), 0f);
     }
 
-    private void RandomizeNodePositions()
+    private static void RandomizeNodePositions()
     {
         for (var index = 0; index < nodes.Count; index++)
         {
@@ -166,18 +91,18 @@ public class MapGenerator : MonoBehaviour
             
             foreach (var node in list)
             {
-                var xRnd = UnityEngine.Random.Range(-1f, 1f);
-                var yRnd = UnityEngine.Random.Range(-1f, 1f);
+                var xRnd = Random.Range(-1f, 1f);
+                var yRnd = Random.Range(-1f, 1f);
 
                 var x = xRnd * layer.nodesApartDistance / 2f;
                 var y = yRnd < 0 ? distToPreviousLayer * yRnd / 2f : distToNextLayer * yRnd / 2f;
 
-                node.transform.localPosition += new Vector3(x, y, 0) * layer.randomizePosition;
+                node.position += new Vector2(x, y) * layer.randomizePosition;
             }
         }
     }
 
-    private void SetUpConnections()
+    private static void SetUpConnections()
     {
         foreach (var path in paths)
         {
@@ -189,94 +114,72 @@ public class MapGenerator : MonoBehaviour
                 {
                     // previous because the path is flipped
                     var nextNode = GetNode(path[i - 1]);
-                    nextNode.AddIncoming(node);
-                    node.AddOutgoing(nextNode);
+                    nextNode.AddIncoming(node.point);
+                    node.AddOutgoing(nextNode.point);
                 }
 
                 if (i < path.Count - 1)
                 {
                     var previousNode = GetNode(path[i + 1]);
-                    previousNode.AddOutgoing(node);
-                    node.AddIncoming(previousNode);
+                    previousNode.AddOutgoing(node.point);
+                    node.AddIncoming(previousNode.point);
                 }
             }
         }
     }
 
-    private void RemoveCrossConnections()
+    private static void RemoveCrossConnections()
     {
         for (var i = 0; i< config.GridWidth-1; i++)
         for (var j = 0; j < config.layers.Count-1; j++)
         {
             var node = GetNode(new Point(i, j));
-            if (node == null || !node.gameObject.activeInHierarchy) continue;
+            if (node == null || node.HasNoConnections()) continue;
             var right = GetNode(new Point(i + 1, j));
-            if (right == null || !right.gameObject.activeInHierarchy) continue;
+            if (right == null || right.HasNoConnections()) continue;
             var top = GetNode(new Point(i, j + 1));
-            if (top == null || !top.gameObject.activeInHierarchy) continue;
+            if (top == null || top.HasNoConnections()) continue;
             var topRight = GetNode(new Point(i + 1, j + 1));
-            if (topRight == null || !topRight.gameObject.activeInHierarchy) continue;
+            if (topRight == null || !topRight.HasNoConnections()) continue;
 
-            if (!node.OutgoingConnections.Contains(topRight))continue;
-            if (!right.OutgoingConnections.Contains(top)) continue;
+            if (!node.outgoing.Contains(topRight.point))continue;
+            if (!right.outgoing.Contains(top.point)) continue;
 
             // we managed to find a cross node:
             // 1) add direct connections:
-            node.AddOutgoing(top);
-            top.AddIncoming(node);
+            node.AddOutgoing(top.point);
+            top.AddIncoming(node.point);
             
-            right.AddOutgoing(topRight);
-            topRight.AddIncoming(right);
+            right.AddOutgoing(topRight.point);
+            topRight.AddIncoming(right.point);
             
-            var rnd = UnityEngine.Random.Range(0f, 1f);
+            var rnd = Random.Range(0f, 1f);
             if (rnd < 0.2f)
             {
                 // remove both cross connections:
                 // a) 
-                node.RemoveOutgoing(topRight);
-                topRight.RemoveIncoming(node);
+                node.RemoveOutgoing(topRight.point);
+                topRight.RemoveIncoming(node.point);
                 // b) 
-                right.RemoveOutgoing(top);
-                top.RemoveIncoming(right);
+                right.RemoveOutgoing(top.point);
+                top.RemoveIncoming(right.point);
             }
             else if (rnd < 0.6f)
             {
                 // a) 
-                node.RemoveOutgoing(topRight);
-                topRight.RemoveIncoming(node);
+                node.RemoveOutgoing(topRight.point);
+                topRight.RemoveIncoming(node.point);
             }
             else
             {
                 // b) 
-                right.RemoveOutgoing(top);
-                top.RemoveIncoming(right);
+                right.RemoveOutgoing(top.point);
+                top.RemoveIncoming(right.point);
             }
         }
     }
 
-    public void AddLineConnection(MapNode from, MapNode to)
-    {
-        var lineObject = Instantiate(linePrefab, mapParent.transform);
-        var lineRenderer = lineObject.GetComponent<LineRenderer>();
-        var fromPoint = from.transform.position +
-                        (to.transform.position - from.transform.position).normalized * offsetFromNodes;
-
-        var toPoint = to.transform.position +
-                      (from.transform.position - to.transform.position).normalized * offsetFromNodes;
-
-        // line renderer with 2 points only does not handle transparency properly:
-        lineRenderer.positionCount = linePointsCount;
-        for (var i = 0; i < linePointsCount; i++)
-        {
-            lineRenderer.SetPosition(i,
-                Vector3.Lerp(fromPoint, toPoint, (float) i / (linePointsCount - 1)));
-        }
-        
-        var dottedLine = lineObject.GetComponent<DottedLineRenderer>();
-        if(dottedLine != null) dottedLine.ScaleMaterial();
-    }
-
-    private MapNode GetNode(Point p)
+    private static Node GetNode(Point p)
     {
         if (p.y >= nodes.Count) return null;
         if (p.x >= nodes[p.y].Count) return null;
@@ -284,18 +187,18 @@ public class MapGenerator : MonoBehaviour
         return nodes[p.y][p.x];
     }
 
-    private Point GetFinalNode()
+    private static Point GetFinalNode()
     {
         var y = config.layers.Count - 1;
         if (config.GridWidth % 2 == 1)
             return new Point(config.GridWidth / 2, y);
 
-        return UnityEngine.Random.Range(0, 2) == 0
+        return Random.Range(0, 2) == 0
             ? new Point(config.GridWidth / 2, y)
             : new Point(config.GridWidth / 2 - 1, y);
     }
 
-    private void GeneratePaths()
+    private static void GeneratePaths()
     {
         var finalNode = GetFinalNode();
         paths = new List<List<Point>>();
@@ -332,12 +235,12 @@ public class MapGenerator : MonoBehaviour
         Debug.Log("Attempts to generate paths: " + attempts);
     }
 
-    private bool PathsLeadToAtLeastNDifferentPoints(IEnumerable<List<Point>> paths, int n)
+    private static bool PathsLeadToAtLeastNDifferentPoints(IEnumerable<List<Point>> paths, int n)
     {
         return (from path in paths select path[path.Count - 1].x).Distinct().Count() >= n;
     }
 
-    private List<Point> Path(Point from, int toY, int width, bool firstStepUnconstrained = false)
+    private static List<Point> Path(Point from, int toY, int width, bool firstStepUnconstrained = false)
     {
         if (from.y == toY)
         {
@@ -375,8 +278,8 @@ public class MapGenerator : MonoBehaviour
         return path;
     }
 
-    private NodeBlueprint GetRandomNode()
+    private static NodeType GetRandomNode()
     {
-        return randomNodes.Count == 0 ? null : randomNodes[UnityEngine.Random.Range(0, randomNodes.Count)];
+        return RandomNodes[Random.Range(0, RandomNodes.Count)];
     }
 }
