@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Store
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: e96be44b3ff26924e9b88ddaf039b596, type: 3}
-  nodeType: 3
+  nodeType: 4

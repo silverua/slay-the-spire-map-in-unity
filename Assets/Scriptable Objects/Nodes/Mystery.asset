@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Mystery
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: cf3bc8bfeb2290f44b80d2ec7c090e92, type: 3}
-  nodeType: 5
+  nodeType: 6

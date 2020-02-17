@@ -13,9 +13,8 @@ public class MapView : MonoBehaviour
         LeftToRight
     }
     
-    public MapConfig config;
     public MapOrientation orientation;
-    public List<NodeBlueprint> randomNodes;
+    public List<NodeBlueprint> blueprints;
     public GameObject nodePrefab;
     [Header("Line settings")]
     public GameObject linePrefab;
@@ -26,32 +25,36 @@ public class MapView : MonoBehaviour
     private GameObject mapParent;
     private List<List<Point>> paths;
     // ALL nodes by layer:
-    private readonly List<MapNode> nodes = new List<MapNode>();
+    private readonly List<MapNode> mapNodes = new List<MapNode>();
+
+    public static MapView Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void ClearMap()
     {
         if (mapParent != null)
             Destroy(mapParent);
         
-        nodes.Clear();
+        mapNodes.Clear();
     }
 
     public void ShowMap(Map m)
     {
-        if (config == null)
+        if (m == null)
         {
-            Debug.LogWarning("Config was null in MapGenerator.Generate()");
+            Debug.LogWarning("Map was null in MapView.ShowMap()");
             return;
         }
 
         ClearMap();
         
         mapParent = new GameObject("MapParent");
-        
-        GenerateLayerDistances();
-        
-        //for (var i = 0; i < config.layers.Count; i++)
-        //    PlaceLayer(i);
+
+        CreateNodes(m.nodes);
 
         SetOrientation();
         
@@ -60,9 +63,23 @@ public class MapView : MonoBehaviour
         SetFirstLayerAttainable();
     }
 
+    private void CreateNodes(IEnumerable<Node> nodes)
+    {
+        foreach (var node in nodes)
+        {
+            var mapNode = CreateMapNode(node);
+            mapNodes.Add(mapNode);
+        }
+    }
+
+    private MapNode CreateMapNode(Node node)
+    {
+        return null;
+    }
+
     private void SetFirstLayerAttainable()
     {
-        foreach (var node in nodes.Where(n => n.Node.point.x == 0))
+        foreach (var node in mapNodes.Where(n => n.Node.point.x == 0))
             node.SetState(NodeStates.Attainable);
     }
 
@@ -89,20 +106,13 @@ public class MapView : MonoBehaviour
 
     private void DrawLines()
     {
-        foreach (var node in nodes)
+        foreach (var node in mapNodes)
         {
-                // reset rotation to fix after orientation changes:
-                node.transform.rotation = Quaternion.identity;
-                foreach (var connection in node.OutgoingConnections)
-                    AddLineConnection(node, connection);
+            // reset rotation to fix after orientation changes:
+            node.transform.rotation = Quaternion.identity;
+            foreach (var connection in node.Node.outgoing)
+                AddLineConnection(node, GetNode(connection));
         }
-    }
-
-    private void GenerateLayerDistances()
-    {
-        layerDistances = new List<float>();
-        foreach (var layer in config.layers)
-            layerDistances.Add(layer.distanceFromPreviousLayer.GetValue());
     }
 
     private float GetDistanceToLayer(int layerIndex)
@@ -160,17 +170,11 @@ public class MapView : MonoBehaviour
 
     private MapNode GetNode(Point p)
     {
-        return nodes.FirstOrDefault(n => n.Node.point.Equals(p));
+        return mapNodes.FirstOrDefault(n => n.Node.point.Equals(p));
     }
 
-    private Point GetFinalNode()
+    public NodeBlueprint GetBlueprint(NodeType type)
     {
-        var y = config.layers.Count - 1;
-        if (config.GridWidth % 2 == 1)
-            return new Point(config.GridWidth / 2, y);
-
-        return UnityEngine.Random.Range(0, 2) == 0
-            ? new Point(config.GridWidth / 2, y)
-            : new Point(config.GridWidth / 2 - 1, y);
+        return blueprints.FirstOrDefault(n => n.nodeType == type);
     }
 }

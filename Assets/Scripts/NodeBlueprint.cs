@@ -4,6 +4,7 @@ using UnityEngine;
 public enum NodeType
 {
     MinorEnemy, 
+    EliteEnemy,
     RestSite, 
     Treasure, 
     Store, 
@@ -24,6 +25,8 @@ public class NodeBlueprint : ScriptableObject
         switch (nodeType)
         {
             case NodeType.MinorEnemy:
+                break;
+            case NodeType.EliteEnemy:
                 break;
             case NodeType.RestSite:
                 break;

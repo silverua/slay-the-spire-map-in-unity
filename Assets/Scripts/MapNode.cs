@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
@@ -16,8 +15,6 @@ public class MapNode : MonoBehaviour
     public SpriteRenderer visitedCircle;
     public Color32 visitedColor = Color.white;
     public Color32 lockedColor = Color.gray;
-    public readonly List<MapNode> IncomingConnections = new List<MapNode>();
-    public readonly List<MapNode> OutgoingConnections = new List<MapNode>();
 
     public Node Node { get; private set; }
     public int LayerIndex { get; private set; }
@@ -29,45 +26,11 @@ public class MapNode : MonoBehaviour
     {
         Node = node;
         LayerIndex = layerIndex;
-        // TODO: set up configs by name, get sprite from a config by name:
-        // sr.sprite = blueprint.sprite;
+        sr.sprite = MapView.Instance.GetBlueprint(node.nodeType).sprite;
         initialScale = sr.transform.localScale.x;
         visitedCircle.color = visitedColor;
         visitedCircle.gameObject.SetActive(false);
         SetState(NodeStates.Locked);
-    }
-
-    public void AddIncoming(MapNode node)
-    {
-        if(IncomingConnections.Contains(node))
-            return;
-
-        IncomingConnections.Add(node);
-    }
-
-    public void AddOutgoing(MapNode node)
-    {
-        if(OutgoingConnections.Contains(node))
-            return;
-
-        OutgoingConnections.Add(node);
-    }
-    
-    public void RemoveIncoming(MapNode node)
-    {
-        if(IncomingConnections.Contains(node))
-            IncomingConnections.Remove(node);
-    }
-
-    public void RemoveOutgoing(MapNode node)
-    {
-        if(OutgoingConnections.Contains(node))
-            OutgoingConnections.Remove(node);
-    }
-
-    public bool HasNoConnections()
-    {
-        return IncomingConnections.Count == 0 && OutgoingConnections.Count == 0;
     }
 
     public void SetState(NodeStates state)
