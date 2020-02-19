@@ -1,8 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ScrollNonUI : MonoBehaviour
 {
+    public bool freezeX;
+    public bool freezeY;
     private Vector2 offset;
     // distance from the center of this Game Object to the point where we clicked to start dragging 
     private Vector3 pointerDisplacement;
@@ -33,7 +34,9 @@ public class ScrollNonUI : MonoBehaviour
         
         var mousePos = MouseInWorldCoords();
         //Debug.Log(mousePos);
-        transform.position = new Vector3(mousePos.x - pointerDisplacement.x, mousePos.y - pointerDisplacement.y,
+        transform.position = new Vector3(
+            freezeX ? transform.position.x : mousePos.x - pointerDisplacement.x,
+            freezeY ? transform.position.y : mousePos.y - pointerDisplacement.y,
             transform.position.z);
     }
     

@@ -67,7 +67,9 @@ public class MapView : MonoBehaviour
     private void CreateMapParent()
     {
         mapParent = new GameObject("MapParent");
-        mapParent.AddComponent<ScrollNonUI>();
+        var scrollNonUi = mapParent.AddComponent<ScrollNonUI>();
+        scrollNonUi.freezeX = orientation == MapOrientation.BottomToTop || orientation == MapOrientation.TopToBottom;
+        scrollNonUi.freezeY = orientation == MapOrientation.LeftToRight || orientation == MapOrientation.RightToLeft;
         var boxCollider = mapParent.AddComponent<BoxCollider>();
         boxCollider.size = new Vector3(100, 100, 1);
     }
