@@ -1,9 +1,14 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 public class ScrollNonUI : MonoBehaviour
 {
+    public float tweenBackDuration = 0.3f;
+    public Ease tweenBackEase; 
     public bool freezeX;
+    public FloatMinMax xConstraints = new FloatMinMax();
     public bool freezeY;
+    public FloatMinMax yConstraints = new FloatMinMax();
     private Vector2 offset;
     // distance from the center of this Game Object to the point where we clicked to start dragging 
     private Vector3 pointerDisplacement;
@@ -20,12 +25,14 @@ public class ScrollNonUI : MonoBehaviour
     public void OnMouseDown()
     {
         pointerDisplacement = -transform.position + MouseInWorldCoords();
+        transform.DOKill();
         dragging = true;
     }
 
     public void OnMouseUp()
     {
         dragging = false;
+        TweenBack();
     }
     
     private void Update ()
@@ -47,5 +54,25 @@ public class ScrollNonUI : MonoBehaviour
         //Debug.Log(screenMousePos);
         screenMousePos.z = zDisplacement;
         return mainCamera.ScreenToWorldPoint(screenMousePos);
+    }
+
+    private void TweenBack()
+    {
+        if (freezeY)
+        {
+            if(transform.position.x >= xConstraints.min && transform.position.x <= xConstraints.max)
+                return;
+
+            var targetX = transform.position.x < xConstraints.min ? xConstraints.min : xConstraints.max;
+            transform.DOLocalMoveX(targetX, tweenBackDuration).SetEase(tweenBackEase);
+        }
+        else if (freezeX)
+        {
+            if(transform.position.y >= yConstraints.min && transform.position.y <= yConstraints.max)
+                return;
+
+            var targetY = transform.position.y < yConstraints.min ? yConstraints.min : yConstraints.max;
+            transform.DOLocalMoveY(targetY, tweenBackDuration).SetEase(tweenBackEase);
+        }
     }
 }
