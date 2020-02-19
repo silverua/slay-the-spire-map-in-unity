@@ -51,15 +51,25 @@ public class MapView : MonoBehaviour
 
         ClearMap();
         
-        mapParent = new GameObject("MapParent");
+        CreateMapParent();
 
         CreateNodes(m.nodes);
 
+        DrawLines();
+        
         SetOrientation();
         
-        DrawLines();
+        ResetNodesRotation();
 
         SetFirstLayerAttainable();
+    }
+
+    private void CreateMapParent()
+    {
+        mapParent = new GameObject("MapParent");
+        mapParent.AddComponent<ScrollNonUI>();
+        var boxCollider = mapParent.AddComponent<BoxCollider>();
+        boxCollider.size = new Vector3(100, 100, 1);
     }
 
     private void CreateNodes(IEnumerable<Node> nodes)
@@ -111,11 +121,15 @@ public class MapView : MonoBehaviour
     {
         foreach (var node in mapNodes)
         {
-            // reset rotation to fix after orientation changes:
-            node.transform.rotation = Quaternion.identity;
             foreach (var connection in node.Node.outgoing)
                 AddLineConnection(node, GetNode(connection));
         }
+    }
+
+    private void ResetNodesRotation()
+    {
+        foreach (var node in mapNodes)
+            node.transform.rotation = Quaternion.identity;
     }
 
     public void AddLineConnection(MapNode from, MapNode to)
@@ -128,12 +142,16 @@ public class MapView : MonoBehaviour
         var toPoint = to.transform.position +
                       (from.transform.position - to.transform.position).normalized * offsetFromNodes;
 
+        // drawing lines in local space:
+        lineObject.transform.position = fromPoint;
+        lineRenderer.useWorldSpace = false;
+
         // line renderer with 2 points only does not handle transparency properly:
         lineRenderer.positionCount = linePointsCount;
         for (var i = 0; i < linePointsCount; i++)
         {
             lineRenderer.SetPosition(i,
-                Vector3.Lerp(fromPoint, toPoint, (float) i / (linePointsCount - 1)));
+                Vector3.Lerp(Vector3.zero, toPoint - fromPoint, (float) i / (linePointsCount - 1)));
         }
         
         var dottedLine = lineObject.GetComponent<DottedLineRenderer>();
