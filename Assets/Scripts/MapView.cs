@@ -16,11 +16,13 @@ public class MapView : MonoBehaviour
     public MapOrientation orientation;
     public List<NodeBlueprint> blueprints;
     public GameObject nodePrefab;
+    public float verticalOrientationXOffset;
     [Header("Line settings")]
     public GameObject linePrefab;
     public int linePointsCount = 10;
     public float offsetFromNodes = 0.5f;
-    
+
+    private GameObject firstParent;
     private GameObject mapParent;
     private List<List<Point>> paths;
     // ALL nodes by layer:
@@ -35,8 +37,8 @@ public class MapView : MonoBehaviour
 
     private void ClearMap()
     {
-        if (mapParent != null)
-            Destroy(mapParent);
+        if (firstParent != null)
+            Destroy(firstParent);
         
         mapNodes.Clear();
     }
@@ -66,7 +68,9 @@ public class MapView : MonoBehaviour
 
     private void CreateMapParent()
     {
-        mapParent = new GameObject("MapParent");
+        firstParent = new GameObject("OuterMapParent");
+        mapParent = new GameObject("MapParentWithAScroll");
+        mapParent.transform.SetParent(firstParent.transform);
         var scrollNonUi = mapParent.AddComponent<ScrollNonUI>();
         scrollNonUi.freezeX = orientation == MapOrientation.BottomToTop || orientation == MapOrientation.TopToBottom;
         scrollNonUi.freezeY = orientation == MapOrientation.LeftToRight || orientation == MapOrientation.RightToLeft;
@@ -109,9 +113,11 @@ public class MapView : MonoBehaviour
                 mapParent.transform.eulerAngles = new Vector3(0, 0, 180);
                 break;
             case MapOrientation.RightToLeft:
+                firstParent.transform.localPosition -= new Vector3(verticalOrientationXOffset, 0, 0);
                 mapParent.transform.eulerAngles = new Vector3(0, 0, 90);
                 break;
             case MapOrientation.LeftToRight:
+                firstParent.transform.localPosition += new Vector3(verticalOrientationXOffset, 0, 0);
                 mapParent.transform.eulerAngles = new Vector3(0, 0, -90);
                 break;
             default:
