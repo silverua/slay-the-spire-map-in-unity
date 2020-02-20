@@ -1,17 +1,20 @@
 ﻿using System.Linq;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class MapManager : MonoBehaviour
 {
     public MapConfig config;
     public MapView view;
-    
+
+    public Map CurrentMap { get; private set; }
+
     private void Start()
     {
         if (PlayerPrefs.HasKey("Map"))
         {
             var mapJson = PlayerPrefs.GetString("Map");
-            var map = JsonUtility.FromJson<Map>(mapJson);
+            var map = JsonConvert.DeserializeObject<Map>(mapJson);
             // using this instead of .Contains()
             if (map.path.Any(p => p.Equals(map.GetBossNode().point)))
             {
@@ -20,6 +23,7 @@ public class MapManager : MonoBehaviour
             }
             else
             {
+                CurrentMap = map;
                 // player has not reached the boss yet, load the current map
                 view.ShowMap(map);
             }
@@ -33,7 +37,22 @@ public class MapManager : MonoBehaviour
     public void GenerateNewMap()
     {
         var map = MapGenerator.GetMap(config);
+        CurrentMap = map;
         Debug.Log(map.ToJson());
         view.ShowMap(map);
+    }
+
+    public void SaveMap()
+    {
+        if(CurrentMap == null) return;
+
+        var json = JsonConvert.SerializeObject(CurrentMap);
+        PlayerPrefs.SetString("Map", json);
+        PlayerPrefs.Save();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveMap();
     }
 }

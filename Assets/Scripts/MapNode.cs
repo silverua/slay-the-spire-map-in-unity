@@ -20,6 +20,9 @@ public class MapNode : MonoBehaviour
 
     private float initialScale;
     private const float HoverScaleFactor = 1.2f;
+    private float mouseDownTime;
+
+    private const float MaxClickDuration = 0.5f;
     
     public void SetUp(Node node)
     {
@@ -64,5 +67,19 @@ public class MapNode : MonoBehaviour
     {
         sr.transform.DOKill();
         sr.transform.DOScale(initialScale, 0.3f);
+    }
+
+    private void OnMouseDown()
+    {
+        mouseDownTime = Time.time;
+    }
+
+    private void OnMouseUp()
+    {
+        if (Time.time - mouseDownTime < MaxClickDuration)
+        {
+            // user clicked on this node:
+            MapPlayerTracker.Instance.SelectNode(this);
+        }
     }
 }

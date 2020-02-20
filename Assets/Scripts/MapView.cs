@@ -12,7 +12,8 @@ public class MapView : MonoBehaviour
         RightToLeft,
         LeftToRight
     }
-    
+
+    public MapManager mapManager;
     public MapOrientation orientation;
     public List<NodeBlueprint> blueprints;
     public GameObject nodePrefab;
@@ -21,13 +22,12 @@ public class MapView : MonoBehaviour
     public GameObject linePrefab;
     public int linePointsCount = 10;
     public float offsetFromNodes = 0.5f;
-
-    private Map currentMap;
+    
     private GameObject firstParent;
     private GameObject mapParent;
     private List<List<Point>> paths;
     // ALL nodes by layer:
-    private readonly List<MapNode> mapNodes = new List<MapNode>();
+    public readonly List<MapNode> MapNodes = new List<MapNode>();
 
     public static MapView Instance;
 
@@ -41,7 +41,7 @@ public class MapView : MonoBehaviour
         if (firstParent != null)
             Destroy(firstParent);
         
-        mapNodes.Clear();
+        MapNodes.Clear();
     }
 
     public void ShowMap(Map m)
@@ -51,8 +51,6 @@ public class MapView : MonoBehaviour
             Debug.LogWarning("Map was null in MapView.ShowMap()");
             return;
         }
-
-        currentMap = m;
 
         ClearMap();
         
@@ -86,7 +84,7 @@ public class MapView : MonoBehaviour
         foreach (var node in nodes)
         {
             var mapNode = CreateMapNode(node);
-            mapNodes.Add(mapNode);
+            MapNodes.Add(mapNode);
         }
     }
 
@@ -101,19 +99,19 @@ public class MapView : MonoBehaviour
 
     private void SetFirstLayerAttainable()
     {
-        foreach (var node in mapNodes.Where(n => n.Node.point.y == 0))
+        foreach (var node in MapNodes.Where(n => n.Node.point.y == 0))
             node.SetState(NodeStates.Attainable);
     }
 
     private void SetOrientation()
     {
         var scrollNonUi = mapParent.GetComponent<ScrollNonUI>();
-        var span = currentMap.DistanceBetweenFirstAndLastLayers();
+        var span = mapManager.CurrentMap.DistanceBetweenFirstAndLastLayers();
         var cameraDimension = orientation == MapOrientation.LeftToRight || orientation == MapOrientation.RightToLeft
             ? GetCameraWidth()
             : GetCameraHeight();
         var constraint = Mathf.Max(0f, span - cameraDimension);
-        var bossNode = mapNodes.FirstOrDefault(node => node.Node.nodeType == NodeType.Boss);
+        var bossNode = MapNodes.FirstOrDefault(node => node.Node.nodeType == NodeType.Boss);
         Debug.Log("Map span in set orientation: " + span + " camera dimension: " + cameraDimension);
 
         switch (orientation)
@@ -162,7 +160,7 @@ public class MapView : MonoBehaviour
 
     private void DrawLines()
     {
-        foreach (var node in mapNodes)
+        foreach (var node in MapNodes)
         {
             foreach (var connection in node.Node.outgoing)
                 AddLineConnection(node, GetNode(connection));
@@ -171,7 +169,7 @@ public class MapView : MonoBehaviour
 
     private void ResetNodesRotation()
     {
-        foreach (var node in mapNodes)
+        foreach (var node in MapNodes)
             node.transform.rotation = Quaternion.identity;
     }
 
@@ -203,7 +201,7 @@ public class MapView : MonoBehaviour
 
     private MapNode GetNode(Point p)
     {
-        return mapNodes.FirstOrDefault(n => n.Node.point.Equals(p));
+        return MapNodes.FirstOrDefault(n => n.Node.point.Equals(p));
     }
 
     public NodeBlueprint GetBlueprint(NodeType type)
