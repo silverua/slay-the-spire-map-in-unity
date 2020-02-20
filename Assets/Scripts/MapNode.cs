@@ -1,6 +1,7 @@
 ﻿using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum NodeStates
 {
@@ -13,6 +14,7 @@ public class MapNode : MonoBehaviour
 {
     public SpriteRenderer sr;
     public SpriteRenderer visitedCircle;
+    public Image visitedCircleImage;
     public Color32 visitedColor = Color.white;
     public Color32 lockedColor = Color.gray;
 
@@ -36,6 +38,7 @@ public class MapNode : MonoBehaviour
 
     public void SetState(NodeStates state)
     {
+        visitedCircle.gameObject.SetActive(false);
         switch (state)
         {
             case NodeStates.Locked:
@@ -45,6 +48,7 @@ public class MapNode : MonoBehaviour
             case NodeStates.Visited:
                 sr.DOKill();
                 sr.color = visitedColor;
+                visitedCircle.gameObject.SetActive(true);
                 break;
             case NodeStates.Attainable:
                 // start pulsating from visited to locked color:
@@ -81,5 +85,16 @@ public class MapNode : MonoBehaviour
             // user clicked on this node:
             MapPlayerTracker.Instance.SelectNode(this);
         }
+    }
+
+    public void ShowSwirlAnimation()
+    {
+        if (visitedCircleImage == null)
+            return;
+        
+        const float fillDuration = 0.3f;
+        visitedCircleImage.fillAmount = 0;
+
+        DOTween.To(() => visitedCircleImage.fillAmount, x => visitedCircleImage.fillAmount = x, 1f, fillDuration);
     }
 }

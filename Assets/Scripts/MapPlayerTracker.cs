@@ -3,11 +3,14 @@ using UnityEngine;
 
 public class MapPlayerTracker : MonoBehaviour
 {
+    public bool lockAfterSelecting = false;
     public MapManager mapManager;
     public MapView view;
     
     public static MapPlayerTracker Instance;
 
+    public bool Locked { get; set; }
+    
     private void Awake()
     {
         Instance = this;
@@ -15,17 +18,16 @@ public class MapPlayerTracker : MonoBehaviour
 
     public void SelectNode(MapNode mapNode)
     {
+        if (Locked) return;
+
         Debug.Log("Selected node: " + mapNode.Node.point);
 
         if (mapManager.CurrentMap.path.Count == 0)
         {
             // player has not selected the node yet, he can select any of the nodes with y = 0
             if (mapNode.Node.point.y == 0)
-            {
-                mapManager.CurrentMap.path.Add(mapNode.Node.point);
-                view.SetAttainableNodes();
-            }
-            else 
+                SendPlayerToNode(mapNode);
+            else
                 PlayWarningThatNodeCannotBeAccessed();
         }
         else
@@ -34,13 +36,18 @@ public class MapPlayerTracker : MonoBehaviour
             var currentNode = mapManager.CurrentMap.GetNode(currentPoint);
 
             if (currentNode != null && currentNode.outgoing.Any(point => point.Equals(mapNode.Node.point)))
-            {
-                mapManager.CurrentMap.path.Add(mapNode.Node.point);
-                view.SetAttainableNodes();
-            }
-            else 
+                SendPlayerToNode(mapNode);
+            else
                 PlayWarningThatNodeCannotBeAccessed();
         }
+    }
+
+    private void SendPlayerToNode(MapNode mapNode)
+    {
+        Locked = lockAfterSelecting;
+        mapManager.CurrentMap.path.Add(mapNode.Node.point);
+        view.SetAttainableNodes();
+        mapNode.ShowSwirlAnimation();
     }
 
     private void PlayWarningThatNodeCannotBeAccessed()
