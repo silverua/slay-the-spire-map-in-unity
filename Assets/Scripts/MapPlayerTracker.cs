@@ -4,6 +4,7 @@ using UnityEngine;
 public class MapPlayerTracker : MonoBehaviour
 {
     public MapManager mapManager;
+    public MapView view;
     
     public static MapPlayerTracker Instance;
 
@@ -19,8 +20,11 @@ public class MapPlayerTracker : MonoBehaviour
         if (mapManager.CurrentMap.path.Count == 0)
         {
             // player has not selected the node yet, he can select any of the nodes with y = 0
-            if(mapNode.Node.point.y == 0)
+            if (mapNode.Node.point.y == 0)
+            {
                 mapManager.CurrentMap.path.Add(mapNode.Node.point);
+                view.SetAttainableNodes();
+            }
             else 
                 PlayWarningThatNodeCannotBeAccessed();
         }
@@ -30,7 +34,10 @@ public class MapPlayerTracker : MonoBehaviour
             var currentNode = mapManager.CurrentMap.GetNode(currentPoint);
 
             if (currentNode != null && currentNode.outgoing.Any(point => point.Equals(mapNode.Node.point)))
+            {
                 mapManager.CurrentMap.path.Add(mapNode.Node.point);
+                view.SetAttainableNodes();
+            }
             else 
                 PlayWarningThatNodeCannotBeAccessed();
         }

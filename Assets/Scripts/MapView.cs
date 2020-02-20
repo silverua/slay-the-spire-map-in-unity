@@ -64,7 +64,7 @@ public class MapView : MonoBehaviour
         
         ResetNodesRotation();
 
-        SetFirstLayerAttainable();
+        SetAttainableNodes();
     }
 
     private void CreateMapParent()
@@ -97,10 +97,39 @@ public class MapView : MonoBehaviour
         return mapNode;
     }
 
-    private void SetFirstLayerAttainable()
+    public void SetAttainableNodes()
     {
-        foreach (var node in MapNodes.Where(n => n.Node.point.y == 0))
-            node.SetState(NodeStates.Attainable);
+        // first set all the nodes as unattainable/locked:
+        foreach (var node in MapNodes)
+            node.SetState(NodeStates.Locked);
+        
+        if (mapManager.CurrentMap.path.Count == 0)
+        {
+            // we have not started traveling on this map yet, set entire first layer as attainable:
+            foreach (var node in MapNodes.Where(n => n.Node.point.y == 0))
+                node.SetState(NodeStates.Attainable);
+        }
+        else
+        {
+            // we have already started moving on this map, first highlight the path as visited:
+            foreach (var point in mapManager.CurrentMap.path)
+            {
+                var mapNode = GetNode(point);
+                if (mapNode != null)
+                    mapNode.SetState(NodeStates.Visited);
+            }
+
+            var currentPoint = mapManager.CurrentMap.path[mapManager.CurrentMap.path.Count - 1];
+            var currentNode = mapManager.CurrentMap.GetNode(currentPoint);
+            
+            // set all the nodes that we can travel to as attainable:
+            foreach (var point in currentNode.outgoing)
+            {
+                var mapNode = GetNode(point);
+                if (mapNode != null)
+                    mapNode.SetState(NodeStates.Attainable);
+            }
+        }
     }
 
     private void SetOrientation()
