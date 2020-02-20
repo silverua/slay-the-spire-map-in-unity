@@ -16,12 +16,13 @@ public class MapView : MonoBehaviour
     public MapOrientation orientation;
     public List<NodeBlueprint> blueprints;
     public GameObject nodePrefab;
-    public float verticalOrientationXOffset;
+    public float orientationOffset;
     [Header("Line settings")]
     public GameObject linePrefab;
     public int linePointsCount = 10;
     public float offsetFromNodes = 0.5f;
 
+    private Map currentMap;
     private GameObject firstParent;
     private GameObject mapParent;
     private List<List<Point>> paths;
@@ -50,6 +51,8 @@ public class MapView : MonoBehaviour
             Debug.LogWarning("Map was null in MapView.ShowMap()");
             return;
         }
+
+        currentMap = m;
 
         ClearMap();
         
@@ -104,21 +107,53 @@ public class MapView : MonoBehaviour
 
     private void SetOrientation()
     {
+        var scrollNonUi = mapParent.GetComponent<ScrollNonUI>();
+        var span = currentMap.DistanceBetweenFirstAndLastLayers();
+        var cameraDimension = orientation == MapOrientation.LeftToRight || orientation == MapOrientation.RightToLeft
+            ? GetCameraWidth()
+            : GetCameraHeight();
+        var constraint = Mathf.Max(0f, span - cameraDimension);
+        var bossNode = mapNodes.FirstOrDefault(node => node.Node.nodeType == NodeType.Boss);
+        Debug.Log("Map span in set orientation: " + span + " camera dimension: " + cameraDimension);
+
         switch (orientation)
         {
             case MapOrientation.BottomToTop:
-                // do nothing
+                if (scrollNonUi != null)
+                {
+                    scrollNonUi.yConstraints.max = 0;
+                    scrollNonUi.yConstraints.min = -(constraint - orientationOffset / 2);
+                }
+                firstParent.transform.localPosition += new Vector3(0, orientationOffset / 2, 0);
                 break;
             case MapOrientation.TopToBottom:
                 mapParent.transform.eulerAngles = new Vector3(0, 0, 180);
+                if (scrollNonUi != null)
+                {
+                    scrollNonUi.yConstraints.min = 0;
+                    scrollNonUi.yConstraints.max = constraint - orientationOffset / 2f;
+                }
+                // factor in map span:
+                firstParent.transform.localPosition += new Vector3(0, -orientationOffset / 2, 0);
                 break;
             case MapOrientation.RightToLeft:
-                firstParent.transform.localPosition -= new Vector3(verticalOrientationXOffset, 0, 0);
                 mapParent.transform.eulerAngles = new Vector3(0, 0, 90);
+                // factor in map span:
+                firstParent.transform.localPosition -= new Vector3(orientationOffset, bossNode.transform.position.y, 0);
+                if (scrollNonUi != null)
+                {
+                    scrollNonUi.xConstraints.max = constraint - orientationOffset;
+                    scrollNonUi.xConstraints.min = 0;
+                }
                 break;
             case MapOrientation.LeftToRight:
-                firstParent.transform.localPosition += new Vector3(verticalOrientationXOffset, 0, 0);
                 mapParent.transform.eulerAngles = new Vector3(0, 0, -90);
+                firstParent.transform.localPosition += new Vector3(orientationOffset, -bossNode.transform.position.y, 0);
+                if (scrollNonUi != null)
+                {
+                    scrollNonUi.xConstraints.max = 0;
+                    scrollNonUi.xConstraints.min = -(constraint - orientationOffset);
+                }
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -174,5 +209,20 @@ public class MapView : MonoBehaviour
     public NodeBlueprint GetBlueprint(NodeType type)
     {
         return blueprints.FirstOrDefault(n => n.nodeType == type);
+    }
+
+    private static float GetCameraWidth()
+    {
+        var cam = Camera.main;
+        if (cam == null) return 0;
+        var height = 2f * cam.orthographicSize; 
+        return height * cam.aspect;
+    }
+    
+    private static float GetCameraHeight()
+    {
+        var cam = Camera.main;
+        if (cam == null) return 0;
+        return 2f * cam.orthographicSize;
     }
 }

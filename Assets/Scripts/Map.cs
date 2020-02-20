@@ -18,6 +18,17 @@ public class Map
         return nodes.FirstOrDefault(n => n.nodeType == NodeType.Boss);
     }
 
+    public float DistanceBetweenFirstAndLastLayers()
+    {
+        var bossNode = GetBossNode();
+        var firstLayerNode = nodes.FirstOrDefault(n => n.point.y == 0);
+
+        if (bossNode == null || firstLayerNode == null)
+            return 0f;
+
+        return bossNode.position.y - firstLayerNode.position.y;
+    }
+
     public Node GetNode(Point point)
     {
         return nodes.FirstOrDefault(n => n.point.Equals(point));

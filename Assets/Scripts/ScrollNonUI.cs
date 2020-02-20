@@ -60,18 +60,18 @@ public class ScrollNonUI : MonoBehaviour
     {
         if (freezeY)
         {
-            if(transform.position.x >= xConstraints.min && transform.position.x <= xConstraints.max)
+            if(transform.localPosition.x >= xConstraints.min && transform.localPosition.x <= xConstraints.max)
                 return;
 
-            var targetX = transform.position.x < xConstraints.min ? xConstraints.min : xConstraints.max;
+            var targetX = transform.localPosition.x < xConstraints.min ? xConstraints.min : xConstraints.max;
             transform.DOLocalMoveX(targetX, tweenBackDuration).SetEase(tweenBackEase);
         }
         else if (freezeX)
         {
-            if(transform.position.y >= yConstraints.min && transform.position.y <= yConstraints.max)
+            if(transform.localPosition.y >= yConstraints.min && transform.localPosition.y <= yConstraints.max)
                 return;
 
-            var targetY = transform.position.y < yConstraints.min ? yConstraints.min : yConstraints.max;
+            var targetY = transform.localPosition.y < yConstraints.min ? yConstraints.min : yConstraints.max;
             transform.DOLocalMoveY(targetY, tweenBackDuration).SetEase(tweenBackEase);
         }
     }
