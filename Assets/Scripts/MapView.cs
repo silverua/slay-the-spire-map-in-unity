@@ -192,7 +192,7 @@ public class MapView : MonoBehaviour
                 if (scrollNonUi != null)
                 {
                     scrollNonUi.yConstraints.max = 0;
-                    scrollNonUi.yConstraints.min = -(constraint - orientationOffset / 2);
+                    scrollNonUi.yConstraints.min = -(constraint - orientationOffset);
                 }
                 firstParent.transform.localPosition += new Vector3(0, orientationOffset / 2, 0);
                 break;
@@ -201,7 +201,7 @@ public class MapView : MonoBehaviour
                 if (scrollNonUi != null)
                 {
                     scrollNonUi.yConstraints.min = 0;
-                    scrollNonUi.yConstraints.max = constraint - orientationOffset / 2f;
+                    scrollNonUi.yConstraints.max = constraint - orientationOffset;
                 }
                 // factor in map span:
                 firstParent.transform.localPosition += new Vector3(0, -orientationOffset / 2, 0);
