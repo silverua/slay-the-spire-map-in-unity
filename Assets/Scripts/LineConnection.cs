@@ -17,12 +17,16 @@ public class LineConnection
     public void SetColor(Color color)
     {
         // Debug.Log("In setcolor");
-        lr.material.color = color;
-        
-        foreach (var key in lr.colorGradient.colorKeys)
+        // lr.material.color = color;
+
+        var gradient = lr.colorGradient;
+        var colorKeys = gradient.colorKeys;
+        for (var j = 0; j < colorKeys.Length; j++)
         {
-            var gradientColorKey = key;
-            gradientColorKey.color = color;
+            colorKeys[j].color = color;
         }
+
+        gradient.colorKeys = colorKeys;
+        lr.colorGradient = gradient;
     }
 }
