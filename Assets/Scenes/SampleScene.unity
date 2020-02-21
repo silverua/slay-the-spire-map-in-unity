@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41edfa9cd46e12b4389c9a79ec3ae0d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockAfterSelecting: 0
   mapManager: {fileID: 1776090139}
   view: {fileID: 1950262109}
 --- !u!4 &612580490
@@ -354,3 +355,15 @@ MonoBehaviour:
     type: 3}
   linePointsCount: 10
   offsetFromNodes: 0.5
+  visitedColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  lockedColor:
+    serializedVersion: 2
+    rgba: 4282795590
+  lineVisitedColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  lineLockedColor:
+    serializedVersion: 2
+    rgba: 4281216558

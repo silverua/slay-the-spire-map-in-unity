@@ -15,8 +15,6 @@ public class MapNode : MonoBehaviour
     public SpriteRenderer sr;
     public SpriteRenderer visitedCircle;
     public Image visitedCircleImage;
-    public Color32 visitedColor = Color.white;
-    public Color32 lockedColor = Color.gray;
 
     public Node Node { get; private set; }
 
@@ -31,7 +29,7 @@ public class MapNode : MonoBehaviour
         Node = node;
         sr.sprite = MapView.Instance.GetBlueprint(node.nodeType).sprite;
         initialScale = sr.transform.localScale.x;
-        visitedCircle.color = visitedColor;
+        visitedCircle.color = MapView.Instance.visitedColor;
         visitedCircle.gameObject.SetActive(false);
         SetState(NodeStates.Locked);
     }
@@ -43,18 +41,18 @@ public class MapNode : MonoBehaviour
         {
             case NodeStates.Locked:
                 sr.DOKill();
-                sr.color = lockedColor;
+                sr.color = MapView.Instance.lockedColor;
                 break;
             case NodeStates.Visited:
                 sr.DOKill();
-                sr.color = visitedColor;
+                sr.color = MapView.Instance.visitedColor;
                 visitedCircle.gameObject.SetActive(true);
                 break;
             case NodeStates.Attainable:
                 // start pulsating from visited to locked color:
-                sr.color = lockedColor;
+                sr.color = MapView.Instance.lockedColor;
                 sr.DOKill();
-                sr.DOColor(visitedColor, 0.5f).SetLoops(-1, LoopType.Yoyo);
+                sr.DOColor(MapView.Instance.visitedColor, 0.5f).SetLoops(-1, LoopType.Yoyo);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);

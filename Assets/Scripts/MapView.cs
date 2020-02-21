@@ -22,13 +22,19 @@ public class MapView : MonoBehaviour
     public GameObject linePrefab;
     public int linePointsCount = 10;
     public float offsetFromNodes = 0.5f;
+    [Header("Colors")]
+    public Color32 visitedColor = Color.white;
+    public Color32 lockedColor = Color.gray;
+    public Color32 lineVisitedColor = Color.white;
+    public Color32 lineLockedColor = Color.gray;
     
     private GameObject firstParent;
     private GameObject mapParent;
     private List<List<Point>> paths;
-    // ALL nodes by layer:
+    // ALL nodes:
     public readonly List<MapNode> MapNodes = new List<MapNode>();
-
+    private readonly List<LineConnection> lineConnections = new List<LineConnection>();
+    
     public static MapView Instance;
 
     private void Awake()
@@ -42,6 +48,7 @@ public class MapView : MonoBehaviour
             Destroy(firstParent);
         
         MapNodes.Clear();
+        lineConnections.Clear();
     }
 
     public void ShowMap(Map m)
@@ -65,6 +72,8 @@ public class MapView : MonoBehaviour
         ResetNodesRotation();
 
         SetAttainableNodes();
+
+        SetLineColors();
     }
 
     private void CreateMapParent()
@@ -129,6 +138,40 @@ public class MapView : MonoBehaviour
                 if (mapNode != null)
                     mapNode.SetState(NodeStates.Attainable);
             }
+        }
+    }
+
+    public void SetLineColors()
+    {
+        // set all lines to grayed out first:
+        foreach (var connection in lineConnections)
+            connection.SetColor(lineLockedColor);
+        
+        // set all lines that are a part of the path to visited color:
+        // if we have not started moving on the map yet, leave everything as is:
+        if (mapManager.CurrentMap.path.Count == 0)
+            return;
+        
+        // in any case, we mark outgoing connections from the final node with visible/attainable color:
+        var currentPoint = mapManager.CurrentMap.path[mapManager.CurrentMap.path.Count - 1];
+        var currentNode = mapManager.CurrentMap.GetNode(currentPoint);
+            
+        foreach (var point in currentNode.outgoing)
+        {
+            var lineConnection = lineConnections.FirstOrDefault(conn => conn.from.Node == currentNode &&
+                                                                        conn.to.Node.point.Equals(point));
+            lineConnection?.SetColor(lineVisitedColor);
+        }
+
+        if (mapManager.CurrentMap.path.Count <= 1) return;
+        
+        for (var i = 0; i < mapManager.CurrentMap.path.Count - 1; i++)
+        {
+            var current = mapManager.CurrentMap.path[i];
+            var next = mapManager.CurrentMap.path[i + 1];
+            var lineConnection = lineConnections.FirstOrDefault(conn => conn.@from.Node.point.Equals(current) &&
+                                                                        conn.to.Node.point.Equals(next));
+            lineConnection?.SetColor(lineVisitedColor);
         }
     }
 
@@ -226,6 +269,8 @@ public class MapView : MonoBehaviour
         
         var dottedLine = lineObject.GetComponent<DottedLineRenderer>();
         if(dottedLine != null) dottedLine.ScaleMaterial();
+
+        lineConnections.Add(new LineConnection(lineRenderer, from, to));
     }
 
     private MapNode GetNode(Point p)

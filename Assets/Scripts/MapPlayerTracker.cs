@@ -20,7 +20,7 @@ public class MapPlayerTracker : MonoBehaviour
     {
         if (Locked) return;
 
-        Debug.Log("Selected node: " + mapNode.Node.point);
+        // Debug.Log("Selected node: " + mapNode.Node.point);
 
         if (mapManager.CurrentMap.path.Count == 0)
         {
@@ -47,6 +47,7 @@ public class MapPlayerTracker : MonoBehaviour
         Locked = lockAfterSelecting;
         mapManager.CurrentMap.path.Add(mapNode.Node.point);
         view.SetAttainableNodes();
+        view.SetLineColors();
         mapNode.ShowSwirlAnimation();
     }
 
