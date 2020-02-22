@@ -15,17 +15,26 @@ public class MapView : MonoBehaviour
 
     public MapManager mapManager;
     public MapOrientation orientation;
+    [Tooltip("List of all the NodeBlueprint scriptable objects from the Assets folder that we'll use to construct this map")]
     public List<NodeBlueprint> blueprints;
     public GameObject nodePrefab;
+    [Tooltip("Offset of the start/end nodes of the map from the edges of the screen")]
     public float orientationOffset;
     [Header("Line settings")]
     public GameObject linePrefab;
+    [Tooltip("Line point count should be > 2 to get smooth color gradients")]
+    [Range(3, 10)]
     public int linePointsCount = 10;
+    [Tooltip("Distance from the node till the line starting point")]
     public float offsetFromNodes = 0.5f;
     [Header("Colors")]
+    [Tooltip("Node Visited or Attainable color")]
     public Color32 visitedColor = Color.white;
+    [Tooltip("Locked node color")]
     public Color32 lockedColor = Color.gray;
+    [Tooltip("Visited or available path color")]
     public Color32 lineVisitedColor = Color.white;
+    [Tooltip("Unavailable path color")]
     public Color32 lineLockedColor = Color.gray;
     
     private GameObject firstParent;
