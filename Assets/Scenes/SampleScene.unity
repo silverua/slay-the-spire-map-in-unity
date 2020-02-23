@@ -592,13 +592,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f09a895d243765545b867adcb10cd13e, type: 2}
   nodePrefab: {fileID: 6746199761131337685, guid: 621ccae6afb8e8949ba963674577578a,
     type: 3}
-  orientationOffset: -6
+  orientationOffset: -4
   background: {fileID: 21300000, guid: 154be9da94274494592f60439cfd560e, type: 3}
   backgroundColor:
     serializedVersion: 2
     rgba: 4294967295
   xSize: 11.5
-  yOffset: 3
+  yOffset: 2
   linePrefab: {fileID: 5857439060437771865, guid: 71ba31cc6fc8c2748afbb475b9f1307a,
     type: 3}
   linePointsCount: 10

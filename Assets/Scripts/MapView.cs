@@ -46,6 +46,7 @@ public class MapView : MonoBehaviour
     private GameObject firstParent;
     private GameObject mapParent;
     private List<List<Point>> paths;
+    private Camera cam;
     // ALL nodes:
     public readonly List<MapNode> MapNodes = new List<MapNode>();
     private readonly List<LineConnection> lineConnections = new List<LineConnection>();
@@ -55,6 +56,7 @@ public class MapView : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        cam = Camera.main;
     }
 
     private void ClearMap()
@@ -213,50 +215,55 @@ public class MapView : MonoBehaviour
     {
         var scrollNonUi = mapParent.GetComponent<ScrollNonUI>();
         var span = mapManager.CurrentMap.DistanceBetweenFirstAndLastLayers();
+        /*
         var cameraDimension = orientation == MapOrientation.LeftToRight || orientation == MapOrientation.RightToLeft
             ? GetCameraWidth()
             : GetCameraHeight();
         var constraint = Mathf.Max(0f, span - cameraDimension);
+        */
         var bossNode = MapNodes.FirstOrDefault(node => node.Node.nodeType == NodeType.Boss);
-        Debug.Log("Map span in set orientation: " + span + " camera dimension: " + cameraDimension);
+        Debug.Log("Map span in set orientation: " + span + " camera aspect: " + cam.aspect);
 
+        var offset = orientationOffset;
         switch (orientation)
         {
             case MapOrientation.BottomToTop:
                 if (scrollNonUi != null)
                 {
                     scrollNonUi.yConstraints.max = 0;
-                    scrollNonUi.yConstraints.min = -(constraint - orientationOffset);
+                    scrollNonUi.yConstraints.min = -(span + 2f * offset);
                 }
-                firstParent.transform.localPosition += new Vector3(0, orientationOffset / 2, 0);
+                firstParent.transform.localPosition += new Vector3(0, offset, 0);
                 break;
             case MapOrientation.TopToBottom:
                 mapParent.transform.eulerAngles = new Vector3(0, 0, 180);
                 if (scrollNonUi != null)
                 {
                     scrollNonUi.yConstraints.min = 0;
-                    scrollNonUi.yConstraints.max = constraint - orientationOffset;
+                    scrollNonUi.yConstraints.max = span + 2f * offset;
                 }
                 // factor in map span:
-                firstParent.transform.localPosition += new Vector3(0, -orientationOffset / 2, 0);
+                firstParent.transform.localPosition += new Vector3(0, -offset, 0);
                 break;
             case MapOrientation.RightToLeft:
+                offset *= cam.aspect;
                 mapParent.transform.eulerAngles = new Vector3(0, 0, 90);
                 // factor in map span:
-                firstParent.transform.localPosition -= new Vector3(orientationOffset, bossNode.transform.position.y, 0);
+                firstParent.transform.localPosition -= new Vector3(offset, bossNode.transform.position.y, 0);
                 if (scrollNonUi != null)
                 {
-                    scrollNonUi.xConstraints.max = constraint - 2f * orientationOffset;
+                    scrollNonUi.xConstraints.max = span + 2f * offset;
                     scrollNonUi.xConstraints.min = 0;
                 }
                 break;
             case MapOrientation.LeftToRight:
+                offset *= cam.aspect;
                 mapParent.transform.eulerAngles = new Vector3(0, 0, -90);
-                firstParent.transform.localPosition += new Vector3(orientationOffset, -bossNode.transform.position.y, 0);
+                firstParent.transform.localPosition += new Vector3(offset, -bossNode.transform.position.y, 0);
                 if (scrollNonUi != null)
                 {
                     scrollNonUi.xConstraints.max = 0;
-                    scrollNonUi.xConstraints.min = -(constraint - 2f * orientationOffset);
+                    scrollNonUi.xConstraints.min = -(span + 2f * offset);
                 }
                 break;
             default:
