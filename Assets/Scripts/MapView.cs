@@ -20,7 +20,13 @@ public class MapView : MonoBehaviour
     public GameObject nodePrefab;
     [Tooltip("Offset of the start/end nodes of the map from the edges of the screen")]
     public float orientationOffset;
-    [Header("Line settings")]
+    [Header("Background Settings")]
+    [Tooltip("If the background sprite is null, background will not be shown")]
+    public Sprite background;
+    public Color32 backgroundColor = Color.white;
+    public float xSize;
+    public float yOffset;
+    [Header("Line Settings")]
     public GameObject linePrefab;
     [Tooltip("Line point count should be > 2 to get smooth color gradients")]
     [Range(3, 10)]
@@ -83,6 +89,25 @@ public class MapView : MonoBehaviour
         SetAttainableNodes();
 
         SetLineColors();
+        
+        CreateMapBackground(m);
+    }
+
+    private void CreateMapBackground(Map m)
+    {
+        if(background == null) return;
+        
+        var backgroundObject = new GameObject("Background");
+        backgroundObject.transform.SetParent(mapParent.transform);
+        var bossNode = MapNodes.FirstOrDefault(node => node.Node.nodeType == NodeType.Boss);
+        var span = m.DistanceBetweenFirstAndLastLayers();
+        backgroundObject.transform.localPosition = new Vector3(bossNode.transform.localPosition.x, span / 2f, 0f);
+        backgroundObject.transform.localRotation = Quaternion.identity;
+        var sr = backgroundObject.AddComponent<SpriteRenderer>();
+        sr.color = backgroundColor;
+        sr.drawMode = SpriteDrawMode.Sliced;
+        sr.sprite = background;
+        sr.size = new Vector2(xSize, span + yOffset * 2f);
     }
 
     private void CreateMapParent()
