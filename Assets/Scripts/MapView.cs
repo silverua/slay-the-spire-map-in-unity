@@ -246,7 +246,7 @@ public class MapView : MonoBehaviour
                 firstParent.transform.localPosition -= new Vector3(orientationOffset, bossNode.transform.position.y, 0);
                 if (scrollNonUi != null)
                 {
-                    scrollNonUi.xConstraints.max = constraint - orientationOffset;
+                    scrollNonUi.xConstraints.max = constraint - 2f * orientationOffset;
                     scrollNonUi.xConstraints.min = 0;
                 }
                 break;
@@ -256,7 +256,7 @@ public class MapView : MonoBehaviour
                 if (scrollNonUi != null)
                 {
                     scrollNonUi.xConstraints.max = 0;
-                    scrollNonUi.xConstraints.min = -(constraint - orientationOffset);
+                    scrollNonUi.xConstraints.min = -(constraint - 2f * orientationOffset);
                 }
                 break;
             default:
