@@ -22,6 +22,8 @@ public class NodeBlueprint : ScriptableObject
     {
         Debug.Log("Entering node: " + nodeType);
         // load appropriate scene with context based on nodeType:
+        // or show appropriate GUI over the map: 
+        // if you choose to show GUI in some of these cases, do not forget to set "Locked" in MapPlayerTracker back to false
         switch (nodeType)
         {
             case NodeType.MinorEnemy:
