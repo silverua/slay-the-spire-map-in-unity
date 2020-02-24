@@ -215,12 +215,6 @@ public class MapView : MonoBehaviour
     {
         var scrollNonUi = mapParent.GetComponent<ScrollNonUI>();
         var span = mapManager.CurrentMap.DistanceBetweenFirstAndLastLayers();
-        /*
-        var cameraDimension = orientation == MapOrientation.LeftToRight || orientation == MapOrientation.RightToLeft
-            ? GetCameraWidth()
-            : GetCameraHeight();
-        var constraint = Mathf.Max(0f, span - cameraDimension);
-        */
         var bossNode = MapNodes.FirstOrDefault(node => node.Node.nodeType == NodeType.Boss);
         Debug.Log("Map span in set orientation: " + span + " camera aspect: " + cam.aspect);
 
@@ -322,20 +316,5 @@ public class MapView : MonoBehaviour
     public NodeBlueprint GetBlueprint(NodeType type)
     {
         return blueprints.FirstOrDefault(n => n.nodeType == type);
-    }
-
-    private static float GetCameraWidth()
-    {
-        var cam = Camera.main;
-        if (cam == null) return 0;
-        var height = 2f * cam.orthographicSize; 
-        return height * cam.aspect;
-    }
-    
-    private static float GetCameraHeight()
-    {
-        var cam = Camera.main;
-        if (cam == null) return 0;
-        return 2f * cam.orthographicSize;
     }
 }
