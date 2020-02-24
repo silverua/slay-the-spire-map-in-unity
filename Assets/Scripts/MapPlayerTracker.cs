@@ -1,9 +1,11 @@
 ﻿using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public class MapPlayerTracker : MonoBehaviour
 {
     public bool lockAfterSelecting = false;
+    public float enterNodeDelay = 1f;
     public MapManager mapManager;
     public MapView view;
     
@@ -49,6 +51,9 @@ public class MapPlayerTracker : MonoBehaviour
         view.SetAttainableNodes();
         view.SetLineColors();
         mapNode.ShowSwirlAnimation();
+
+        var blueprint = view.GetBlueprint(mapNode.Node.nodeType);
+        DOTween.Sequence().AppendInterval(enterNodeDelay).OnComplete(blueprint.EnterNode);
     }
 
     private void PlayWarningThatNodeCannotBeAccessed()
