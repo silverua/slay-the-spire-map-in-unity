@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -52,8 +53,34 @@ public class MapPlayerTracker : MonoBehaviour
         view.SetLineColors();
         mapNode.ShowSwirlAnimation();
 
-        var blueprint = view.GetBlueprint(mapNode.Node.nodeType);
-        DOTween.Sequence().AppendInterval(enterNodeDelay).OnComplete(blueprint.EnterNode);
+        DOTween.Sequence().AppendInterval(enterNodeDelay).OnComplete(() => EnterNode(mapNode.Node.nodeType));
+    }
+    
+    private static void EnterNode(NodeType nodeType)
+    {
+        Debug.Log("Entering node: " + nodeType);
+        // load appropriate scene with context based on nodeType:
+        // or show appropriate GUI over the map: 
+        // if you choose to show GUI in some of these cases, do not forget to set "Locked" in MapPlayerTracker back to false
+        switch (nodeType)
+        {
+            case NodeType.MinorEnemy:
+                break;
+            case NodeType.EliteEnemy:
+                break;
+            case NodeType.RestSite:
+                break;
+            case NodeType.Treasure:
+                break;
+            case NodeType.Store:
+                break;
+            case NodeType.Boss:
+                break;
+            case NodeType.Mystery:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 
     private void PlayWarningThatNodeCannotBeAccessed()
