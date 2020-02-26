@@ -18,89 +18,93 @@ MonoBehaviour:
   numOfStartingNodes:
     min: 3
     max: 4
+  bossNodeOptions:
+  - {fileID: 11400000, guid: f369b9255d8081740905a1ada3e1b72d, type: 2}
+  - {fileID: 11400000, guid: 3cd24b2e276b6dc48a3c3842ff38a96c, type: 2}
+  - {fileID: 11400000, guid: 9686a87dacea8254c959c4f1aec9941f, type: 2}
   layers:
     array:
-    - node: {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
+    - nodeType: 0
       distanceFromPreviousLayer:
         min: 0
         max: 0
       nodesApartDistance: 2
       randomizePosition: 0
       randomizeNodes: 0
-    - node: {fileID: 11400000, guid: e1635866d1c2f154e8c9045bd0e000f2, type: 2}
+    - nodeType: 0
       distanceFromPreviousLayer:
         min: 2
         max: 3
       nodesApartDistance: 2
       randomizePosition: 0.866
       randomizeNodes: 0.728
-    - node: {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
+    - nodeType: 0
       distanceFromPreviousLayer:
         min: 2
         max: 3
       nodesApartDistance: 2
       randomizePosition: 0.658
       randomizeNodes: 0
-    - node: {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
+    - nodeType: 3
       distanceFromPreviousLayer:
         min: 2
         max: 3
       nodesApartDistance: 2
       randomizePosition: 0.542
       randomizeNodes: 0.739
-    - node: {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
+    - nodeType: 0
       distanceFromPreviousLayer:
         min: 2
         max: 3
       nodesApartDistance: 2
       randomizePosition: 0.176
       randomizeNodes: 0.739
-    - node: {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
+    - nodeType: 0
       distanceFromPreviousLayer:
         min: 2
         max: 3
       nodesApartDistance: 2
       randomizePosition: 0.902
       randomizeNodes: 0.739
-    - node: {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
+    - nodeType: 0
       distanceFromPreviousLayer:
         min: 2
         max: 3
       nodesApartDistance: 2
       randomizePosition: 0.176
       randomizeNodes: 0.739
-    - node: {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
+    - nodeType: 0
       distanceFromPreviousLayer:
         min: 2
         max: 3
       nodesApartDistance: 2
       randomizePosition: 0.829
       randomizeNodes: 0.739
-    - node: {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
+    - nodeType: 0
       distanceFromPreviousLayer:
         min: 2
         max: 3
       nodesApartDistance: 2
       randomizePosition: 0.829
       randomizeNodes: 0.739
-    - node: {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
+    - nodeType: 1
       distanceFromPreviousLayer:
         min: 2
         max: 3
       nodesApartDistance: 2
       randomizePosition: 0.829
       randomizeNodes: 0.739
-    - node: {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
+    - nodeType: 2
       distanceFromPreviousLayer:
         min: 2
         max: 3
       nodesApartDistance: 2
       randomizePosition: 0.829
       randomizeNodes: 0
-    - node: {fileID: 11400000, guid: 3cd24b2e276b6dc48a3c3842ff38a96c, type: 2}
+    - nodeType: 5
       distanceFromPreviousLayer:
-        min: 2
-        max: 3
+        min: 4
+        max: 5
       nodesApartDistance: 2
       randomizePosition: 0.194
       randomizeNodes: 0

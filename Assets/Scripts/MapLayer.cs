@@ -5,7 +5,7 @@ using UnityEngine;
 public class MapLayer
 {
     [Tooltip("Default node for this map layer. If Randomize Nodes is 0, you will get this node 100% of the time")]
-    public NodeBlueprint node;
+    public NodeType nodeType;
     // [OneLineWithHeader] public IntMinMax numOfNodes;
     [OneLineWithHeader] public FloatMinMax distanceFromPreviousLayer;
     [Tooltip("Distance between the nodes on this layer")]

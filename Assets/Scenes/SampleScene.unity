@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockAfterSelecting: 0
+  enterNodeDelay: 1
   mapManager: {fileID: 1776090139}
   view: {fileID: 1950262109}
 --- !u!4 &612580490
@@ -590,6 +591,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e1635866d1c2f154e8c9045bd0e000f2, type: 2}
   - {fileID: 11400000, guid: dfb2651849bbba640970aec1f4b8601f, type: 2}
   - {fileID: 11400000, guid: f09a895d243765545b867adcb10cd13e, type: 2}
+  - {fileID: 11400000, guid: 9686a87dacea8254c959c4f1aec9941f, type: 2}
+  - {fileID: 11400000, guid: f369b9255d8081740905a1ada3e1b72d, type: 2}
   nodePrefab: {fileID: 6746199761131337685, guid: 621ccae6afb8e8949ba963674577578a,
     type: 3}
   orientationOffset: -4

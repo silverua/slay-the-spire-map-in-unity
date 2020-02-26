@@ -6,9 +6,11 @@ public class Map
 {
     public List<Node> nodes;
     public List<Point> path;
-
-    public Map(List<Node> nodes, List<Point> path)
+    public string bossNodeName;
+    
+    public Map(string bossNodeName, List<Node> nodes, List<Point> path)
     {
+        this.bossNodeName = bossNodeName;
         this.nodes = nodes;
         this.path = path;
     }

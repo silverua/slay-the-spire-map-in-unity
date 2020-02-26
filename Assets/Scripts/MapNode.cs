@@ -24,10 +24,11 @@ public class MapNode : MonoBehaviour
 
     private const float MaxClickDuration = 0.5f;
     
-    public void SetUp(Node node)
+    public void SetUp(Node node, Sprite sprite)
     {
         Node = node;
-        sr.sprite = MapView.Instance.GetBlueprint(node.nodeType).sprite;
+        sr.sprite = sprite;
+        if (node.nodeType == NodeType.Boss) transform.localScale *= 1.5f;
         initialScale = sr.transform.localScale.x;
         visitedCircle.color = MapView.Instance.visitedColor;
         visitedCircle.gameObject.SetActive(false);

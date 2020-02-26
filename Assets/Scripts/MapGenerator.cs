@@ -40,8 +40,10 @@ public static class MapGenerator
 
         // select all the nodes with connections:
         var nodesList = nodes.SelectMany(n => n).Where(n => n.incoming.Count > 0 || n.outgoing.Count > 0).ToList();
-
-        return new Map(nodesList, new List<Point>());
+        
+        // pick a random name of the boss level for this map:
+        var bossNodeName = config.bossNodeOptions.Random().name;
+        return new Map(bossNodeName, nodesList, new List<Point>());
     }
 
     private static void GenerateLayerDistances()
@@ -68,7 +70,7 @@ public static class MapGenerator
 
         for (var i = 0; i < config.GridWidth; i++)
         {
-            var nodeType = Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.node.nodeType;
+            var nodeType = Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.nodeType;
             var node = new Node(nodeType, new Point(i, layerIndex))
             {
                 position = new Vector2(-offset + i * layer.nodesApartDistance, GetDistanceToLayer(layerIndex))

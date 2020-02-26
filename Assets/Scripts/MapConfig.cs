@@ -1,4 +1,5 @@
-﻿using Malee;
+﻿using System.Collections.Generic;
+using Malee;
 using OneLine;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class MapConfig : ScriptableObject
     public IntMinMax numOfPreBossNodes;
     [OneLineWithHeader]
     public IntMinMax numOfStartingNodes;
+    public List<NodeBlueprint> bossNodeOptions;
     [Reorderable]
     public ListOfMapLayers layers;
     

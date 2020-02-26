@@ -137,7 +137,10 @@ public class MapView : MonoBehaviour
     {
         var mapNodeObject = Instantiate(nodePrefab, mapParent.transform);
         var mapNode = mapNodeObject.GetComponent<MapNode>();
-        mapNode.SetUp(node);
+        var blueprint = node.nodeType == NodeType.Boss
+            ? GetBlueprint(mapManager.CurrentMap.bossNodeName)
+            : GetBlueprint(node.nodeType);
+        mapNode.SetUp(node, blueprint.sprite);
         mapNode.transform.localPosition = node.position;
         return mapNode;
     }
@@ -316,5 +319,10 @@ public class MapView : MonoBehaviour
     public NodeBlueprint GetBlueprint(NodeType type)
     {
         return blueprints.FirstOrDefault(n => n.nodeType == type);
+    }
+    
+    public NodeBlueprint GetBlueprint(string blueprintName)
+    { 
+        return blueprints.FirstOrDefault(n => n.name == blueprintName);
     }
 }
