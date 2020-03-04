@@ -42,8 +42,8 @@ public static class MapGenerator
         var nodesList = nodes.SelectMany(n => n).Where(n => n.incoming.Count > 0 || n.outgoing.Count > 0).ToList();
         
         // pick a random name of the boss level for this map:
-        var bossNodeName = config.bossNodeOptions.Random().name;
-        return new Map(bossNodeName, nodesList, new List<Point>());
+        var bossNodeName = config.nodeBlueprints.Where(b => b.nodeType == NodeType.Boss).ToList().Random().name;
+        return new Map(conf.name, bossNodeName, nodesList, new List<Point>());
     }
 
     private static void GenerateLayerDistances()

@@ -15,8 +15,11 @@ public class MapView : MonoBehaviour
 
     public MapManager mapManager;
     public MapOrientation orientation;
-    [Tooltip("List of all the NodeBlueprint scriptable objects from the Assets folder that we'll use to construct this map")]
-    public List<NodeBlueprint> blueprints;
+
+    [Tooltip(
+        "List of all the MapConfig scriptable objects from the Assets folder that might be used to construct maps. " +
+        "Similar to Acts in Slay The Spire (define general layout, types of bosses.)")]
+    public List<MapConfig> allMapConfigs;
     public GameObject nodePrefab;
     [Tooltip("Offset of the start/end nodes of the map from the edges of the screen")]
     public float orientationOffset;
@@ -318,13 +321,20 @@ public class MapView : MonoBehaviour
         return MapNodes.FirstOrDefault(n => n.Node.point.Equals(p));
     }
 
+    private MapConfig GetConfig(string configName)
+    {
+        return allMapConfigs.FirstOrDefault(c => c.name == configName);
+    }
+
     public NodeBlueprint GetBlueprint(NodeType type)
     {
-        return blueprints.FirstOrDefault(n => n.nodeType == type);
+        var config = GetConfig(mapManager.CurrentMap.configName);
+        return config.nodeBlueprints.FirstOrDefault(n => n.nodeType == type);
     }
     
     public NodeBlueprint GetBlueprint(string blueprintName)
     { 
-        return blueprints.FirstOrDefault(n => n.name == blueprintName);
+        var config = GetConfig(mapManager.CurrentMap.configName);
+        return config.nodeBlueprints.FirstOrDefault(n => n.name == blueprintName);
     }
 }

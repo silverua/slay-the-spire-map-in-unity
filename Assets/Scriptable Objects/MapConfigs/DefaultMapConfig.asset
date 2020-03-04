@@ -12,16 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21f71146b25f5f4faa3957f18d627ba, type: 3}
   m_Name: DefaultMapConfig
   m_EditorClassIdentifier: 
+  nodeBlueprints:
+  - {fileID: 11400000, guid: f09a895d243765545b867adcb10cd13e, type: 2}
+  - {fileID: 11400000, guid: f369b9255d8081740905a1ada3e1b72d, type: 2}
+  - {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
+  - {fileID: 11400000, guid: 97a3dd99dcf39e9428d65410797a0ff4, type: 2}
+  - {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
+  - {fileID: 11400000, guid: 9686a87dacea8254c959c4f1aec9941f, type: 2}
+  - {fileID: 11400000, guid: 3cd24b2e276b6dc48a3c3842ff38a96c, type: 2}
+  - {fileID: 11400000, guid: e1635866d1c2f154e8c9045bd0e000f2, type: 2}
+  - {fileID: 11400000, guid: dfb2651849bbba640970aec1f4b8601f, type: 2}
   numOfPreBossNodes:
     min: 4
     max: 5
   numOfStartingNodes:
     min: 3
     max: 4
-  bossNodeOptions:
-  - {fileID: 11400000, guid: f369b9255d8081740905a1ada3e1b72d, type: 2}
-  - {fileID: 11400000, guid: 3cd24b2e276b6dc48a3c3842ff38a96c, type: 2}
-  - {fileID: 11400000, guid: 9686a87dacea8254c959c4f1aec9941f, type: 2}
   layers:
     array:
     - nodeType: 0

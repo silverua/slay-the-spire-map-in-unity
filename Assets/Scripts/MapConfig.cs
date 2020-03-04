@@ -6,13 +6,13 @@ using UnityEngine;
 [CreateAssetMenu]
 public class MapConfig : ScriptableObject
 {
+    public List<NodeBlueprint> nodeBlueprints;
     public int GridWidth => Mathf.Max(numOfPreBossNodes.max, numOfStartingNodes.max);
 
     [OneLineWithHeader] 
     public IntMinMax numOfPreBossNodes;
     [OneLineWithHeader]
     public IntMinMax numOfStartingNodes;
-    public List<NodeBlueprint> bossNodeOptions;
     [Reorderable]
     public ListOfMapLayers layers;
     

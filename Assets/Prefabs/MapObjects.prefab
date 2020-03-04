@@ -137,16 +137,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapManager: {fileID: 5337413451174954175}
   orientation: 3
-  blueprints:
-  - {fileID: 11400000, guid: 3cd24b2e276b6dc48a3c3842ff38a96c, type: 2}
-  - {fileID: 11400000, guid: 2cc0c8e74e85bc14d8be96c9a834594d, type: 2}
-  - {fileID: 11400000, guid: 97a3dd99dcf39e9428d65410797a0ff4, type: 2}
-  - {fileID: 11400000, guid: bb14966bf28c4164ba9c2580c724cdf9, type: 2}
-  - {fileID: 11400000, guid: e1635866d1c2f154e8c9045bd0e000f2, type: 2}
-  - {fileID: 11400000, guid: dfb2651849bbba640970aec1f4b8601f, type: 2}
-  - {fileID: 11400000, guid: f09a895d243765545b867adcb10cd13e, type: 2}
-  - {fileID: 11400000, guid: 9686a87dacea8254c959c4f1aec9941f, type: 2}
-  - {fileID: 11400000, guid: f369b9255d8081740905a1ada3e1b72d, type: 2}
+  allMapConfigs:
+  - {fileID: 11400000, guid: 19bf411c79e522b4b8e54f82b0140314, type: 2}
   nodePrefab: {fileID: 6746199761131337685, guid: 621ccae6afb8e8949ba963674577578a,
     type: 3}
   orientationOffset: -4
