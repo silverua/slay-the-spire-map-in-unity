@@ -71,7 +71,8 @@ public static class MapGenerator
         for (var i = 0; i < config.GridWidth; i++)
         {
             var nodeType = Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.nodeType;
-            var node = new Node(nodeType, new Point(i, layerIndex))
+            var blueprintName = config.nodeBlueprints.Where(b => b.nodeType == nodeType).ToList().Random().name;
+            var node = new Node(nodeType, blueprintName, new Point(i, layerIndex))
             {
                 position = new Vector2(-offset + i * layer.nodesApartDistance, GetDistanceToLayer(layerIndex))
             };

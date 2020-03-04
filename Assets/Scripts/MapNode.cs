@@ -17,6 +17,7 @@ public class MapNode : MonoBehaviour
     public Image visitedCircleImage;
 
     public Node Node { get; private set; }
+    public NodeBlueprint Blueprint { get; private set; }
 
     private float initialScale;
     private const float HoverScaleFactor = 1.2f;
@@ -24,10 +25,11 @@ public class MapNode : MonoBehaviour
 
     private const float MaxClickDuration = 0.5f;
     
-    public void SetUp(Node node, Sprite sprite)
+    public void SetUp(Node node, NodeBlueprint blueprint)
     {
         Node = node;
-        sr.sprite = sprite;
+        Blueprint = blueprint;
+        sr.sprite = blueprint.sprite;
         if (node.nodeType == NodeType.Boss) transform.localScale *= 1.5f;
         initialScale = sr.transform.localScale.x;
         visitedCircle.color = MapView.Instance.visitedColor;

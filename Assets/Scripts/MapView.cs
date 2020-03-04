@@ -140,10 +140,8 @@ public class MapView : MonoBehaviour
     {
         var mapNodeObject = Instantiate(nodePrefab, mapParent.transform);
         var mapNode = mapNodeObject.GetComponent<MapNode>();
-        var blueprint = node.nodeType == NodeType.Boss
-            ? GetBlueprint(mapManager.CurrentMap.bossNodeName)
-            : GetBlueprint(node.nodeType);
-        mapNode.SetUp(node, blueprint.sprite);
+        var blueprint = GetBlueprint(node.blueprintName);
+        mapNode.SetUp(node, blueprint);
         mapNode.transform.localPosition = node.position;
         return mapNode;
     }

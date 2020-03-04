@@ -53,17 +53,18 @@ public class MapPlayerTracker : MonoBehaviour
         view.SetAttainableNodes();
         view.SetLineColors();
         mapNode.ShowSwirlAnimation();
-
-        DOTween.Sequence().AppendInterval(enterNodeDelay).OnComplete(() => EnterNode(mapNode.Node.nodeType));
+        
+        DOTween.Sequence().AppendInterval(enterNodeDelay).OnComplete(() => EnterNode(mapNode));
     }
     
-    private static void EnterNode(NodeType nodeType)
+    private static void EnterNode(MapNode mapNode)
     {
-        Debug.Log("Entering node: " + nodeType);
+        // we have access to blueprint name here as well
+        Debug.Log("Entering node: " + mapNode.Node.blueprintName + " of type: " + mapNode.Node.nodeType);
         // load appropriate scene with context based on nodeType:
         // or show appropriate GUI over the map: 
         // if you choose to show GUI in some of these cases, do not forget to set "Locked" in MapPlayerTracker back to false
-        switch (nodeType)
+        switch (mapNode.Node.nodeType)
         {
             case NodeType.MinorEnemy:
                 break;

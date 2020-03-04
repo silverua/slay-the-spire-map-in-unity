@@ -6,16 +6,18 @@ using UnityEngine;
 
 public class Node
 {
-    public Point point;
-    public List<Point> incoming = new List<Point>();
-    public List<Point> outgoing = new List<Point>();
+    public readonly Point point;
+    public readonly List<Point> incoming = new List<Point>();
+    public readonly List<Point> outgoing = new List<Point>();
     [JsonConverter(typeof(StringEnumConverter))]
-    public NodeType nodeType;
+    public readonly NodeType nodeType;
+    public readonly string blueprintName;
     public Vector2 position;
 
-    public Node(NodeType nodeType, Point point)
+    public Node(NodeType nodeType, string blueprintName, Point point)
     {
         this.nodeType = nodeType;
+        this.blueprintName = blueprintName;
         this.point = point;
     }
     
