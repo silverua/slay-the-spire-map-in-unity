@@ -1,6 +1,7 @@
 # Slay the Spire Map in Unity
 
-Demo video: 
+Demo video:
+
 [![FEATURES](https://img.youtube.com/vi/gHPh3trkJWc/0.jpg)](https://youtu.be/gHPh3trkJWc)
 
 This repo contains an implementation of the Slay the Spire Map in Unity3d. 
