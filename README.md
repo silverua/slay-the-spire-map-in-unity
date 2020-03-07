@@ -1,5 +1,7 @@
 # Slay the Spire Map in Unity
 
+[![FEATURES](https://img.youtube.com/vi/gHPh3trkJWc/0.jpg)](https://youtu.be/gHPh3trkJWc)
+
 This repo contains an implementation of the Slay the Spire Map in Unity3d. 
 Key features:
 - Pick any orientation (left to right, right to left, top to bottom, bottom to top)
