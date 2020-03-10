@@ -4,47 +4,54 @@ using System.Collections;
 using Malee.Editor;
 using System;
 
-[CanEditMultipleObjects]
-[CustomEditor(typeof(Example))]
-public class ExampleEditor : Editor {
-	
-	private ReorderableList list1;
-	private SerializedProperty list2;
-	private ReorderableList list3;
+namespace Map
+{
+    [CanEditMultipleObjects]
+    [CustomEditor(typeof(Example))]
+    public class ExampleEditor : Editor
+    {
 
-	void OnEnable() {
+        private ReorderableList list1;
+        private SerializedProperty list2;
+        private ReorderableList list3;
 
-		list1 = new ReorderableList(serializedObject.FindProperty("list1"));
-		list1.elementNameProperty = "myEnum";
+        void OnEnable()
+        {
 
-		list2 = serializedObject.FindProperty("list2");
+            list1 = new ReorderableList(serializedObject.FindProperty("list1"));
+            list1.elementNameProperty = "myEnum";
 
-		list3 = new ReorderableList(serializedObject.FindProperty("list3"));
-		list3.getElementNameCallback += GetList3ElementName;
-	}
+            list2 = serializedObject.FindProperty("list2");
 
-	private string GetList3ElementName(SerializedProperty element) {
+            list3 = new ReorderableList(serializedObject.FindProperty("list3"));
+            list3.getElementNameCallback += GetList3ElementName;
+        }
 
-		return element.propertyPath;
-	}
+        private string GetList3ElementName(SerializedProperty element)
+        {
 
-	public override void OnInspectorGUI() {
+            return element.propertyPath;
+        }
 
-		serializedObject.Update();
+        public override void OnInspectorGUI()
+        {
 
-		//draw the list using GUILayout, you can of course specify your own position and label
-		list1.DoLayoutList();
+            serializedObject.Update();
 
-		//Caching the property is recommended
-		EditorGUILayout.PropertyField(list2);
+            //draw the list using GUILayout, you can of course specify your own position and label
+            list1.DoLayoutList();
 
-		//draw the final list, the element name is supplied through the callback defined above "GetList3ElementName"
-		list3.DoLayoutList();
+            //Caching the property is recommended
+            EditorGUILayout.PropertyField(list2);
 
-		//Draw without caching property
-		EditorGUILayout.PropertyField(serializedObject.FindProperty("list4"));
-		EditorGUILayout.PropertyField(serializedObject.FindProperty("list5"));
+            //draw the final list, the element name is supplied through the callback defined above "GetList3ElementName"
+            list3.DoLayoutList();
 
-		serializedObject.ApplyModifiedProperties();
-	}
+            //Draw without caching property
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("list4"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("list5"));
+
+            serializedObject.ApplyModifiedProperties();
+        }
+    }
 }

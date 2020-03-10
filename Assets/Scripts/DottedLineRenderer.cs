@@ -1,30 +1,33 @@
 ﻿using UnityEngine;
 
-public class DottedLineRenderer : MonoBehaviour
+namespace Map
 {
-    public bool scaleInUpdate = false;
-    private LineRenderer lR;
-    private Renderer rend;
-
-    private void Start () 
+    public class DottedLineRenderer : MonoBehaviour
     {
-        ScaleMaterial();
-        enabled = scaleInUpdate;
-    }
+        public bool scaleInUpdate = false;
+        private LineRenderer lR;
+        private Renderer rend;
 
-    public void ScaleMaterial()
-    {
-        lR = GetComponent<LineRenderer>();
-        rend = GetComponent<Renderer>();
-        rend.material.mainTextureScale =
-            new Vector2(Vector2.Distance(lR.GetPosition(0), lR.GetPosition(lR.positionCount - 1)) / lR.widthMultiplier,
-                1);
-    }
+        private void Start()
+        {
+            ScaleMaterial();
+            enabled = scaleInUpdate;
+        }
 
-    private void Update ()
-    {
-        rend.material.mainTextureScale =
-            new Vector2(Vector2.Distance(lR.GetPosition(0), lR.GetPosition(lR.positionCount - 1)) / lR.widthMultiplier,
-                1);
+        public void ScaleMaterial()
+        {
+            lR = GetComponent<LineRenderer>();
+            rend = GetComponent<Renderer>();
+            rend.material.mainTextureScale =
+                new Vector2(Vector2.Distance(lR.GetPosition(0), lR.GetPosition(lR.positionCount - 1)) / lR.widthMultiplier,
+                    1);
+        }
+
+        private void Update()
+        {
+            rend.material.mainTextureScale =
+                new Vector2(Vector2.Distance(lR.GetPosition(0), lR.GetPosition(lR.positionCount - 1)) / lR.widthMultiplier,
+                    1);
+        }
     }
 }

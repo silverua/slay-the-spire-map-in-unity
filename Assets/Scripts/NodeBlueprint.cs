@@ -1,19 +1,25 @@
 ﻿using UnityEngine;
 
-public enum NodeType
+namespace Map
 {
-    MinorEnemy, 
-    EliteEnemy,
-    RestSite, 
-    Treasure, 
-    Store, 
-    Boss, 
-    Mystery
+    public enum NodeType
+    {
+        MinorEnemy,
+        EliteEnemy,
+        RestSite,
+        Treasure,
+        Store,
+        Boss,
+        Mystery
+    }
 }
 
-[CreateAssetMenu]
-public class NodeBlueprint : ScriptableObject
+namespace Map
 {
-    public Sprite sprite;
-    public NodeType nodeType;
+    [CreateAssetMenu]
+    public class NodeBlueprint : ScriptableObject
+    {
+        public Sprite sprite;
+        public NodeType nodeType;
+    }
 }

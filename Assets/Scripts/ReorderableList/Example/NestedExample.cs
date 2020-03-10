@@ -3,36 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using Malee;
 
-public class NestedExample : MonoBehaviour {
+namespace Map
+{
+    public class NestedExample : MonoBehaviour
+    {
 
-	[Reorderable]
-	public ExampleChildList list;
+        [Reorderable]
+        public ExampleChildList list;
 
-	[System.Serializable]
-	public class ExampleChild {
+        [System.Serializable]
+        public class ExampleChild
+        {
 
-		[Reorderable(singleLine = true)]
-		public NestedChildList nested;
-	}
+            [Reorderable(singleLine = true)]
+            public NestedChildList nested;
+        }
 
-	[System.Serializable]
-	public class NestedChild {
+        [System.Serializable]
+        public class NestedChild
+        {
 
-		public float myValue;
-	}
+            public float myValue;
+        }
 
-	[System.Serializable]
-	public class NestedChildCustomDrawer {
+        [System.Serializable]
+        public class NestedChildCustomDrawer
+        {
 
-		public bool myBool;
-		public GameObject myGameObject;
-	}
+            public bool myBool;
+            public GameObject myGameObject;
+        }
 
-	[System.Serializable]
-	public class ExampleChildList : ReorderableArray<ExampleChild> {
-	}
+        [System.Serializable]
+        public class ExampleChildList : ReorderableArray<ExampleChild>
+        {
+        }
 
-	[System.Serializable]
-	public class NestedChildList : ReorderableArray<NestedChildCustomDrawer> {
-	}
+        [System.Serializable]
+        public class NestedChildList : ReorderableArray<NestedChildCustomDrawer>
+        {
+        }
+    }
 }

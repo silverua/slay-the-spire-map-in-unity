@@ -2,57 +2,60 @@
 using UnityEngine;
 using Newtonsoft.Json;
 
-public class MapManager : MonoBehaviour
+namespace Map
 {
-    public MapConfig config;
-    public MapView view;
-
-    public Map CurrentMap { get; private set; }
-
-    private void Start()
+    public class MapManager : MonoBehaviour
     {
-        if (PlayerPrefs.HasKey("Map"))
+        public MapConfig config;
+        public MapView view;
+
+        public Map CurrentMap { get; private set; }
+
+        private void Start()
         {
-            var mapJson = PlayerPrefs.GetString("Map");
-            var map = JsonConvert.DeserializeObject<Map>(mapJson);
-            // using this instead of .Contains()
-            if (map.path.Any(p => p.Equals(map.GetBossNode().point)))
+            if (PlayerPrefs.HasKey("Map"))
             {
-                // payer has already reached the boss, generate a new map
-                GenerateNewMap();
+                var mapJson = PlayerPrefs.GetString("Map");
+                var map = JsonConvert.DeserializeObject<Map>(mapJson);
+                // using this instead of .Contains()
+                if (map.path.Any(p => p.Equals(map.GetBossNode().point)))
+                {
+                    // payer has already reached the boss, generate a new map
+                    GenerateNewMap();
+                }
+                else
+                {
+                    CurrentMap = map;
+                    // player has not reached the boss yet, load the current map
+                    view.ShowMap(map);
+                }
             }
             else
             {
-                CurrentMap = map;
-                // player has not reached the boss yet, load the current map
-                view.ShowMap(map);
+                GenerateNewMap();
             }
         }
-        else
+
+        public void GenerateNewMap()
         {
-            GenerateNewMap();
+            var map = MapGenerator.GetMap(config);
+            CurrentMap = map;
+            Debug.Log(map.ToJson());
+            view.ShowMap(map);
         }
-    }
 
-    public void GenerateNewMap()
-    {
-        var map = MapGenerator.GetMap(config);
-        CurrentMap = map;
-        Debug.Log(map.ToJson());
-        view.ShowMap(map);
-    }
+        public void SaveMap()
+        {
+            if (CurrentMap == null) return;
 
-    public void SaveMap()
-    {
-        if(CurrentMap == null) return;
+            var json = JsonConvert.SerializeObject(CurrentMap);
+            PlayerPrefs.SetString("Map", json);
+            PlayerPrefs.Save();
+        }
 
-        var json = JsonConvert.SerializeObject(CurrentMap);
-        PlayerPrefs.SetString("Map", json);
-        PlayerPrefs.Save();
-    }
-
-    private void OnApplicationQuit()
-    {
-        SaveMap();
+        private void OnApplicationQuit()
+        {
+            SaveMap();
+        }
     }
 }

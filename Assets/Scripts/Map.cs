@@ -2,44 +2,47 @@
 using System.Linq;
 using Newtonsoft.Json;
 
-public class Map
+namespace Map
 {
-    public List<Node> nodes;
-    public List<Point> path;
-    public string bossNodeName;
-    public string configName; // similar to the act name in Slay the Spire
-    
-    public Map(string configName, string bossNodeName, List<Node> nodes, List<Point> path)
+    public class Map
     {
-        this.configName = configName;
-        this.bossNodeName = bossNodeName;
-        this.nodes = nodes;
-        this.path = path;
-    }
+        public List<Node> nodes;
+        public List<Point> path;
+        public string bossNodeName;
+        public string configName; // similar to the act name in Slay the Spire
 
-    public Node GetBossNode()
-    {
-        return nodes.FirstOrDefault(n => n.nodeType == NodeType.Boss);
-    }
+        public Map(string configName, string bossNodeName, List<Node> nodes, List<Point> path)
+        {
+            this.configName = configName;
+            this.bossNodeName = bossNodeName;
+            this.nodes = nodes;
+            this.path = path;
+        }
 
-    public float DistanceBetweenFirstAndLastLayers()
-    {
-        var bossNode = GetBossNode();
-        var firstLayerNode = nodes.FirstOrDefault(n => n.point.y == 0);
+        public Node GetBossNode()
+        {
+            return nodes.FirstOrDefault(n => n.nodeType == NodeType.Boss);
+        }
 
-        if (bossNode == null || firstLayerNode == null)
-            return 0f;
+        public float DistanceBetweenFirstAndLastLayers()
+        {
+            var bossNode = GetBossNode();
+            var firstLayerNode = nodes.FirstOrDefault(n => n.point.y == 0);
 
-        return bossNode.position.y - firstLayerNode.position.y;
-    }
+            if (bossNode == null || firstLayerNode == null)
+                return 0f;
 
-    public Node GetNode(Point point)
-    {
-        return nodes.FirstOrDefault(n => n.point.Equals(point));
-    }
+            return bossNode.position.y - firstLayerNode.position.y;
+        }
 
-    public string ToJson()
-    {
-        return JsonConvert.SerializeObject(this, Formatting.Indented);
+        public Node GetNode(Point point)
+        {
+            return nodes.FirstOrDefault(n => n.point.Equals(point));
+        }
+
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
     }
 }

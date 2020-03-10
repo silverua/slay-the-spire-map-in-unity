@@ -3,23 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using Malee;
 
-public class RecursionTest : MonoBehaviour {
+namespace Map
+{
+    public class RecursionTest : MonoBehaviour
+    {
 
-	/* Don't do this!
-	[Reorderable]
-	public Tables tables = new Tables();
+        /* Don't do this!
+        [Reorderable]
+        public Tables tables = new Tables();
 
-	[System.Serializable]
-	public class Table {
+        [System.Serializable]
+        public class Table {
 
-		public string name;
+            public string name;
 
-		[Reorderable]
-		public Tables table;
-	}
+            [Reorderable]
+            public Tables table;
+        }
 
-	[System.Serializable]
-	public class Tables : ReorderableArray<Table> {
-	}
-	*/
+        [System.Serializable]
+        public class Tables : ReorderableArray<Table> {
+        }
+        */
+    }
 }
