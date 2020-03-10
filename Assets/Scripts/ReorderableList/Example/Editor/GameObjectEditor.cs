@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(GameObjectExample))]
-public class GameObjectEditor : Editor {
+namespace Map
+{
+    [CustomEditor(typeof(GameObjectExample))]
+    public class GameObjectEditor : Editor
+    {
 
-	
+    }
 }

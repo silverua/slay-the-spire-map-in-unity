@@ -3,21 +3,24 @@ using Malee;
 using OneLine;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class MapConfig : ScriptableObject
+namespace Map
 {
-    public List<NodeBlueprint> nodeBlueprints;
-    public int GridWidth => Mathf.Max(numOfPreBossNodes.max, numOfStartingNodes.max);
-
-    [OneLineWithHeader] 
-    public IntMinMax numOfPreBossNodes;
-    [OneLineWithHeader]
-    public IntMinMax numOfStartingNodes;
-    [Reorderable]
-    public ListOfMapLayers layers;
-    
-    [System.Serializable]
-    public class ListOfMapLayers : ReorderableArray<MapLayer>
+    [CreateAssetMenu]
+    public class MapConfig : ScriptableObject
     {
+        public List<NodeBlueprint> nodeBlueprints;
+        public int GridWidth => Mathf.Max(numOfPreBossNodes.max, numOfStartingNodes.max);
+
+        [OneLineWithHeader]
+        public IntMinMax numOfPreBossNodes;
+        [OneLineWithHeader]
+        public IntMinMax numOfStartingNodes;
+        [Reorderable]
+        public ListOfMapLayers layers;
+
+        [System.Serializable]
+        public class ListOfMapLayers : ReorderableArray<MapLayer>
+        {
+        }
     }
 }

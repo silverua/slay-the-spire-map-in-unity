@@ -4,42 +4,49 @@ using UnityEngine;
 using UnityEditor;
 using Malee.Editor;
 
-[CustomEditor(typeof(SurrogateTest))]
-public class SurrogateTestEditor : Editor {
+namespace Map
+{
+    [CustomEditor(typeof(SurrogateTest))]
+    public class SurrogateTestEditor : Editor
+    {
 
-	private ReorderableList list;
-	private SerializedProperty myClassArray;
+        private ReorderableList list;
+        private SerializedProperty myClassArray;
 
-	private void OnEnable() {
+        private void OnEnable()
+        {
 
-		//custom list with more complex surrogate functionalty
+            //custom list with more complex surrogate functionalty
 
-		list = new ReorderableList(serializedObject.FindProperty("objects"));
-		list.surrogate = new ReorderableList.Surrogate(typeof(GameObject), AppendObject);
+            list = new ReorderableList(serializedObject.FindProperty("objects"));
+            list.surrogate = new ReorderableList.Surrogate(typeof(GameObject), AppendObject);
 
-		//myClassArray uses an auto surrogate property on the "ReorderableAttribute"
-		//it's limited to only setting a property field to the dragged object reference. Still handy!
+            //myClassArray uses an auto surrogate property on the "ReorderableAttribute"
+            //it's limited to only setting a property field to the dragged object reference. Still handy!
 
-		myClassArray = serializedObject.FindProperty("myClassArray");
-	}
+            myClassArray = serializedObject.FindProperty("myClassArray");
+        }
 
-	public override void OnInspectorGUI() {
+        public override void OnInspectorGUI()
+        {
 
-		GUILayout.Label("Drag a GameObject onto the lists. Even though the list type is not a GameObject!");
+            GUILayout.Label("Drag a GameObject onto the lists. Even though the list type is not a GameObject!");
 
-		serializedObject.Update();
+            serializedObject.Update();
 
-		list.DoLayoutList();
-		EditorGUILayout.PropertyField(myClassArray);
+            list.DoLayoutList();
+            EditorGUILayout.PropertyField(myClassArray);
 
-		serializedObject.ApplyModifiedProperties();
-	}
+            serializedObject.ApplyModifiedProperties();
+        }
 
-	private void AppendObject(SerializedProperty element, Object objectReference, ReorderableList list) {
+        private void AppendObject(SerializedProperty element, Object objectReference, ReorderableList list)
+        {
 
-		//we can do more with a custom surrogate delegate :)
+            //we can do more with a custom surrogate delegate :)
 
-		element.FindPropertyRelative("gameObject").objectReferenceValue = objectReference;
-		element.FindPropertyRelative("name").stringValue = objectReference.name;
-	}
+            element.FindPropertyRelative("gameObject").objectReferenceValue = objectReference;
+            element.FindPropertyRelative("name").stringValue = objectReference.name;
+        }
+    }
 }

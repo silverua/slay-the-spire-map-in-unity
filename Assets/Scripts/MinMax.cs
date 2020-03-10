@@ -1,25 +1,31 @@
 ﻿using UnityEngine;
 
-[System.Serializable]
-public class FloatMinMax
+namespace Map
 {
-    public float min;
-    public float max;
-
-    public float GetValue()
+    [System.Serializable]
+    public class FloatMinMax
     {
-        return Random.Range(min, max);
+        public float min;
+        public float max;
+
+        public float GetValue()
+        {
+            return Random.Range(min, max);
+        }
     }
 }
 
-[System.Serializable]
-public class IntMinMax
+namespace Map
 {
-    public int min;
-    public int max;
-
-    public int GetValue()
+    [System.Serializable]
+    public class IntMinMax
     {
-        return Random.Range(min, max + 1);
+        public int min;
+        public int max;
+
+        public int GetValue()
+        {
+            return Random.Range(min, max + 1);
+        }
     }
 }
