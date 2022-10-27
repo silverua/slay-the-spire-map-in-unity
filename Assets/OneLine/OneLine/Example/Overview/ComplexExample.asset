@@ -1,0 +1,1759 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94d73f5f4a1f45a78ab8735d6640480, type: 3}
+  m_Name: ComplexExample
+  m_EditorClassIdentifier: 
+  characters:
+  - fullName:
+      firstName: Roland
+      secondName: Roled
+      nickName: Owl
+    stats:
+      strength: 23
+      intelligence: 12
+      agility: 22
+      charisma: 17
+      luck: 10
+    skills:
+    - type: 3
+      level: 13
+  - fullName:
+      firstName: Knoukh
+      secondName: Rumpfur
+      nickName: Ginger
+    stats:
+      strength: 35
+      intelligence: 7
+      agility: 13
+      charisma: 5
+      luck: 19
+    skills:
+    - type: 0
+      level: 0
+    - type: 2
+      level: 4
+    - type: 4
+      level: 12
+  - fullName:
+      firstName: Knoukh
+      secondName: Rumpfur
+      nickName: Ginger
+    stats:
+      strength: 35
+      intelligence: 7
+      agility: 13
+      charisma: 5
+      luck: 19
+    skills:
+    - type: 0
+      level: 0
+    - type: 2
+      level: 4
+    - type: 4
+      level: 12
+  - fullName:
+      firstName: Knoukh
+      secondName: Rumpfur
+      nickName: Ginger
+    stats:
+      strength: 35
+      intelligence: 7
+      agility: 13
+      charisma: 5
+      luck: 19
+    skills:
+    - type: 0
+      level: 0
+    - type: 2
+      level: 4
+    - type: 4
+      level: 12
+  - fullName:
+      firstName: Knoukh
+      secondName: Rumpfur
+      nickName: Ginger
+    stats:
+      strength: 35
+      intelligence: 7
+      agility: 13
+      charisma: 5
+      luck: 19
+    skills:
+    - type: 0
+      level: 0
+    - type: 2
+      level: 4
+    - type: 4
+      level: 12
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15
+  - fullName:
+      firstName: Rita
+      secondName: Snow
+      nickName: Cat Lady
+    stats:
+      strength: 11
+      intelligence: 23
+      agility: 15
+      charisma: 13
+      luck: 0
+    skills:
+    - type: 1
+      level: 15

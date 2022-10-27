@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 264b97e1d7c8e054b9ad88f6545fd705, type: 3}
+  m_Name: Root Array Example
+  m_EditorClassIdentifier: 
+  rootArray:
+  - first: (1,1)
+    second: (1,2)
+    third: (1,3)
+  - first: (2,1)
+    second: (2,2)
+    third: (2,3)
+  singleNestedArray:
+    array:
+    - First
+    - Second
+    - Third
+    - Forth
+  twoNestedArrays:
+    first: 01000000020000000300000004000000
+    second:
+    - First
+    - Second

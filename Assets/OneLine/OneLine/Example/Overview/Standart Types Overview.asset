@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8e04f773e79294a8deb45b168dd913, type: 3}
+  m_Name: Standart Types Overview
+  m_EditorClassIdentifier: 
+  pure:
+    integerField: 542
+    longField: 0
+    floatField: 2
+    doubleField: 212314
+    booleanField: 1
+    stringField: 65777164
+  first:
+    colorField: {r: 0.38235295, g: 0.12370243, b: 0.12370243, a: 0}
+    color32Field:
+      serializedVersion: 2
+      rgba: 0
+    objectField: {fileID: 0}
+  second:
+    layerMaskField:
+      serializedVersion: 2
+      m_Bits: 0
+    enumField: 16
+    curveField:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+  third:
+    floatField: 0
+    vector2Field: {x: 0, y: 0}
+    vector3Field: {x: 0, y: 0, z: 0}
+    vector4Field: {x: 0, y: 0, z: 0, w: 0}
+  matrixField:
+    e00: 0
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 0
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 0
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 0
+  rectField:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  boundsField:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}

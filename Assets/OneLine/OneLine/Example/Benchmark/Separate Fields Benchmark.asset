@@ -1,0 +1,713 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 652cefb73657e411a874f57349d8b993, type: 3}
+  m_Name: Separate Fields Benchmark
+  m_EditorClassIdentifier: 
+  field1:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field2:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field3:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field4:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field5:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field6:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field7:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field8:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field9:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field10:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field11:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field12:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field13:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field14:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field15:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field16:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field17:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field18:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field19:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field20:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field21:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field22:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field23:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field24:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field25:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field26:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field27:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field28:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field29:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field30:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field31:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field32:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field33:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field34:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field35:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field36:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field37:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field38:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field39:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field40:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field41:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field42:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field43:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field44:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field45:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field46:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field47:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field48:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field49:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field50:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field51:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field52:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field53:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field54:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field55:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field56:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field57:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field58:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field59:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field60:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field61:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field62:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field63:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field64:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field65:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field66:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field67:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field68:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field69:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field70:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field71:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field72:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field73:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field74:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field75:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field76:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field77:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field78:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field79:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field80:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field81:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field82:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field83:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field84:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field85:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field86:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field87:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field88:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field89:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field90:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field91:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field92:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field93:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field94:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field95:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field96:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field97:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field98:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field99:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
+  field100:
+    integerField: 0
+    longField: 0
+    floatField: 0
+    doubleField: 0
+    booleanField: 0
+    stringField: 
