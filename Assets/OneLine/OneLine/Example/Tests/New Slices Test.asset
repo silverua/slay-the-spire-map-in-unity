@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9efc419f62b6a4a439b260bf0eb0a0e5, type: 3}
+  m_Name: New Slices Test
+  m_EditorClassIdentifier: 
+  root:
+    first:
+      first: 
+      second: 
+    second:
+      array:
+      - 
+      - 
+    third: 
+  root2:
+    first:
+      first: 
+      second: 
+    second:
+      array: []
+    third: 

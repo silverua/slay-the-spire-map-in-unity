@@ -1,0 +1,305 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f743bd85725f81045b030d3601214577, type: 3}
+  m_Name: Overview
+  m_EditorClassIdentifier: 
+  letMeTellYouAboutTheOneLineAttribute:
+    first: OneLine is a library. In the same time [OneLine] is an attribute. Feel
+      free to use it.
+  itWillDrawAnyFieldYouWantIntoOneLineWithAllChildren:
+    first: And
+    second: doesn't
+    third: matter
+    forth: how
+    fifth: many
+    sixth: children
+    seventh: they
+    eighth: have
+    ninth: Very simple, I think.
+  oneLineDrawsAllSpaceAttributesInYourCode:
+    first: There is one [Space] around. Where is it?
+    second: <= [Space] is here! Didn't you find it?
+  tooltipAttribute:
+    first: Root field has a tooltip.
+    second: This field has it's own tooltip.
+    third: What tooltip will you find here?
+  oneLineCalculatesFieldWidthesBasedOnAttributes:
+    first: '[WeightAttribute] and [WidthAttribute]. You can use them both or separately.'
+  weightAttributeDeterminesRelativeWidth:
+    first: This field's Weight is 3
+    second: Weight == 2
+    third: Default (1)
+  widthAttributeDeterminesAdditionalFixedWidth:
+    first: 75 units
+    second: This field doesn't have any attributes and has default Weight=1
+    third: 50 units
+  youCanCustomizeYouDatabaseByAttributes: Use [Highlight], [HideLabel], and [OneLine(Header=LineHeader.Short)].
+  hideLabel:
+    first: '[HideLabel] helps you to expand line and get some more width for your
+      db.'
+    second: You can use it with arrays too.
+  highlightAttributeHelpsToPointOnMostImportantThings:
+    first: Does'n matter
+    second: Does'n matter
+    third: I'm greely important
+    fourth: Does'n matter
+  youCanAlsoDrawFieldsNameAboveLine:
+    first: My name is First
+    second: My name is Second
+    third: Yes, you know.
+  oneLineDrawsAllNestedArraysIntoLine:
+    array:
+    - Use "+" to add new
+    - Use "-" to remove last
+    - Or use right-click
+  arraysHaveToHaveCustomWeightOrWidth:
+    first:
+    - Default
+    - Weight = 1
+    second:
+    - Elements
+    - Have
+    - Fixed
+    - Width
+  lookAtSeparatorBetweenComplexElementsOfArray:
+    array:
+    - first: First Field
+      second: Second Field
+    - first: First Field
+      second: Second Field
+  thisArrayWithHideButtonsAttributeHidesItsButtons:
+    array:
+    - Dublicate or delete elements
+    - by right-click context menu
+    - Looks nice, doesn't it?
+  thisArrayHasImmutableLengthByArrayLengthAttribute:
+    array:
+    - Length of this array is fixed
+    - inside code. Try to change it
+    - No, you can't.
+  youCanDoSomethingLikeThis:
+  - first: 
+    second: 
+    third: 
+  - first: 
+    second: 
+    third: 
+  - first: 
+    second: 
+    third: 
+  - first: 
+    second: 
+    third: 
+  - first: 
+    second: 
+    third: 
+  - first: 
+    second: 
+    third: 
+  - first: 
+    second: 
+    third: 
+  - first: 
+    second: 
+    third: 
+  - first: 
+    second: 
+    third: 
+  - first: 
+    second: 
+    third: 
+  orThisButIDoNotKnowWhyDoYouNeetId:
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+  - first: 
+    array:
+    - 
+  - first: 
+    array: []
+  - first: 
+    array:
+    - 
+  - first: 
+    array:
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+  - first: 
+    array:
+    - 
+  - first: 
+    array: []
+  - first: 
+    array:
+    - 
+  - first: 
+    array:
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+  - first: 
+    array:
+    - 
+  - first: 
+    array: []
+  - first: 
+    array:
+    - 
+  - first: 
+    array:
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+    - 
+  - first: 
+    array:
+    - 
+    - 
+    - 
+    - 
+    - 

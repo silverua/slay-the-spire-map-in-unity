@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d587304b6c4ecaa47877eb62e0b4540b, type: 3}
+  m_Name: One Line Drawer Example
+  m_EditorClassIdentifier: 
+  root:
+    first: Single field
+    second: {r: 0.36838233, g: 0.6397059, b: 0.061148338, a: 0}
+    third:
+      first: 1
+      second: {x: 1, y: 2}
+  rootArray:
+  - first: First
+    second: {r: 1, g: 0, b: 0, a: 0}
+    third:
+      first: 0
+      second: {x: 1, y: 2}
+  - first: Second
+    second: {r: 1, g: 0.26896554, b: 0, a: 0}
+    third:
+      first: 1
+      second: {x: 3, y: 4}
+  - first: Third
+    second: {r: 1, g: 0.9724138, b: 0, a: 0}
+    third:
+      first: 0
+      second: {x: 5, y: 6}
+  - first: Forth
+    second: {r: 0, g: 1, b: 0.048275948, a: 0}
+    third:
+      first: 1
+      second: {x: 7, y: 8}
+  - first: Fifth
+    second: {r: 0, g: 0.8758622, b: 1, a: 0}
+    third:
+      first: 0
+      second: {x: 9, y: 10}
+  - first: Sixth
+    second: {r: 0, g: 0.21379304, b: 1, a: 0}
+    third:
+      first: 1
+      second: {x: 12, y: 11}
+  - first: Seventh
+    second: {r: 0.2827587, g: 0, b: 1, a: 0}
+    third:
+      first: 0
+      second: {x: 13, y: 14}
