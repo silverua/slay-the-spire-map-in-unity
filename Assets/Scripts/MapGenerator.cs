@@ -259,7 +259,7 @@ namespace Map
                 if (rightCol < config.GridWidth && horizontalDistance <= verticalDistance)
                     candidateCols.Add(rightCol);
 
-                int RandomCandidateIndex = Random.Range(0, candidateCols.Count - 1);
+                int RandomCandidateIndex = Random.Range(0, candidateCols.Count);
                 int candidateCol = candidateCols[RandomCandidateIndex];
                 var nextPoint = new Point(candidateCol, row);
 
