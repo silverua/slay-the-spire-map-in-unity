@@ -112,32 +112,20 @@ namespace Map
         {
             foreach (var path in paths)
             {
-                for (var i = 0; i < path.Count; i++)
+                for (var i = 0; i < path.Count - 1; ++i)
                 {
                     var node = GetNode(path[i]);
-
-                    if (i > 0)
-                    {
-                        // previous because the path is flipped
-                        var nextNode = GetNode(path[i - 1]);
-                        nextNode.AddIncoming(node.point);
-                        node.AddOutgoing(nextNode.point);
-                    }
-
-                    if (i < path.Count - 1)
-                    {
-                        var previousNode = GetNode(path[i + 1]);
-                        previousNode.AddOutgoing(node.point);
-                        node.AddIncoming(previousNode.point);
-                    }
+                    var nextNode = GetNode(path[i + 1]);
+                    node.AddOutgoing(nextNode.point);
+                    nextNode.AddIncoming(node.point);
                 }
             }
         }
 
         private static void RemoveCrossConnections()
         {
-            for (var i = 0; i < config.GridWidth - 1; i++)
-                for (var j = 0; j < config.layers.Count - 1; j++)
+            for (var i = 0; i < config.GridWidth - 1; ++i)
+                for (var j = 0; j < config.layers.Count - 1; ++j)
                 {
                     var node = GetNode(new Point(i, j));
                     if (node == null || node.HasNoConnections()) continue;
