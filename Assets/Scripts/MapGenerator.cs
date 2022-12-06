@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -214,8 +214,7 @@ namespace Map
             var preBossXs = candidateXs.Take(numOfPreBossNodes);
             var preBossPoints = (from x in preBossXs select new Point(x, finalNode.y - 1)).ToList();
 
-            int numOfPaths = Mathf.Max(numOfStartingNodes, numOfPreBossNodes); // We can add a config option to generate more paths
-
+            int numOfPaths = Mathf.Max(numOfStartingNodes, numOfPreBossNodes, config.overrideAmountOfPaths);
             for (int i = 0; i < numOfPaths; ++i)
             {
                 Point startNode = startingPoints[i % numOfStartingNodes];
@@ -224,7 +223,6 @@ namespace Map
                 path.Add(finalNode);
                 paths.Add(path);
             }
-
         }
 
         // Generates a random path bottom up.
