@@ -16,8 +16,8 @@ namespace Map
         [OneLineWithHeader]
         public IntMinMax numOfStartingNodes;
 
-        [Tooltip("Increase this number beyond the numbers of starting and pre-boss nodes to generate more paths")]
-        public int overrideAmountOfPaths = -1;
+        [Tooltip("Increase this number to generate more paths")]
+        public int extraPaths;
         [Reorderable]
         public ListOfMapLayers layers;
 

@@ -214,7 +214,7 @@ namespace Map
             var preBossXs = candidateXs.Take(numOfPreBossNodes);
             var preBossPoints = (from x in preBossXs select new Point(x, finalNode.y - 1)).ToList();
 
-            int numOfPaths = Mathf.Max(numOfStartingNodes, numOfPreBossNodes, config.overrideAmountOfPaths);
+            int numOfPaths = Mathf.Max(numOfStartingNodes, numOfPreBossNodes) + Mathf.Max(0, config.extraPaths);
             for (int i = 0; i < numOfPaths; ++i)
             {
                 Point startNode = startingPoints[i % numOfStartingNodes];
