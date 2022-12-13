@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -112,32 +112,20 @@ namespace Map
         {
             foreach (var path in paths)
             {
-                for (var i = 0; i < path.Count; i++)
+                for (var i = 0; i < path.Count - 1; ++i)
                 {
                     var node = GetNode(path[i]);
-
-                    if (i > 0)
-                    {
-                        // previous because the path is flipped
-                        var nextNode = GetNode(path[i - 1]);
-                        nextNode.AddIncoming(node.point);
-                        node.AddOutgoing(nextNode.point);
-                    }
-
-                    if (i < path.Count - 1)
-                    {
-                        var previousNode = GetNode(path[i + 1]);
-                        previousNode.AddOutgoing(node.point);
-                        node.AddIncoming(previousNode.point);
-                    }
+                    var nextNode = GetNode(path[i + 1]);
+                    node.AddOutgoing(nextNode.point);
+                    nextNode.AddIncoming(node.point);
                 }
             }
         }
 
         private static void RemoveCrossConnections()
         {
-            for (var i = 0; i < config.GridWidth - 1; i++)
-                for (var j = 0; j < config.layers.Count - 1; j++)
+            for (var i = 0; i < config.GridWidth - 1; ++i)
+                for (var j = 0; j < config.layers.Count - 1; ++j)
                 {
                     var node = GetNode(new Point(i, j));
                     if (node == null || node.HasNoConnections()) continue;
@@ -219,70 +207,66 @@ namespace Map
                 candidateXs.Add(i);
 
             candidateXs.Shuffle();
+            var startingXs = candidateXs.Take(numOfStartingNodes);
+            var startingPoints = (from x in startingXs select new Point(x, 0)).ToList();
+
+            candidateXs.Shuffle();
             var preBossXs = candidateXs.Take(numOfPreBossNodes);
             var preBossPoints = (from x in preBossXs select new Point(x, finalNode.y - 1)).ToList();
-            var attempts = 0;
 
-            // start by generating paths from each of the preBossPoints to the 1st layer:
-            foreach (var point in preBossPoints)
+            int numOfPaths = Mathf.Max(numOfStartingNodes, numOfPreBossNodes) + Mathf.Max(0, config.extraPaths);
+            for (int i = 0; i < numOfPaths; ++i)
             {
-                var path = Path(point, 0, config.GridWidth);
-                path.Insert(0, finalNode);
+                Point startNode = startingPoints[i % numOfStartingNodes];
+                Point endNode = preBossPoints[i % numOfPreBossNodes];
+                var path = Path(startNode, endNode);
+                path.Add(finalNode);
                 paths.Add(path);
-                attempts++;
             }
-
-            while (!PathsLeadToAtLeastNDifferentPoints(paths, numOfStartingNodes) && attempts < 100)
-            {
-                var randomPreBossPoint = preBossPoints[UnityEngine.Random.Range(0, preBossPoints.Count)];
-                var path = Path(randomPreBossPoint, 0, config.GridWidth);
-                path.Insert(0, finalNode);
-                paths.Add(path);
-                attempts++;
-            }
-
-            Debug.Log("Attempts to generate paths: " + attempts);
         }
 
-        private static bool PathsLeadToAtLeastNDifferentPoints(IEnumerable<List<Point>> paths, int n)
+        // Generates a random path bottom up.
+        private static List<Point> Path(Point fromPoint, Point toPoint)
         {
-            return (from path in paths select path[path.Count - 1].x).Distinct().Count() >= n;
-        }
+            int toRow = toPoint.y;
+            int toCol = toPoint.x;
 
-        private static List<Point> Path(Point from, int toY, int width, bool firstStepUnconstrained = false)
-        {
-            if (from.y == toY)
+            int lastNodeCol = fromPoint.x;
+
+            var path = new List<Point> { fromPoint };
+            var candidateCols = new List<int>();
+            for (int row = 1; row < toRow; ++row)
             {
-                Debug.LogError("Points are on same layers, return");
-                return null;
-            }
+                candidateCols.Clear();
 
-            // making one y step in this direction with each move
-            var direction = from.y > toY ? -1 : 1;
+                int verticalDistance = toRow - row;
+                int horizontalDistance;
 
-            var path = new List<Point> { from };
-            while (path[path.Count - 1].y != toY)
-            {
-                var lastPoint = path[path.Count - 1];
-                var candidateXs = new List<int>();
-                if (firstStepUnconstrained && lastPoint.Equals(from))
-                {
-                    for (var i = 0; i < width; i++)
-                        candidateXs.Add(i);
-                }
-                else
-                {
-                    // forward
-                    candidateXs.Add(lastPoint.x);
-                    // left
-                    if (lastPoint.x - 1 >= 0) candidateXs.Add(lastPoint.x - 1);
-                    // right
-                    if (lastPoint.x + 1 < width) candidateXs.Add(lastPoint.x + 1);
-                }
+                int forwardCol = lastNodeCol;
+                horizontalDistance = Mathf.Abs(toCol - forwardCol);
+                if (horizontalDistance <= verticalDistance)
+                    candidateCols.Add(lastNodeCol);
 
-                var nextPoint = new Point(candidateXs[Random.Range(0, candidateXs.Count)], lastPoint.y + direction);
+                int leftCol = lastNodeCol - 1;
+                horizontalDistance = Mathf.Abs(toCol - leftCol);
+                if (leftCol >= 0 && horizontalDistance <= verticalDistance)
+                    candidateCols.Add(leftCol);
+
+                int rightCol = lastNodeCol + 1;
+                horizontalDistance = Mathf.Abs(toCol - rightCol);
+                if (rightCol < config.GridWidth && horizontalDistance <= verticalDistance)
+                    candidateCols.Add(rightCol);
+
+                int RandomCandidateIndex = Random.Range(0, candidateCols.Count);
+                int candidateCol = candidateCols[RandomCandidateIndex];
+                var nextPoint = new Point(candidateCol, row);
+
                 path.Add(nextPoint);
+
+                lastNodeCol = candidateCol;
             }
+
+            path.Add(toPoint);
 
             return path;
         }
