@@ -20,3 +20,10 @@ Free resources and assets used in the project:
 - [DOTween](https://assetstore.unity.com/packages/tools/animation/dotween-hotween-v2-27676)
 - Icons from [Game-icons.net](https://game-icons.net). You can find a full list of credits in the folder with icons
 - [Newtonsoft.JSON for Unity](https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347) 
+
+December 13 2022 Update:
+Thanks to [hojjatjafary](https://github.com/hojjatjafary)
+- Better algorithm for generating paths
+- New algorithm uses a for loop instead of a while loop to generate paths, which makes it more precise and eliminates the need of limiting max amount of attempts
+- New algorithm respects precise numbers of starting nodes and pre-boss nodes
+- Use the new field `extraPaths` in MapConfig to generate more paths and create more connections between the nodes
