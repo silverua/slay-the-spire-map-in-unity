@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,6 +62,7 @@ namespace Map
             Stretch(mprt);
             
             SetMapLength();
+            ScrollToOrigin();
         }
 
         private void SetMapLength()
@@ -73,6 +75,27 @@ namespace Map
             else
                 sizeDelta.y = length;
             rt.sizeDelta = sizeDelta;
+        }
+
+        private void ScrollToOrigin()
+        {
+            switch (orientation)
+            {
+                case MapOrientation.BottomToTop:
+                    scrollRectVertical.normalizedPosition = Vector2.zero;
+                    break;
+                case MapOrientation.TopToBottom:
+                    scrollRectVertical.normalizedPosition = new Vector2(0, 1);
+                    break;
+                case MapOrientation.RightToLeft:
+                    scrollRectHorizontal.normalizedPosition = new Vector2(1, 0);
+                    break;
+                case MapOrientation.LeftToRight:
+                    scrollRectHorizontal.normalizedPosition = Vector2.zero;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private static void Stretch(RectTransform tr)
