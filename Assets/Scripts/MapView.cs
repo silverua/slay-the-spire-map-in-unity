@@ -48,15 +48,17 @@ namespace Map
         [Tooltip("Unavailable path color")]
         public Color32 lineLockedColor = Color.gray;
 
-        private GameObject firstParent;
-        private GameObject mapParent;
+        protected GameObject firstParent;
+        protected GameObject mapParent;
         private List<List<Point>> paths;
         private Camera cam;
         // ALL nodes:
         public readonly List<MapNode> MapNodes = new List<MapNode>();
-        private readonly List<LineConnection> lineConnections = new List<LineConnection>();
+        protected readonly List<LineConnection> lineConnections = new List<LineConnection>();
 
         public static MapView Instance;
+
+        public Map Map { get; protected set; }
 
         private void Awake()
         {
@@ -80,6 +82,8 @@ namespace Map
                 Debug.LogWarning("Map was null in MapView.ShowMap()");
                 return;
             }
+
+            Map = m;
 
             ClearMap();
 
@@ -117,7 +121,7 @@ namespace Map
             sr.size = new Vector2(xSize, span + yOffset * 2f);
         }
 
-        private void CreateMapParent()
+        protected virtual void CreateMapParent()
         {
             firstParent = new GameObject("OuterMapParent");
             mapParent = new GameObject("MapParentWithAScroll");
@@ -138,7 +142,7 @@ namespace Map
             }
         }
 
-        protected MapNode CreateMapNode(Node node)
+        protected virtual MapNode CreateMapNode(Node node)
         {
             var mapNodeObject = Instantiate(nodePrefab, mapParent.transform);
             var mapNode = mapNodeObject.GetComponent<MapNode>();
@@ -217,7 +221,7 @@ namespace Map
             }
         }
 
-        private void SetOrientation()
+        protected virtual void SetOrientation()
         {
             var scrollNonUi = mapParent.GetComponent<ScrollNonUI>();
             var span = mapManager.CurrentMap.DistanceBetweenFirstAndLastLayers();
@@ -290,6 +294,8 @@ namespace Map
 
         protected virtual void AddLineConnection(MapNode from, MapNode to)
         {
+            if (linePrefab == null) return;
+
             var lineObject = Instantiate(linePrefab, mapParent.transform);
             var lineRenderer = lineObject.GetComponent<LineRenderer>();
             var fromPoint = from.transform.position +

@@ -9,10 +9,77 @@ namespace Map
         [SerializeField] private ScrollRect scrollRectHorizontal;
         [SerializeField] private ScrollRect scrollRectVertical;
         [SerializeField] private float unitsToPixelsMultiplier  = 10f;
+        [SerializeField] private float padding; // padding of the background from the sides of the scroll rect:
 
         protected override void ClearMap()
         {
-            base.ClearMap();
+            scrollRectHorizontal.gameObject.SetActive(false);
+            scrollRectVertical.gameObject.SetActive(false);
+            
+            MapNodes.Clear();
+            lineConnections.Clear();
+        }
+
+        private ScrollRect GetScrollRectForMap()
+        {
+            return orientation == MapOrientation.LeftToRight || orientation == MapOrientation.RightToLeft
+                ? scrollRectHorizontal
+                : scrollRectVertical;
+        }
+
+        protected override void CreateMapParent()
+        {
+            var scrollRect = GetScrollRectForMap();
+            scrollRect.gameObject.SetActive(true);
+            
+            firstParent = new GameObject("OuterMapParent");
+            firstParent.transform.SetParent(scrollRect.content);
+            var fprt = firstParent.AddComponent<RectTransform>();
+            Stretch(fprt);
+            
+            // apply the anchoring preset to stretch it to fit parent:
+            mapParent = new GameObject("MapParentWithAScroll");
+            mapParent.transform.SetParent(firstParent.transform);
+            var mprt = mapParent.AddComponent<RectTransform>();
+            Stretch(mprt);
+            
+            SetMapLength();
+        }
+
+        private void SetMapLength()
+        {
+            var rt = GetScrollRectForMap().content;
+            var sizeDelta = rt.sizeDelta;
+            var length = padding + Map.DistanceBetweenFirstAndLastLayers() * unitsToPixelsMultiplier;
+            if (orientation == MapOrientation.LeftToRight || orientation == MapOrientation.RightToLeft)
+                sizeDelta.x = length;
+            else
+                sizeDelta.y = length;
+            rt.sizeDelta = sizeDelta;
+        }
+
+        private static void Stretch(RectTransform tr)
+        {
+            tr.localPosition = Vector3.zero;
+            tr.anchorMin = Vector2.zero;
+            tr.anchorMax = Vector2.one;
+            tr.sizeDelta = Vector2.zero;
+            tr.anchoredPosition = Vector2.zero;
+        }
+
+        protected override MapNode CreateMapNode(Node node)
+        {
+            var mapNodeObject = Instantiate(nodePrefab, mapParent.transform);
+            var mapNode = mapNodeObject.GetComponent<MapNode>();
+            var blueprint = GetBlueprint(node.blueprintName);
+            mapNode.SetUp(node, blueprint);
+            mapNode.transform.localPosition = node.position * unitsToPixelsMultiplier;
+            return mapNode;
+        }
+
+        protected override void SetOrientation()
+        {
+            // do nothing here for UI:
         }
 
         public override void ShowMap(Map m)
