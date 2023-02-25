@@ -44,7 +44,6 @@ namespace Map
             var fprt = firstParent.AddComponent<RectTransform>();
             Stretch(fprt);
             
-            // apply the anchoring preset to stretch it to fit parent:
             mapParent = new GameObject("MapParentWithAScroll");
             mapParent.transform.SetParent(firstParent.transform);
             mapParent.transform.localScale = Vector3.one;
@@ -81,9 +80,31 @@ namespace Map
             var mapNode = mapNodeObject.GetComponent<MapNode>();
             var blueprint = GetBlueprint(node.blueprintName);
             mapNode.SetUp(node, blueprint);
-            mapNode.transform.localPosition = node.position * unitsToPixelsMultiplier;
+            mapNode.transform.localPosition = GetNodePosition(node);
             return mapNode;
         }
+
+        private Vector2 GetNodePosition(Node node)
+        {
+            var length = padding + Map.DistanceBetweenFirstAndLastLayers() * unitsToPixelsMultiplier;
+            
+            switch (orientation)
+            {
+                case MapOrientation.BottomToTop:
+                    return node.position * unitsToPixelsMultiplier;
+                case MapOrientation.TopToBottom:
+                    return new Vector2(0f, length) - node.position * unitsToPixelsMultiplier;
+                case MapOrientation.RightToLeft:
+                    return new Vector2(length, 0f) - Flip(node.position) * unitsToPixelsMultiplier;
+                case MapOrientation.LeftToRight:
+                    return new Vector2((padding - length) / 2f, -backgroundPadding.y / 2f) +
+                           Flip(node.position) * unitsToPixelsMultiplier;
+                default:
+                    return Vector2.zero;
+            }
+        }
+
+        private static Vector2 Flip(Vector2 other) => new Vector2(other.y, other.x);
 
         protected override void SetOrientation()
         {

@@ -1542,12 +1542,12 @@ PrefabInstance:
     - target: {fileID: 3015013619643396332, guid: f3d397d8780414037811524dd988a62e,
         type: 3}
       propertyPath: padding
-      value: 300
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 3015013619643396332, guid: f3d397d8780414037811524dd988a62e,
         type: 3}
       propertyPath: unitsToPixelsMultiplier
-      value: 100
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 3015013619643396332, guid: f3d397d8780414037811524dd988a62e,
         type: 3}
