@@ -95,7 +95,8 @@ namespace Map
                 case MapOrientation.TopToBottom:
                     return new Vector2(0f, length) - node.position * unitsToPixelsMultiplier;
                 case MapOrientation.RightToLeft:
-                    return new Vector2(length, 0f) - Flip(node.position) * unitsToPixelsMultiplier;
+                    return new Vector2((length - padding) / 2f, backgroundPadding.y / 2f) -
+                           Flip(node.position) * unitsToPixelsMultiplier;
                 case MapOrientation.LeftToRight:
                     return new Vector2((padding - length) / 2f, -backgroundPadding.y / 2f) +
                            Flip(node.position) * unitsToPixelsMultiplier;
