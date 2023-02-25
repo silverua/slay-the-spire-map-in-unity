@@ -48,15 +48,17 @@ namespace Map
         [Tooltip("Unavailable path color")]
         public Color32 lineLockedColor = Color.gray;
 
-        private GameObject firstParent;
-        private GameObject mapParent;
+        protected GameObject firstParent;
+        protected GameObject mapParent;
         private List<List<Point>> paths;
         private Camera cam;
         // ALL nodes:
         public readonly List<MapNode> MapNodes = new List<MapNode>();
-        private readonly List<LineConnection> lineConnections = new List<LineConnection>();
+        protected readonly List<LineConnection> lineConnections = new List<LineConnection>();
 
         public static MapView Instance;
+
+        public Map Map { get; protected set; }
 
         private void Awake()
         {
@@ -64,7 +66,7 @@ namespace Map
             cam = Camera.main;
         }
 
-        private void ClearMap()
+        protected virtual void ClearMap()
         {
             if (firstParent != null)
                 Destroy(firstParent);
@@ -73,13 +75,15 @@ namespace Map
             lineConnections.Clear();
         }
 
-        public void ShowMap(Map m)
+        public virtual void ShowMap(Map m)
         {
             if (m == null)
             {
                 Debug.LogWarning("Map was null in MapView.ShowMap()");
                 return;
             }
+
+            Map = m;
 
             ClearMap();
 
@@ -100,7 +104,7 @@ namespace Map
             CreateMapBackground(m);
         }
 
-        private void CreateMapBackground(Map m)
+        protected virtual void CreateMapBackground(Map m)
         {
             if (background == null) return;
 
@@ -117,7 +121,7 @@ namespace Map
             sr.size = new Vector2(xSize, span + yOffset * 2f);
         }
 
-        private void CreateMapParent()
+        protected virtual void CreateMapParent()
         {
             firstParent = new GameObject("OuterMapParent");
             mapParent = new GameObject("MapParentWithAScroll");
@@ -129,7 +133,7 @@ namespace Map
             boxCollider.size = new Vector3(100, 100, 1);
         }
 
-        private void CreateNodes(IEnumerable<Node> nodes)
+        protected void CreateNodes(IEnumerable<Node> nodes)
         {
             foreach (var node in nodes)
             {
@@ -138,7 +142,7 @@ namespace Map
             }
         }
 
-        private MapNode CreateMapNode(Node node)
+        protected virtual MapNode CreateMapNode(Node node)
         {
             var mapNodeObject = Instantiate(nodePrefab, mapParent.transform);
             var mapNode = mapNodeObject.GetComponent<MapNode>();
@@ -183,7 +187,7 @@ namespace Map
             }
         }
 
-        public void SetLineColors()
+        public virtual void SetLineColors()
         {
             // set all lines to grayed out first:
             foreach (var connection in lineConnections)
@@ -217,7 +221,7 @@ namespace Map
             }
         }
 
-        private void SetOrientation()
+        protected virtual void SetOrientation()
         {
             var scrollNonUi = mapParent.GetComponent<ScrollNonUI>();
             var span = mapManager.CurrentMap.DistanceBetweenFirstAndLastLayers();
@@ -288,8 +292,10 @@ namespace Map
                 node.transform.rotation = Quaternion.identity;
         }
 
-        public void AddLineConnection(MapNode from, MapNode to)
+        protected virtual void AddLineConnection(MapNode from, MapNode to)
         {
+            if (linePrefab == null) return;
+
             var lineObject = Instantiate(linePrefab, mapParent.transform);
             var lineRenderer = lineObject.GetComponent<LineRenderer>();
             var fromPoint = from.transform.position +
@@ -313,26 +319,26 @@ namespace Map
             var dottedLine = lineObject.GetComponent<DottedLineRenderer>();
             if (dottedLine != null) dottedLine.ScaleMaterial();
 
-            lineConnections.Add(new LineConnection(lineRenderer, from, to));
+            lineConnections.Add(new LineConnection(lineRenderer, null, from, to));
         }
 
-        private MapNode GetNode(Point p)
+        protected MapNode GetNode(Point p)
         {
             return MapNodes.FirstOrDefault(n => n.Node.point.Equals(p));
         }
 
-        private MapConfig GetConfig(string configName)
+        protected MapConfig GetConfig(string configName)
         {
             return allMapConfigs.FirstOrDefault(c => c.name == configName);
         }
 
-        public NodeBlueprint GetBlueprint(NodeType type)
+        protected NodeBlueprint GetBlueprint(NodeType type)
         {
             var config = GetConfig(mapManager.CurrentMap.configName);
             return config.nodeBlueprints.FirstOrDefault(n => n.nodeType == type);
         }
 
-        public NodeBlueprint GetBlueprint(string blueprintName)
+        protected NodeBlueprint GetBlueprint(string blueprintName)
         {
             var config = GetConfig(mapManager.CurrentMap.configName);
             return config.nodeBlueprints.FirstOrDefault(n => n.name == blueprintName);
