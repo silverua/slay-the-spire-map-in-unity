@@ -17,6 +17,10 @@ namespace Map
         {
             scrollRectHorizontal.gameObject.SetActive(false);
             scrollRectVertical.gameObject.SetActive(false);
+
+            foreach (var scrollRect in new []{scrollRectHorizontal, scrollRectVertical})
+            foreach (Transform t in scrollRect.content)
+                Destroy(t.gameObject);
             
             MapNodes.Clear();
             lineConnections.Clear();

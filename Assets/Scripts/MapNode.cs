@@ -1,6 +1,7 @@
 ﻿using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Map
@@ -15,10 +16,12 @@ namespace Map
 
 namespace Map
 {
-    public class MapNode : MonoBehaviour
+    public class MapNode : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
     {
         public SpriteRenderer sr;
+        public Image image;
         public SpriteRenderer visitedCircle;
+        public Image circleImage;
         public Image visitedCircleImage;
 
         public Node Node { get; private set; }
@@ -34,57 +37,122 @@ namespace Map
         {
             Node = node;
             Blueprint = blueprint;
-            sr.sprite = blueprint.sprite;
+            if (sr != null) sr.sprite = blueprint.sprite;
+            if (image != null) image.sprite = blueprint.sprite;
             if (node.nodeType == NodeType.Boss) transform.localScale *= 1.5f;
-            initialScale = sr.transform.localScale.x;
-            visitedCircle.color = MapView.Instance.visitedColor;
-            visitedCircle.gameObject.SetActive(false);
+            if (sr != null) initialScale = sr.transform.localScale.x;
+            if (image != null) initialScale = image.transform.localScale.x;
+
+            if (visitedCircle != null)
+            {
+                visitedCircle.color = MapView.Instance.visitedColor;
+                visitedCircle.gameObject.SetActive(false);
+            }
+
+            if (circleImage != null)
+            {
+                circleImage.color = MapView.Instance.visitedColor;
+                circleImage.gameObject.SetActive(false);    
+            }
+            
             SetState(NodeStates.Locked);
         }
 
         public void SetState(NodeStates state)
         {
-            visitedCircle.gameObject.SetActive(false);
+            if (visitedCircle != null) visitedCircle.gameObject.SetActive(false);
+            if (circleImage != null) circleImage.gameObject.SetActive(false);
+            
             switch (state)
             {
                 case NodeStates.Locked:
-                    sr.DOKill();
-                    sr.color = MapView.Instance.lockedColor;
+                    if (sr != null)
+                    {
+                        sr.DOKill();
+                        sr.color = MapView.Instance.lockedColor;
+                    }
+
+                    if (image != null)
+                    {
+                        image.DOKill();
+                        image.color = MapView.Instance.lockedColor;
+                    }
+
                     break;
                 case NodeStates.Visited:
-                    sr.DOKill();
-                    sr.color = MapView.Instance.visitedColor;
-                    visitedCircle.gameObject.SetActive(true);
+                    if (sr != null)
+                    {
+                        sr.DOKill();
+                        sr.color = MapView.Instance.visitedColor;
+                    }
+                    
+                    if (image != null)
+                    {
+                        image.DOKill();
+                        image.color = MapView.Instance.visitedColor;
+                    }
+                    
+                    if (visitedCircle != null) visitedCircle.gameObject.SetActive(true);
+                    if (circleImage != null) circleImage.gameObject.SetActive(true);
                     break;
                 case NodeStates.Attainable:
                     // start pulsating from visited to locked color:
-                    sr.color = MapView.Instance.lockedColor;
-                    sr.DOKill();
-                    sr.DOColor(MapView.Instance.visitedColor, 0.5f).SetLoops(-1, LoopType.Yoyo);
+                    if (sr != null)
+                    {
+                        sr.color = MapView.Instance.lockedColor;
+                        sr.DOKill();
+                        sr.DOColor(MapView.Instance.visitedColor, 0.5f).SetLoops(-1, LoopType.Yoyo);
+                    }
+                    
+                    if (image != null)
+                    {
+                        image.color = MapView.Instance.lockedColor;
+                        image.DOKill();
+                        image.DOColor(MapView.Instance.visitedColor, 0.5f).SetLoops(-1, LoopType.Yoyo);
+                    }
+                    
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
         }
 
-        private void OnMouseEnter()
+        public void OnPointerEnter(PointerEventData data)
         {
-            sr.transform.DOKill();
-            sr.transform.DOScale(initialScale * HoverScaleFactor, 0.3f);
+            if (sr != null)
+            {
+                sr.transform.DOKill();
+                sr.transform.DOScale(initialScale * HoverScaleFactor, 0.3f);
+            }
+
+            if (image != null)
+            {
+                image.transform.DOKill();
+                image.transform.DOScale(initialScale * HoverScaleFactor, 0.3f);
+            }
         }
 
-        private void OnMouseExit()
+        public void OnPointerExit(PointerEventData data)
         {
-            sr.transform.DOKill();
-            sr.transform.DOScale(initialScale, 0.3f);
+            if (sr != null)
+            {
+                sr.transform.DOKill();
+                sr.transform.DOScale(initialScale, 0.3f);
+            }
+
+            if (image != null)
+            {
+                image.transform.DOKill();
+                image.transform.DOScale(initialScale, 0.3f);
+            }
         }
 
-        private void OnMouseDown()
+        public void OnPointerDown(PointerEventData data)
         {
             mouseDownTime = Time.time;
         }
 
-        private void OnMouseUp()
+        public void OnPointerUp(PointerEventData data)
         {
             if (Time.time - mouseDownTime < MaxClickDuration)
             {

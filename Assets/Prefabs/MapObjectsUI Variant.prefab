@@ -16,7 +16,7 @@ MonoBehaviour:
   orientation: 3
   allMapConfigs:
   - {fileID: 11400000, guid: 19bf411c79e522b4b8e54f82b0140314, type: 2}
-  nodePrefab: {fileID: 6746199761131337685, guid: 621ccae6afb8e8949ba963674577578a,
+  nodePrefab: {fileID: 5037388882644343366, guid: d1c61babba3d845e89d15d136ce9793b,
     type: 3}
   orientationOffset: -4
   background: {fileID: 21300000, guid: 154be9da94274494592f60439cfd560e, type: 3}
@@ -43,6 +43,9 @@ MonoBehaviour:
   scrollRectHorizontal: {fileID: 0}
   scrollRectVertical: {fileID: 0}
   unitsToPixelsMultiplier: 1
+  padding: 0
+  backgroundPadding: {x: 0, y: 0}
+  backgroundPPUMultiplier: 1
 --- !u!1001 &7225417150389636463
 PrefabInstance:
   m_ObjectHideFlags: 0
