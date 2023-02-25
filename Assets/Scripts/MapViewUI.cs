@@ -91,9 +91,11 @@ namespace Map
             switch (orientation)
             {
                 case MapOrientation.BottomToTop:
-                    return node.position * unitsToPixelsMultiplier;
+                    return new Vector2(-backgroundPadding.x / 2f, (padding - length) / 2f) +
+                           node.position * unitsToPixelsMultiplier;
                 case MapOrientation.TopToBottom:
-                    return new Vector2(0f, length) - node.position * unitsToPixelsMultiplier;
+                    return new Vector2(backgroundPadding.x / 2f, (length - padding) / 2f) -
+                           node.position * unitsToPixelsMultiplier;
                 case MapOrientation.RightToLeft:
                     return new Vector2((length - padding) / 2f, backgroundPadding.y / 2f) -
                            Flip(node.position) * unitsToPixelsMultiplier;

@@ -1539,31 +1539,6 @@ PrefabInstance:
       propertyPath: scrollRectVertical
       value: 
       objectReference: {fileID: 302862922}
-    - target: {fileID: 3015013619643396332, guid: f3d397d8780414037811524dd988a62e,
-        type: 3}
-      propertyPath: padding
-      value: 600
-      objectReference: {fileID: 0}
-    - target: {fileID: 3015013619643396332, guid: f3d397d8780414037811524dd988a62e,
-        type: 3}
-      propertyPath: unitsToPixelsMultiplier
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 3015013619643396332, guid: f3d397d8780414037811524dd988a62e,
-        type: 3}
-      propertyPath: backgroundPadding.x
-      value: -200
-      objectReference: {fileID: 0}
-    - target: {fileID: 3015013619643396332, guid: f3d397d8780414037811524dd988a62e,
-        type: 3}
-      propertyPath: backgroundPadding.y
-      value: -100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3015013619643396332, guid: f3d397d8780414037811524dd988a62e,
-        type: 3}
-      propertyPath: backgroundPPUMultiplier
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3596387997667980223, guid: f3d397d8780414037811524dd988a62e,
         type: 3}
       propertyPath: m_Name

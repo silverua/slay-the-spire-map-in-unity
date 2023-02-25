@@ -42,10 +42,10 @@ MonoBehaviour:
     rgba: 4281216558
   scrollRectHorizontal: {fileID: 0}
   scrollRectVertical: {fileID: 0}
-  unitsToPixelsMultiplier: 1
-  padding: 0
-  backgroundPadding: {x: 0, y: 0}
-  backgroundPPUMultiplier: 1
+  unitsToPixelsMultiplier: 60
+  padding: 600
+  backgroundPadding: {x: -100, y: -100}
+  backgroundPPUMultiplier: 2
 --- !u!1001 &7225417150389636463
 PrefabInstance:
   m_ObjectHideFlags: 0
