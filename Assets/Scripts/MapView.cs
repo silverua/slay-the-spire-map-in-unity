@@ -187,7 +187,7 @@ namespace Map
             }
         }
 
-        public void SetLineColors()
+        public virtual void SetLineColors()
         {
             // set all lines to grayed out first:
             foreach (var connection in lineConnections)
@@ -319,7 +319,7 @@ namespace Map
             var dottedLine = lineObject.GetComponent<DottedLineRenderer>();
             if (dottedLine != null) dottedLine.ScaleMaterial();
 
-            lineConnections.Add(new LineConnection(lineRenderer, from, to));
+            lineConnections.Add(new LineConnection(lineRenderer, null, from, to));
         }
 
         protected MapNode GetNode(Point p)

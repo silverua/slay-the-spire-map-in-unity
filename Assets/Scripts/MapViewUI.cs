@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 namespace Map
 {
@@ -12,6 +14,7 @@ namespace Map
         [SerializeField] private float padding; // padding of the background from the sides of the scroll rect:
         [SerializeField] private Vector2 backgroundPadding;
         [SerializeField] private float backgroundPPUMultiplier = 1;
+        [SerializeField] private UILineRenderer uiLinePrefab;
 
         protected override void ClearMap()
         {
@@ -114,11 +117,6 @@ namespace Map
             // do nothing here for UI:
         }
 
-        public override void ShowMap(Map m)
-        {
-            base.ShowMap(m);
-        }
-
         protected override void CreateMapBackground(Map m)
         {
             var backgroundObject = new GameObject("Background");
@@ -136,9 +134,34 @@ namespace Map
             image.pixelsPerUnitMultiplier = backgroundPPUMultiplier;
         }
 
-        protected override void AddLineConnection(MapNode @from, MapNode to)
+        protected override void AddLineConnection(MapNode from, MapNode to)
         {
-            base.AddLineConnection(@from, to);
+            if (uiLinePrefab == null) return;
+            
+            var lineRenderer = Instantiate(uiLinePrefab, mapParent.transform);
+            lineRenderer.transform.SetAsFirstSibling();
+            var fromPoint = from.transform.position +
+                            (to.transform.position - from.transform.position).normalized * offsetFromNodes;
+
+            var toPoint = to.transform.position +
+                          (from.transform.position - to.transform.position).normalized * offsetFromNodes;
+
+            // drawing lines in local space:
+            lineRenderer.transform.position = fromPoint;
+
+            // line renderer with 2 points only does not handle transparency properly:
+            var list = new List<Vector2>();
+            for (var i = 0; i < linePointsCount; i++)
+            {
+                list.Add(Vector3.Lerp(Vector3.zero, toPoint - fromPoint, (float)i / (linePointsCount - 1)));
+            }
+
+            lineRenderer.Points = list.ToArray();
+
+            var dottedLine = lineRenderer.GetComponent<DottedLineRenderer>();
+            if (dottedLine != null) dottedLine.ScaleMaterial();
+
+            lineConnections.Add(new LineConnection(null, lineRenderer, from, to));
         }
     }
 }

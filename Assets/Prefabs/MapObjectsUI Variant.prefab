@@ -27,7 +27,7 @@ MonoBehaviour:
   yOffset: 2
   linePrefab: {fileID: 0}
   linePointsCount: 10
-  offsetFromNodes: 0.5
+  offsetFromNodes: 40
   visitedColor:
     serializedVersion: 2
     rgba: 4294967295
@@ -43,9 +43,11 @@ MonoBehaviour:
   scrollRectHorizontal: {fileID: 0}
   scrollRectVertical: {fileID: 0}
   unitsToPixelsMultiplier: 60
-  padding: 600
+  padding: 400
   backgroundPadding: {x: -100, y: -100}
   backgroundPPUMultiplier: 2
+  uiLinePrefab: {fileID: 3781031511026450631, guid: d75ab2aed486b42e6b8d4f177babbda2,
+    type: 3}
 --- !u!1001 &7225417150389636463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -121,7 +123,7 @@ PrefabInstance:
     - target: {fileID: 6173653652465991376, guid: 6dc8f4ee6004b5345a5925b01e34cb27,
         type: 3}
       propertyPath: m_Name
-      value: MapObjectsUI Variant
+      value: MapObjectsUI
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5337413451386887161, guid: 6dc8f4ee6004b5345a5925b01e34cb27, type: 3}
