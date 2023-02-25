@@ -10,6 +10,8 @@ namespace Map
         [SerializeField] private ScrollRect scrollRectVertical;
         [SerializeField] private float unitsToPixelsMultiplier  = 10f;
         [SerializeField] private float padding; // padding of the background from the sides of the scroll rect:
+        [SerializeField] private Vector2 backgroundPadding;
+        [SerializeField] private float backgroundPPUMultiplier = 1;
 
         protected override void ClearMap()
         {
@@ -34,12 +36,14 @@ namespace Map
             
             firstParent = new GameObject("OuterMapParent");
             firstParent.transform.SetParent(scrollRect.content);
+            firstParent.transform.localScale = Vector3.one;
             var fprt = firstParent.AddComponent<RectTransform>();
             Stretch(fprt);
             
             // apply the anchoring preset to stretch it to fit parent:
             mapParent = new GameObject("MapParentWithAScroll");
             mapParent.transform.SetParent(firstParent.transform);
+            mapParent.transform.localScale = Vector3.one;
             var mprt = mapParent.AddComponent<RectTransform>();
             Stretch(mprt);
             
@@ -89,7 +93,19 @@ namespace Map
 
         protected override void CreateMapBackground(Map m)
         {
-            base.CreateMapBackground(m);
+            var backgroundObject = new GameObject("Background");
+            backgroundObject.transform.SetParent(mapParent.transform);
+            backgroundObject.transform.localScale = Vector3.one;
+            var rt = backgroundObject.AddComponent<RectTransform>();
+            Stretch(rt);
+            rt.SetAsFirstSibling();
+            rt.sizeDelta = backgroundPadding;
+            
+            var image = backgroundObject.AddComponent<Image>();
+            image.color = backgroundColor;
+            image.type = Image.Type.Sliced;
+            image.sprite = background;
+            image.pixelsPerUnitMultiplier = backgroundPPUMultiplier;
         }
 
         protected override void AddLineConnection(MapNode @from, MapNode to)
