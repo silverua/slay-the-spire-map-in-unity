@@ -8,12 +8,19 @@ namespace Map
     public class MapViewUI : MapView
     {
         [Header("UI Map Settings")]
+        [Tooltip("ScrollRect that will be used for orientations: Left To Right, Right To Left")]
         [SerializeField] private ScrollRect scrollRectHorizontal;
+        [Tooltip("ScrollRect that will be used for orientations: Top To Bottom, Bottom To Top")]
         [SerializeField] private ScrollRect scrollRectVertical;
+        [Tooltip("Multiplier to compensate for larger distances in UI pixels on the canvas compared to distances in world units")]
         [SerializeField] private float unitsToPixelsMultiplier  = 10f;
-        [SerializeField] private float padding; // padding of the background from the sides of the scroll rect:
+        [Tooltip("Padding of the first and last rows of nodes from the sides of the scroll rect")]
+        [SerializeField] private float padding;
+        [Tooltip("Padding of the background from the sides of the scroll rect")]
         [SerializeField] private Vector2 backgroundPadding;
+        [Tooltip("Pixels per Unit multiplier for the background image")]
         [SerializeField] private float backgroundPPUMultiplier = 1;
+        [Tooltip("Prefab of the UI line between the nodes (uses scripts from Unity UI Extensions)")]
         [SerializeField] private UILineRenderer uiLinePrefab;
 
         protected override void ClearMap()
