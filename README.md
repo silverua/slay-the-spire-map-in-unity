@@ -27,3 +27,10 @@ Thanks to [hojjatjafary](https://github.com/hojjatjafary)
 - New algorithm uses a for loop instead of a while loop to generate paths, which makes it more precise and eliminates the need of limiting max amount of attempts
 - New algorithm respects precise numbers of starting nodes and pre-boss nodes
 - Use the new field `extraPaths` in MapConfig to generate more paths and create more connections between the nodes
+
+February 25 2023 Update:
+Got several requests to make this map work with Unity UI and scroll rects. 
+In this update: 
+- New test scene with the Unity UI version of the map: Assets/Scenes/SampleSceneUI.unity
+- New UI-specific prefabs: Assets/Prefabs/MapObjectsUI Variant.prefab, Assets/Prefabs/UINode.prefab, Assets/Prefabs/UILine.prefab
+- UI setup requires 2 scroll rects created for horizontal, vertical maps. Check out the SampleSceneUI for an example of this.
