@@ -34,3 +34,8 @@ In this update:
 - New test scene with the Unity UI version of the map: Assets/Scenes/SampleSceneUI.unity
 - New UI-specific prefabs: Assets/Prefabs/MapObjectsUI Variant.prefab, Assets/Prefabs/UINode.prefab, Assets/Prefabs/UILine.prefab
 - UI setup requires 2 scroll rects created for horizontal, vertical maps. Check out the SampleSceneUI for an example of this.
+
+March 14 2023 Update:
+Upgraded to Unity 2021 on master to: 
+- Fix "Self referencing loop detected" errors related to Newtonsoft.Json serializing Vectors
+- Fix some issues with lines connecting nodes in SampleSceneUI
