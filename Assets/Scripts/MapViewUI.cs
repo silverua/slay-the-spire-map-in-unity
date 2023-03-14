@@ -170,21 +170,29 @@ namespace Map
             
             var lineRenderer = Instantiate(uiLinePrefab, mapParent.transform);
             lineRenderer.transform.SetAsFirstSibling();
-            var fromPoint = from.transform.position +
-                            (to.transform.position - from.transform.position).normalized * offsetFromNodes;
+            var fromRT = from.transform as RectTransform;
+            var toRT = to.transform as RectTransform;
+            var fromPoint = fromRT.anchoredPosition +
+                            (toRT.anchoredPosition - fromRT.anchoredPosition).normalized * offsetFromNodes;
 
-            var toPoint = to.transform.position +
-                          (from.transform.position - to.transform.position).normalized * offsetFromNodes;
+            var toPoint = toRT.anchoredPosition +
+                          (fromRT.anchoredPosition - toRT.anchoredPosition).normalized * offsetFromNodes;
 
             // drawing lines in local space:
-            lineRenderer.transform.position = fromPoint;
+            lineRenderer.transform.position = from.transform.position +
+                                              (Vector3) (toRT.anchoredPosition - fromRT.anchoredPosition).normalized *
+                                              offsetFromNodes;
 
             // line renderer with 2 points only does not handle transparency properly:
             var list = new List<Vector2>();
             for (var i = 0; i < linePointsCount; i++)
             {
-                list.Add(Vector3.Lerp(Vector3.zero, toPoint - fromPoint, (float)i / (linePointsCount - 1)));
+                list.Add(Vector3.Lerp(Vector3.zero, toPoint - fromPoint +
+                                                    2 * (fromRT.anchoredPosition - toRT.anchoredPosition).normalized *
+                                                    offsetFromNodes, (float) i / (linePointsCount - 1)));
             }
+            
+            Debug.Log("From: " + fromPoint + " to: " + toPoint + " last point: " + list[list.Count - 1]);
 
             lineRenderer.Points = list.ToArray();
 
