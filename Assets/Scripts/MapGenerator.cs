@@ -12,7 +12,6 @@ namespace Map
         {NodeType.Mystery, NodeType.Store, NodeType.Treasure, NodeType.MinorEnemy, NodeType.RestSite};
 
         private static List<float> layerDistances;
-        private static List<List<Vector2Int>> paths;
         // ALL nodes by layer:
         private static readonly List<List<Node>> nodes = new List<List<Node>>();
 
@@ -32,11 +31,11 @@ namespace Map
             for (int i = 0; i < conf.layers.Count; i++)
                 PlaceLayer(i);
 
-            GeneratePaths();
+            List<List<Vector2Int>> paths = GeneratePaths();
 
             RandomizeNodePositions();
 
-            SetUpConnections();
+            SetUpConnections(paths);
 
             RemoveCrossConnections();
 
@@ -108,7 +107,7 @@ namespace Map
             }
         }
 
-        private static void SetUpConnections()
+        private static void SetUpConnections(List<List<Vector2Int>> paths)
         {
             foreach (List<Vector2Int> path in paths)
             {
@@ -195,10 +194,10 @@ namespace Map
                 : new Vector2Int(config.GridWidth / 2 - 1, y);
         }
 
-        private static void GeneratePaths()
+        private static List<List<Vector2Int>> GeneratePaths()
         {
             Vector2Int finalNode = GetFinalNode();
-            paths = new List<List<Vector2Int>>();
+            var paths = new List<List<Vector2Int>>();
             int numOfStartingNodes = config.numOfStartingNodes.GetValue();
             int numOfPreBossNodes = config.numOfPreBossNodes.GetValue();
 
@@ -223,6 +222,8 @@ namespace Map
                 path.Add(finalNode);
                 paths.Add(path);
             }
+
+            return paths;
         }
 
         // Generates a random path bottom up.
