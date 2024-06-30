@@ -37,8 +37,8 @@ namespace Map
             }
             else
             {
-                var currentPoint = mapManager.CurrentMap.path[mapManager.CurrentMap.path.Count - 1];
-                var currentNode = mapManager.CurrentMap.GetNode(currentPoint);
+                Vector2Int currentPoint = mapManager.CurrentMap.path[mapManager.CurrentMap.path.Count - 1];
+                Node currentNode = mapManager.CurrentMap.GetNode(currentPoint);
 
                 if (currentNode != null && currentNode.outgoing.Any(point => point.Equals(mapNode.Node.point)))
                     SendPlayerToNode(mapNode);

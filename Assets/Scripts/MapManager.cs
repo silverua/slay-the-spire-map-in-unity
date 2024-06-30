@@ -15,8 +15,8 @@ namespace Map
         {
             if (PlayerPrefs.HasKey("Map"))
             {
-                var mapJson = PlayerPrefs.GetString("Map");
-                var map = JsonConvert.DeserializeObject<Map>(mapJson);
+                string mapJson = PlayerPrefs.GetString("Map");
+                Map map = JsonConvert.DeserializeObject<Map>(mapJson);
                 // using this instead of .Contains()
                 if (map.path.Any(p => p.Equals(map.GetBossNode().point)))
                 {
@@ -38,7 +38,7 @@ namespace Map
 
         public void GenerateNewMap()
         {
-            var map = MapGenerator.GetMap(config);
+            Map map = MapGenerator.GetMap(config);
             CurrentMap = map;
             Debug.Log(map.ToJson());
             view.ShowMap(map);
@@ -48,7 +48,7 @@ namespace Map
         {
             if (CurrentMap == null) return;
 
-            var json = JsonConvert.SerializeObject(CurrentMap, Formatting.Indented,
+            string json = JsonConvert.SerializeObject(CurrentMap, Formatting.Indented,
                 new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore});
             PlayerPrefs.SetString("Map", json);
             PlayerPrefs.Save();

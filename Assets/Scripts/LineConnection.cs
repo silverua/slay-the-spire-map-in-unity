@@ -23,9 +23,9 @@ namespace Map
         {
             if (lr != null)
             {
-                var gradient = lr.colorGradient;
-                var colorKeys = gradient.colorKeys;
-                for (var j = 0; j < colorKeys.Length; j++)
+                Gradient gradient = lr.colorGradient;
+                GradientColorKey[] colorKeys = gradient.colorKeys;
+                for (int j = 0; j < colorKeys.Length; j++)
                 {
                     colorKeys[j].color = color;
                 }

@@ -41,7 +41,7 @@ namespace Map
         {
             if (!dragging) return;
 
-            var mousePos = MouseInWorldCoords();
+            Vector3 mousePos = MouseInWorldCoords();
             //Debug.Log(mousePos);
             transform.position = new Vector3(
                 freezeX ? transform.position.x : mousePos.x - pointerDisplacement.x,
@@ -52,7 +52,7 @@ namespace Map
         // returns mouse position in World coordinates for our GameObject to follow. 
         private Vector3 MouseInWorldCoords()
         {
-            var screenMousePos = Input.mousePosition;
+            Vector3 screenMousePos = Input.mousePosition;
             //Debug.Log(screenMousePos);
             screenMousePos.z = zDisplacement;
             return mainCamera.ScreenToWorldPoint(screenMousePos);
@@ -65,7 +65,7 @@ namespace Map
                 if (transform.localPosition.x >= xConstraints.min && transform.localPosition.x <= xConstraints.max)
                     return;
 
-                var targetX = transform.localPosition.x < xConstraints.min ? xConstraints.min : xConstraints.max;
+                float targetX = transform.localPosition.x < xConstraints.min ? xConstraints.min : xConstraints.max;
                 transform.DOLocalMoveX(targetX, tweenBackDuration).SetEase(tweenBackEase);
             }
             else if (freezeX)
@@ -73,7 +73,7 @@ namespace Map
                 if (transform.localPosition.y >= yConstraints.min && transform.localPosition.y <= yConstraints.max)
                     return;
 
-                var targetY = transform.localPosition.y < yConstraints.min ? yConstraints.min : yConstraints.max;
+                float targetY = transform.localPosition.y < yConstraints.min ? yConstraints.min : yConstraints.max;
                 transform.DOLocalMoveY(targetY, tweenBackDuration).SetEase(tweenBackEase);
             }
         }
