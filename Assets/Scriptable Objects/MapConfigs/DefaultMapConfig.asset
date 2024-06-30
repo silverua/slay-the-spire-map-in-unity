@@ -28,89 +28,89 @@ MonoBehaviour:
   numOfStartingNodes:
     min: 3
     max: 4
+  extraPaths: 0
   layers:
-    array:
-    - nodeType: 0
-      distanceFromPreviousLayer:
-        min: 0
-        max: 0
-      nodesApartDistance: 2
-      randomizePosition: 0
-      randomizeNodes: 0
-    - nodeType: 0
-      distanceFromPreviousLayer:
-        min: 2
-        max: 3
-      nodesApartDistance: 2
-      randomizePosition: 0.587
-      randomizeNodes: 0.728
-    - nodeType: 0
-      distanceFromPreviousLayer:
-        min: 2
-        max: 3
-      nodesApartDistance: 2
-      randomizePosition: 0.509
-      randomizeNodes: 0
-    - nodeType: 3
-      distanceFromPreviousLayer:
-        min: 2
-        max: 3
-      nodesApartDistance: 2
-      randomizePosition: 0.542
-      randomizeNodes: 0.739
-    - nodeType: 0
-      distanceFromPreviousLayer:
-        min: 2
-        max: 3
-      nodesApartDistance: 2
-      randomizePosition: 0.176
-      randomizeNodes: 0.739
-    - nodeType: 0
-      distanceFromPreviousLayer:
-        min: 2
-        max: 3
-      nodesApartDistance: 2
-      randomizePosition: 0.649
-      randomizeNodes: 0.739
-    - nodeType: 0
-      distanceFromPreviousLayer:
-        min: 2
-        max: 3
-      nodesApartDistance: 2
-      randomizePosition: 0.176
-      randomizeNodes: 0.739
-    - nodeType: 0
-      distanceFromPreviousLayer:
-        min: 2
-        max: 3
-      nodesApartDistance: 2
-      randomizePosition: 0.829
-      randomizeNodes: 0.739
-    - nodeType: 0
-      distanceFromPreviousLayer:
-        min: 2
-        max: 3
-      nodesApartDistance: 2
-      randomizePosition: 0.829
-      randomizeNodes: 0.739
-    - nodeType: 1
-      distanceFromPreviousLayer:
-        min: 2
-        max: 3
-      nodesApartDistance: 2
-      randomizePosition: 0.524
-      randomizeNodes: 0.739
-    - nodeType: 2
-      distanceFromPreviousLayer:
-        min: 2
-        max: 3
-      nodesApartDistance: 2
-      randomizePosition: 0.526
-      randomizeNodes: 0
-    - nodeType: 5
-      distanceFromPreviousLayer:
-        min: 4
-        max: 5
-      nodesApartDistance: 2
-      randomizePosition: 0.194
-      randomizeNodes: 0
+  - nodeType: 0
+    distanceFromPreviousLayer:
+      min: 0
+      max: 0
+    nodesApartDistance: 2
+    randomizePosition: 0
+    randomizeNodes: 0
+  - nodeType: 0
+    distanceFromPreviousLayer:
+      min: 2
+      max: 3
+    nodesApartDistance: 2
+    randomizePosition: 0.587
+    randomizeNodes: 0.728
+  - nodeType: 0
+    distanceFromPreviousLayer:
+      min: 2
+      max: 3
+    nodesApartDistance: 2
+    randomizePosition: 0.509
+    randomizeNodes: 0
+  - nodeType: 3
+    distanceFromPreviousLayer:
+      min: 2
+      max: 3
+    nodesApartDistance: 2
+    randomizePosition: 0.542
+    randomizeNodes: 0.739
+  - nodeType: 0
+    distanceFromPreviousLayer:
+      min: 2
+      max: 3
+    nodesApartDistance: 2
+    randomizePosition: 0.176
+    randomizeNodes: 0.739
+  - nodeType: 0
+    distanceFromPreviousLayer:
+      min: 2
+      max: 3
+    nodesApartDistance: 2
+    randomizePosition: 0.649
+    randomizeNodes: 0.739
+  - nodeType: 0
+    distanceFromPreviousLayer:
+      min: 2
+      max: 3
+    nodesApartDistance: 2
+    randomizePosition: 0.176
+    randomizeNodes: 0.739
+  - nodeType: 0
+    distanceFromPreviousLayer:
+      min: 2
+      max: 3
+    nodesApartDistance: 2
+    randomizePosition: 0.829
+    randomizeNodes: 0.739
+  - nodeType: 0
+    distanceFromPreviousLayer:
+      min: 2
+      max: 3
+    nodesApartDistance: 2
+    randomizePosition: 0.829
+    randomizeNodes: 0.739
+  - nodeType: 1
+    distanceFromPreviousLayer:
+      min: 2
+      max: 3
+    nodesApartDistance: 2
+    randomizePosition: 0.524
+    randomizeNodes: 0.739
+  - nodeType: 2
+    distanceFromPreviousLayer:
+      min: 2
+      max: 3
+    nodesApartDistance: 2
+    randomizePosition: 0.526
+    randomizeNodes: 0
+  - nodeType: 5
+    distanceFromPreviousLayer:
+      min: 4
+      max: 5
+    nodesApartDistance: 2
+    randomizePosition: 0.194
+    randomizeNodes: 0

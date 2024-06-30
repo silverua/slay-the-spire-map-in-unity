@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Malee;
 using OneLine;
 using UnityEngine;
 
@@ -18,12 +17,6 @@ namespace Map
 
         [Tooltip("Increase this number to generate more paths")]
         public int extraPaths;
-        [Reorderable]
-        public ListOfMapLayers layers;
-
-        [System.Serializable]
-        public class ListOfMapLayers : ReorderableArray<MapLayer>
-        {
-        }
+        public List<MapLayer> layers;
     }
 }
