@@ -72,7 +72,7 @@ namespace Map
 
             for (int i = 0; i < config.GridWidth; i++)
             {
-                NodeType nodeType = Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.nodeType;
+                NodeType nodeType = Random.Range(0f, 1f) < layer.randomizeNodes ? RandomNodes.Random() : layer.nodeType;
                 string blueprintName = config.nodeBlueprints.Where(b => b.nodeType == nodeType).ToList().Random().name;
                 Node node = new Node(nodeType, blueprintName, new Vector2Int(i, layerIndex))
                 {
@@ -269,11 +269,6 @@ namespace Map
             path.Add(toPoint);
 
             return path;
-        }
-
-        private static NodeType GetRandomNode()
-        {
-            return RandomNodes[Random.Range(0, RandomNodes.Count)];
         }
     }
 }
