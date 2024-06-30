@@ -12,7 +12,7 @@ namespace Map
         {NodeType.Mystery, NodeType.Store, NodeType.Treasure, NodeType.MinorEnemy, NodeType.RestSite};
 
         private static List<float> layerDistances;
-        private static List<List<Point>> paths;
+        private static List<List<Vector2Int>> paths;
         // ALL nodes by layer:
         private static readonly List<List<Node>> nodes = new List<List<Node>>();
 
@@ -45,7 +45,7 @@ namespace Map
 
             // pick a random name of the boss level for this map:
             var bossNodeName = config.nodeBlueprints.Where(b => b.nodeType == NodeType.Boss).ToList().Random().name;
-            return new Map(conf.name, bossNodeName, nodesList, new List<Point>());
+            return new Map(conf.name, bossNodeName, nodesList, new List<Vector2Int>());
         }
 
         private static void GenerateLayerDistances()
@@ -74,7 +74,7 @@ namespace Map
             {
                 var nodeType = Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.nodeType;
                 var blueprintName = config.nodeBlueprints.Where(b => b.nodeType == nodeType).ToList().Random().name;
-                var node = new Node(nodeType, blueprintName, new Point(i, layerIndex))
+                var node = new Node(nodeType, blueprintName, new Vector2Int(i, layerIndex))
                 {
                     position = new Vector2(-offset + i * layer.nodesApartDistance, GetDistanceToLayer(layerIndex))
                 };
@@ -127,13 +127,13 @@ namespace Map
             for (var i = 0; i < config.GridWidth - 1; ++i)
                 for (var j = 0; j < config.layers.Count - 1; ++j)
                 {
-                    var node = GetNode(new Point(i, j));
+                    var node = GetNode(new Vector2Int(i, j));
                     if (node == null || node.HasNoConnections()) continue;
-                    var right = GetNode(new Point(i + 1, j));
+                    var right = GetNode(new Vector2Int(i + 1, j));
                     if (right == null || right.HasNoConnections()) continue;
-                    var top = GetNode(new Point(i, j + 1));
+                    var top = GetNode(new Vector2Int(i, j + 1));
                     if (top == null || top.HasNoConnections()) continue;
-                    var topRight = GetNode(new Point(i + 1, j + 1));
+                    var topRight = GetNode(new Vector2Int(i + 1, j + 1));
                     if (topRight == null || topRight.HasNoConnections()) continue;
 
                     // Debug.Log("Inspecting node for connections: " + node.point);
@@ -176,7 +176,7 @@ namespace Map
                 }
         }
 
-        private static Node GetNode(Point p)
+        private static Node GetNode(Vector2Int p)
         {
             if (p.y >= nodes.Count) return null;
             if (p.x >= nodes[p.y].Count) return null;
@@ -184,21 +184,21 @@ namespace Map
             return nodes[p.y][p.x];
         }
 
-        private static Point GetFinalNode()
+        private static Vector2Int GetFinalNode()
         {
             var y = config.layers.Count - 1;
             if (config.GridWidth % 2 == 1)
-                return new Point(config.GridWidth / 2, y);
+                return new Vector2Int(config.GridWidth / 2, y);
 
             return Random.Range(0, 2) == 0
-                ? new Point(config.GridWidth / 2, y)
-                : new Point(config.GridWidth / 2 - 1, y);
+                ? new Vector2Int(config.GridWidth / 2, y)
+                : new Vector2Int(config.GridWidth / 2 - 1, y);
         }
 
         private static void GeneratePaths()
         {
             var finalNode = GetFinalNode();
-            paths = new List<List<Point>>();
+            paths = new List<List<Vector2Int>>();
             var numOfStartingNodes = config.numOfStartingNodes.GetValue();
             var numOfPreBossNodes = config.numOfPreBossNodes.GetValue();
 
@@ -208,17 +208,17 @@ namespace Map
 
             candidateXs.Shuffle();
             var startingXs = candidateXs.Take(numOfStartingNodes);
-            var startingPoints = (from x in startingXs select new Point(x, 0)).ToList();
+            var startingPoints = (from x in startingXs select new Vector2Int(x, 0)).ToList();
 
             candidateXs.Shuffle();
             var preBossXs = candidateXs.Take(numOfPreBossNodes);
-            var preBossPoints = (from x in preBossXs select new Point(x, finalNode.y - 1)).ToList();
+            var preBossPoints = (from x in preBossXs select new Vector2Int(x, finalNode.y - 1)).ToList();
 
             int numOfPaths = Mathf.Max(numOfStartingNodes, numOfPreBossNodes) + Mathf.Max(0, config.extraPaths);
             for (int i = 0; i < numOfPaths; ++i)
             {
-                Point startNode = startingPoints[i % numOfStartingNodes];
-                Point endNode = preBossPoints[i % numOfPreBossNodes];
+                Vector2Int startNode = startingPoints[i % numOfStartingNodes];
+                Vector2Int endNode = preBossPoints[i % numOfPreBossNodes];
                 var path = Path(startNode, endNode);
                 path.Add(finalNode);
                 paths.Add(path);
@@ -226,14 +226,14 @@ namespace Map
         }
 
         // Generates a random path bottom up.
-        private static List<Point> Path(Point fromPoint, Point toPoint)
+        private static List<Vector2Int> Path(Vector2Int fromPoint, Vector2Int toPoint)
         {
             int toRow = toPoint.y;
             int toCol = toPoint.x;
 
             int lastNodeCol = fromPoint.x;
 
-            var path = new List<Point> { fromPoint };
+            var path = new List<Vector2Int> { fromPoint };
             var candidateCols = new List<int>();
             for (int row = 1; row < toRow; ++row)
             {
@@ -259,7 +259,7 @@ namespace Map
 
                 int RandomCandidateIndex = Random.Range(0, candidateCols.Count);
                 int candidateCol = candidateCols[RandomCandidateIndex];
-                var nextPoint = new Point(candidateCol, row);
+                var nextPoint = new Vector2Int(candidateCol, row);
 
                 path.Add(nextPoint);
 
