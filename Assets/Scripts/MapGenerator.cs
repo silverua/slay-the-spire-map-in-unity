@@ -258,8 +258,8 @@ namespace Map
                 if (rightCol < config.GridWidth && horizontalDistance <= verticalDistance)
                     candidateCols.Add(rightCol);
 
-                int RandomCandidateIndex = Random.Range(0, candidateCols.Count);
-                int candidateCol = candidateCols[RandomCandidateIndex];
+                int randomCandidateIndex = Random.Range(0, candidateCols.Count);
+                int candidateCol = candidateCols[randomCandidateIndex];
                 Vector2Int nextPoint = new Vector2Int(candidateCol, row);
 
                 path.Add(nextPoint);
