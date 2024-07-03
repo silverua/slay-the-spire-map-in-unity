@@ -96,11 +96,11 @@ namespace Map
 
                 foreach (Node node in list)
                 {
-                    float xRnd = Random.Range(-1f, 1f);
-                    float yRnd = Random.Range(-1f, 1f);
+                    float xRnd = Random.Range(-0.5f, 0.5f);
+                    float yRnd = Random.Range(-0.5f, 0.5f);
 
-                    float x = xRnd * layer.nodesApartDistance / 2f;
-                    float y = yRnd < 0 ? distToPreviousLayer * yRnd / 2f : distToNextLayer * yRnd / 2f;
+                    float x = xRnd * layer.nodesApartDistance;
+                    float y = yRnd < 0 ? distToPreviousLayer * yRnd: distToNextLayer * yRnd;
 
                     node.position += new Vector2(x, y) * layer.randomizePosition;
                 }
