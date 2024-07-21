@@ -8,9 +8,6 @@ namespace Map
     {
         private static MapConfig config;
 
-        private static readonly List<NodeType> RandomNodes = new List<NodeType>
-        {NodeType.Mystery, NodeType.Store, NodeType.Treasure, NodeType.MinorEnemy, NodeType.RestSite};
-
         private static List<float> layerDistances;
         // ALL nodes by layer:
         private static readonly List<List<Node>> nodes = new List<List<Node>>();
@@ -71,7 +68,11 @@ namespace Map
 
             for (int i = 0; i < config.GridWidth; i++)
             {
-                NodeType nodeType = Random.Range(0f, 1f) < layer.randomizeNodes ? RandomNodes.Random() : layer.nodeType;
+                var supportedRandomNodeTypes =
+                    config.randomNodes.Where(t => config.nodeBlueprints.Any(b => b.nodeType == t)).ToList();
+                NodeType nodeType = Random.Range(0f, 1f) < layer.randomizeNodes && supportedRandomNodeTypes.Count > 0
+                    ? supportedRandomNodeTypes.Random()
+                    : layer.nodeType;
                 string blueprintName = config.nodeBlueprints.Where(b => b.nodeType == nodeType).ToList().Random().name;
                 Node node = new Node(nodeType, blueprintName, new Vector2Int(i, layerIndex))
                 {
