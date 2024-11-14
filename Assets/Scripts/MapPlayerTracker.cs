@@ -40,17 +40,33 @@ namespace Map
                 Vector2Int currentPoint = mapManager.CurrentMap.path[mapManager.CurrentMap.path.Count - 1];
                 Node currentNode = mapManager.CurrentMap.GetNode(currentPoint);
 
-                if (currentNode != null && currentNode.outgoing.Any(point => point.Equals(mapNode.Node.point)))
+                if (currentNode != null && CanTravelToNode(mapNode.Node, currentNode))
                     SendPlayerToNode(mapNode);
                 else
                     PlayWarningThatNodeCannotBeAccessed();
             }
         }
 
+        private static bool CanTravelToNode(Node to, Node from)
+        {
+            return from.outgoing.Any(point => point.Equals(to.point)) ||
+                   from.point.y == to.point.y; 
+            // (optionally use this instead of (from.point.y == to.point.y), but it can prevent movement to the side if the neighbor node is absent)
+            // from.point.y == to.point.y && Mathf.Abs(from.point.x - to.point.x) == 1;
+        }
+
         private void SendPlayerToNode(MapNode mapNode)
         {
             Locked = lockAfterSelecting;
-            mapManager.CurrentMap.path.Add(mapNode.Node.point);
+            if (mapManager.CurrentMap.path.Count > 0 && mapManager.CurrentMap.path[^1].y == mapNode.Node.point.y)
+            {
+                mapManager.CurrentMap.path[^1] = mapNode.Node.point;
+            }
+            else
+            {
+                mapManager.CurrentMap.path.Add(mapNode.Node.point);
+            }
+            
             mapManager.SaveMap();
             view.SetAttainableNodes();
             view.SetLineColors();
