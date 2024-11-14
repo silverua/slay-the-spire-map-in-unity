@@ -178,11 +178,18 @@ namespace Map
                 Node currentNode = mapManager.CurrentMap.GetNode(currentPoint);
 
                 // set all the nodes that we can travel to as attainable:
+                var attainableNodes =
+                    MapNodes.Where(n => n.Node != currentNode && n.Node.point.y == currentNode.point.y).ToList();
                 foreach (Vector2Int point in currentNode.outgoing)
                 {
                     MapNode mapNode = GetNode(point);
                     if (mapNode != null)
-                        mapNode.SetState(NodeStates.Attainable);
+                        attainableNodes.Add(mapNode);
+                }
+
+                foreach (var node in attainableNodes)
+                {
+                    node.SetState(NodeStates.Attainable);
                 }
             }
         }
