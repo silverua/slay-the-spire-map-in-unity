@@ -171,5 +171,20 @@ namespace Map
 
             DOTween.To(() => visitedCircleImage.fillAmount, x => visitedCircleImage.fillAmount = x, 1f, fillDuration);
         }
+
+        private void OnDestroy()
+        {
+            if (image != null)
+            {
+                image.transform.DOKill();
+                image.DOKill();
+            }
+
+            if (sr != null)
+            {
+                sr.transform.DOKill();
+                sr.DOKill();
+            }
+        }
     }
 }
