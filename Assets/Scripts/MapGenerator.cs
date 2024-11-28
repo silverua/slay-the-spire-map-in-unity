@@ -41,7 +41,7 @@ namespace Map
 
             // pick a random name of the boss level for this map:
             string bossNodeName = config.nodeBlueprints.Where(b => b.nodeType == NodeType.Boss).ToList().Random().name;
-            return new Map(conf.name, bossNodeName, nodesList, new List<Vector2Int>());
+            return new Map(conf.name, bossNodeName, nodesList, new List<Vector2Int>(), false);
         }
 
         private static void GenerateLayerDistances()

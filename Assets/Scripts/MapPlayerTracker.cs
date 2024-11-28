@@ -47,8 +47,13 @@ namespace Map
             }
         }
 
-        private static bool CanTravelToNode(Node to, Node from)
+        private bool CanTravelToNode(Node to, Node from)
         {
+            if (mapManager.CurrentMap.movedOnSameLayer)
+            {
+                return from.outgoing.Any(point => point.Equals(to.point));
+            }
+            
             return from.outgoing.Any(point => point.Equals(to.point)) ||
                    from.point.y == to.point.y; 
             // (optionally use this instead of (from.point.y == to.point.y), but it can prevent movement to the side if the neighbor node is absent)
@@ -61,10 +66,12 @@ namespace Map
             if (mapManager.CurrentMap.path.Count > 0 && mapManager.CurrentMap.path[^1].y == mapNode.Node.point.y)
             {
                 mapManager.CurrentMap.path[^1] = mapNode.Node.point;
+                mapManager.CurrentMap.movedOnSameLayer = true;
             }
             else
             {
                 mapManager.CurrentMap.path.Add(mapNode.Node.point);
+                mapManager.CurrentMap.movedOnSameLayer = false;
             }
             
             mapManager.SaveMap();

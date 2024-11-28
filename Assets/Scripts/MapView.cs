@@ -178,8 +178,18 @@ namespace Map
                 Node currentNode = mapManager.CurrentMap.GetNode(currentPoint);
 
                 // set all the nodes that we can travel to as attainable:
-                var attainableNodes =
-                    MapNodes.Where(n => n.Node != currentNode && n.Node.point.y == currentNode.point.y).ToList();
+                List<MapNode> attainableNodes;
+
+                if (mapManager.CurrentMap.path.Count > 1 && mapManager.CurrentMap.movedOnSameLayer)
+                {
+                    // if we already moved on the same layer before this, do not allow to move on the same layer anymore
+                    attainableNodes = new List<MapNode>();
+                }
+                else
+                {
+                    attainableNodes = MapNodes.Where(n => n.Node != currentNode && n.Node.point.y == currentNode.point.y).ToList();
+                }
+
                 foreach (Vector2Int point in currentNode.outgoing)
                 {
                     MapNode mapNode = GetNode(point);
