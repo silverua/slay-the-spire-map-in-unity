@@ -18,6 +18,18 @@ public class CanvasManager : MonoBehaviour
 
     private Transform nextLevelButtonTransform;
     private Transform previousLevelButtonTransform;
+    public static CanvasManager Instance;
+    private Camera cam;
+    private Camera cam2;
+
+    private void Awake()
+    {
+        Instance = this;
+        cam = Camera.main;
+        cam.targetDisplay = 0; // First display
+        cam2 = Instantiate(Camera.main);
+        cam2.targetDisplay = 1; // Second display
+    }
 
     private void initializePartyInfoTextField() 
     {
