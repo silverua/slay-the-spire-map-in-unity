@@ -39,3 +39,6 @@ March 14 2023 Update:
 Upgraded to Unity 2021 on master to: 
 - Fix "Self referencing loop detected" errors related to Newtonsoft.Json serializing Vectors
 - Fix some issues with lines connecting nodes in SampleSceneUI
+
+August 15 2026 Update:
+Thanks to [conradosaud](https://github.com/conradosaud) you can now add this map to your project easier by downloading the [Package.unity](https://github.com/silverua/slay-the-spire-map-in-unity/blob/master/Package.unitypackage) file from the root of the project. Import the package into your Unity project by dropping it into the Project tab or choosing it via Assets/Import Package/Custom Package.
