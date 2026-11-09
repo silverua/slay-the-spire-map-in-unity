@@ -34,10 +34,14 @@ namespace Map
 
             SetUpConnections(paths);
 
+            EnsureAllNodesUsed();
+
             RemoveCrossConnections();
 
             // select all the nodes with connections:
-            List<Node> nodesList = nodes.SelectMany(n => n).Where(n => n.incoming.Count > 0 || n.outgoing.Count > 0).ToList();
+            bool keepIsolated = nodes.Count <= 1;
+            List<Node> nodesList = nodes.SelectMany(n => n)
+                .Where(n => keepIsolated || n.incoming.Count > 0 || n.outgoing.Count > 0).ToList();
 
             // pick a random name of the boss level for this map:
             string bossNodeName = config.nodeBlueprints.Where(b => b.nodeType == NodeType.Boss).ToList().Random().name;
@@ -66,7 +70,7 @@ namespace Map
             // offset of this layer to make all the nodes centered:
             float offset = layer.nodesApartDistance * config.GridWidth / 2f;
 
-            for (int i = 0; i < config.GridWidth; i++)
+            foreach (int column in PickNodeColumns(GetNodeCount(layer)))
             {
                 var supportedRandomNodeTypes =
                     config.randomNodes.Where(t => config.nodeBlueprints.Any(b => b.nodeType == t)).ToList();
@@ -74,14 +78,86 @@ namespace Map
                     ? supportedRandomNodeTypes.Random()
                     : layer.nodeType;
                 string blueprintName = config.nodeBlueprints.Where(b => b.nodeType == nodeType).ToList().Random().name;
-                Node node = new Node(nodeType, blueprintName, new Vector2Int(i, layerIndex))
+                Node node = new Node(nodeType, blueprintName, new Vector2Int(column, layerIndex))
                 {
-                    position = new Vector2(-offset + i * layer.nodesApartDistance, GetDistanceToLayer(layerIndex))
+                    position = new Vector2(-offset + column * layer.nodesApartDistance, GetDistanceToLayer(layerIndex))
                 };
                 nodesOnThisLayer.Add(node);
             }
 
             nodes.Add(nodesOnThisLayer);
+        }
+
+        private static int GetNodeCount(MapLayer layer)
+        {
+            int width = config.GridWidth;
+            if (layer?.numOfNodes == null) return 1;
+
+            int lower = Mathf.Min(layer.numOfNodes.min, layer.numOfNodes.max);
+            int upper = Mathf.Max(layer.numOfNodes.min, layer.numOfNodes.max);
+            lower = Mathf.Clamp(Mathf.Max(1, lower), 1, width);
+            upper = Mathf.Clamp(Mathf.Max(lower, upper), 1, width);
+            return Random.Range(lower, upper + 1);
+        }
+
+        private static List<int> PickNodeColumns(int count)
+        {
+            int width = config.GridWidth;
+            count = Mathf.Clamp(count, 1, width);
+
+            if (count == width)
+                return Enumerable.Range(0, width).ToList();
+
+            if (count == 1)
+            {
+                if (width % 2 == 1)
+                    return new List<int> {width / 2};
+
+                return new List<int> {Random.Range(0, 2) == 0 ? width / 2 : width / 2 - 1};
+            }
+
+            bool[] used = new bool[width];
+            List<int> columns = new List<int>(count);
+            for (int i = 0; i < count; i++)
+            {
+                int ideal = Mathf.RoundToInt(i * (width - 1f) / (count - 1));
+                int column = NearestFreeColumn(used, ideal);
+                used[column] = true;
+                columns.Add(column);
+            }
+
+            for (int i = 0; i < columns.Count; i++)
+            {
+                int shifted = columns[i] + Random.Range(-1, 2);
+                if (shifted < 0 || shifted >= width || used[shifted]) continue;
+
+                used[columns[i]] = false;
+                used[shifted] = true;
+                columns[i] = shifted;
+            }
+
+            columns.Sort();
+            return columns;
+        }
+
+        private static int NearestFreeColumn(bool[] used, int ideal)
+        {
+            if (!used[ideal]) return ideal;
+
+            int width = used.Length;
+            for (int distance = 1; distance < width; distance++)
+            {
+                int left = ideal - distance;
+                int right = ideal + distance;
+                bool leftFree = left >= 0 && !used[left];
+                bool rightFree = right < width && !used[right];
+                if (leftFree && rightFree)
+                    return Random.Range(0, 2) == 0 ? left : right;
+                if (leftFree) return left;
+                if (rightFree) return right;
+            }
+
+            return ideal;
         }
 
         private static void RandomizeNodePositions()
@@ -116,6 +192,7 @@ namespace Map
                 {
                     Node node = GetNode(path[i]);
                     Node nextNode = GetNode(path[i + 1]);
+                    if (node == null || nextNode == null) continue;
                     node.AddOutgoing(nextNode.point);
                     nextNode.AddIncoming(node.point);
                 }
@@ -124,103 +201,156 @@ namespace Map
 
         private static void RemoveCrossConnections()
         {
-            for (int i = 0; i < config.GridWidth - 1; ++i)
-                for (int j = 0; j < config.layers.Count - 1; ++j)
+            // Links can skip columns, so a cross is any pair of edges whose endpoints are in opposite order.
+            for (int y = 0; y < nodes.Count - 1; y++)
+            {
+                int edgeBudget = Mathf.Max(1, nodes[y].Count * nodes[y + 1].Count);
+                int guard = edgeBudget * edgeBudget;
+                while (guard-- > 0 && TryUncrossOnePair(y))
                 {
-                    Node node = GetNode(new Vector2Int(i, j));
-                    if (node == null || node.HasNoConnections()) continue;
-                    Node right = GetNode(new Vector2Int(i + 1, j));
-                    if (right == null || right.HasNoConnections()) continue;
-                    Node top = GetNode(new Vector2Int(i, j + 1));
-                    if (top == null || top.HasNoConnections()) continue;
-                    Node topRight = GetNode(new Vector2Int(i + 1, j + 1));
-                    if (topRight == null || topRight.HasNoConnections()) continue;
+                }
+            }
+        }
 
-                    // Debug.Log("Inspecting node for connections: " + node.point);
-                    if (!node.outgoing.Any(element => element.Equals(topRight.point))) continue;
-                    if (!right.outgoing.Any(element => element.Equals(top.point))) continue;
+        private static bool TryUncrossOnePair(int y)
+        {
+            List<Node> fromNodes = nodes[y];
+            for (int i = 0; i < fromNodes.Count; i++)
+            {
+                Node fromA = fromNodes[i];
+                for (int aEdge = 0; aEdge < fromA.outgoing.Count; aEdge++)
+                {
+                    Node toA = GetNode(fromA.outgoing[aEdge]);
+                    if (toA == null || toA.point.y != y + 1) continue;
 
-                    // Debug.Log("Found a cross node: " + node.point);
-
-                    // we managed to find a cross node:
-                    // 1) add direct connections:
-                    node.AddOutgoing(top.point);
-                    top.AddIncoming(node.point);
-
-                    right.AddOutgoing(topRight.point);
-                    topRight.AddIncoming(right.point);
-
-                    float rnd = Random.Range(0f, 1f);
-                    if (rnd < 0.2f)
+                    for (int k = i + 1; k < fromNodes.Count; k++)
                     {
-                        // remove both cross connections:
-                        // a) 
-                        node.RemoveOutgoing(topRight.point);
-                        topRight.RemoveIncoming(node.point);
-                        // b) 
-                        right.RemoveOutgoing(top.point);
-                        top.RemoveIncoming(right.point);
-                    }
-                    else if (rnd < 0.6f)
-                    {
-                        // a) 
-                        node.RemoveOutgoing(topRight.point);
-                        topRight.RemoveIncoming(node.point);
-                    }
-                    else
-                    {
-                        // b) 
-                        right.RemoveOutgoing(top.point);
-                        top.RemoveIncoming(right.point);
+                        Node fromB = fromNodes[k];
+                        for (int bEdge = 0; bEdge < fromB.outgoing.Count; bEdge++)
+                        {
+                            Node toB = GetNode(fromB.outgoing[bEdge]);
+                            if (toB == null || toB.point.y != y + 1) continue;
+                            if ((fromA.point.x - fromB.point.x) * (toA.point.x - toB.point.x) >= 0) continue;
+
+                            SwapOutgoing(fromA, toA, fromB, toB);
+                            return true;
+                        }
                     }
                 }
+            }
+
+            return false;
+        }
+
+        private static void SwapOutgoing(Node fromA, Node toA, Node fromB, Node toB)
+        {
+            fromA.RemoveOutgoing(toA.point);
+            toA.RemoveIncoming(fromA.point);
+            fromB.RemoveOutgoing(toB.point);
+            toB.RemoveIncoming(fromB.point);
+
+            fromA.AddOutgoing(toB.point);
+            toB.AddIncoming(fromA.point);
+            fromB.AddOutgoing(toA.point);
+            toA.AddIncoming(fromB.point);
         }
 
         private static Node GetNode(Vector2Int p)
         {
-            if (p.y >= nodes.Count) return null;
-            if (p.x >= nodes[p.y].Count) return null;
+            if (p.y < 0 || p.y >= nodes.Count) return null;
 
-            return nodes[p.y][p.x];
+            return nodes[p.y].FirstOrDefault(n => n.point.x == p.x);
         }
 
-        private static Vector2Int GetFinalNode()
+        private static Node ClosestNode(int layerIndex, int column)
         {
-            int y = config.layers.Count - 1;
-            if (config.GridWidth % 2 == 1)
-                return new Vector2Int(config.GridWidth / 2, y);
+            if (layerIndex < 0 || layerIndex >= nodes.Count || nodes[layerIndex].Count == 0)
+                return null;
 
-            return Random.Range(0, 2) == 0
-                ? new Vector2Int(config.GridWidth / 2, y)
-                : new Vector2Int(config.GridWidth / 2 - 1, y);
+            Node closest = nodes[layerIndex][0];
+            int bestDistance = Mathf.Abs(closest.point.x - column);
+            for (int i = 1; i < nodes[layerIndex].Count; i++)
+            {
+                Node candidate = nodes[layerIndex][i];
+                int distance = Mathf.Abs(candidate.point.x - column);
+                if (distance >= bestDistance) continue;
+
+                bestDistance = distance;
+                closest = candidate;
+            }
+
+            return closest;
+        }
+
+        private static void EnsureAllNodesUsed()
+        {
+            for (int y = 0; y < nodes.Count; y++)
+            {
+                foreach (Node node in nodes[y])
+                {
+                    if (y < nodes.Count - 1 && node.outgoing.Count == 0)
+                    {
+                        Node child = ClosestNode(y + 1, node.point.x);
+                        if (child != null)
+                        {
+                            node.AddOutgoing(child.point);
+                            child.AddIncoming(node.point);
+                        }
+                    }
+
+                    if (y > 0 && node.incoming.Count == 0)
+                    {
+                        Node parent = ClosestNode(y - 1, node.point.x);
+                        if (parent != null)
+                        {
+                            parent.AddOutgoing(node.point);
+                            node.AddIncoming(parent.point);
+                        }
+                    }
+                }
+            }
         }
 
         private static List<List<Vector2Int>> GeneratePaths()
         {
-            Vector2Int finalNode = GetFinalNode();
             var paths = new List<List<Vector2Int>>();
-            int numOfStartingNodes = config.numOfStartingNodes.GetValue();
-            int numOfPreBossNodes = config.numOfPreBossNodes.GetValue();
+            int lastLayer = config.layers.Count - 1;
+            if (lastLayer <= 0 || nodes.Count <= 1) return paths;
 
-            List<int> candidateXs = new List<int>();
-            for (int i = 0; i < config.GridWidth; i++)
-                candidateXs.Add(i);
+            List<Vector2Int> startingPoints = nodes[0].Select(n => n.point).ToList();
+            List<Vector2Int> bossPoints = nodes[lastLayer].Select(n => n.point).ToList();
+            if (startingPoints.Count == 0 || bossPoints.Count == 0) return paths;
 
-            candidateXs.Shuffle();
-            IEnumerable<int> startingXs = candidateXs.Take(numOfStartingNodes);
-            List<Vector2Int> startingPoints = (from x in startingXs select new Vector2Int(x, 0)).ToList();
+            startingPoints.Shuffle();
+            bossPoints.Shuffle();
 
-            candidateXs.Shuffle();
-            IEnumerable<int> preBossXs = candidateXs.Take(numOfPreBossNodes);
-            List<Vector2Int> preBossPoints = (from x in preBossXs select new Vector2Int(x, finalNode.y - 1)).ToList();
+            if (lastLayer == 1)
+            {
+                int directPathCount = Mathf.Max(startingPoints.Count, bossPoints.Count) + Mathf.Max(0, config.extraPaths);
+                for (int i = 0; i < directPathCount; i++)
+                {
+                    paths.Add(new List<Vector2Int>
+                    {
+                        startingPoints[i % startingPoints.Count],
+                        bossPoints[i % bossPoints.Count]
+                    });
+                }
 
-            int numOfPaths = Mathf.Max(numOfStartingNodes, numOfPreBossNodes) + Mathf.Max(0, config.extraPaths);
+                return paths;
+            }
+
+            int preBossLayer = lastLayer - 1;
+            List<Vector2Int> preBossPoints = nodes[preBossLayer].Select(n => n.point).ToList();
+            if (preBossPoints.Count == 0) return paths;
+
+            preBossPoints.Shuffle();
+            int numOfPaths = Mathf.Max(startingPoints.Count, preBossPoints.Count) + Mathf.Max(0, config.extraPaths);
             for (int i = 0; i < numOfPaths; ++i)
             {
-                Vector2Int startNode = startingPoints[i % numOfStartingNodes];
-                Vector2Int endNode = preBossPoints[i % numOfPreBossNodes];
+                Vector2Int startNode = startingPoints[i % startingPoints.Count];
+                Vector2Int endNode = preBossPoints[i % preBossPoints.Count];
                 List<Vector2Int> path = Path(startNode, endNode);
-                path.Add(finalNode);
+                path.Add(bossPoints[i % bossPoints.Count]);
                 paths.Add(path);
             }
 
@@ -236,41 +366,51 @@ namespace Map
             int lastNodeCol = fromPoint.x;
 
             List<Vector2Int> path = new List<Vector2Int> { fromPoint };
-            List<int> candidateCols = new List<int>();
             for (int row = 1; row < toRow; ++row)
             {
-                candidateCols.Clear();
+                if (row >= nodes.Count || nodes[row].Count == 0) continue;
 
-                int verticalDistance = toRow - row;
-                int horizontalDistance;
-
-                int forwardCol = lastNodeCol;
-                horizontalDistance = Mathf.Abs(toCol - forwardCol);
-                if (horizontalDistance <= verticalDistance)
-                    candidateCols.Add(lastNodeCol);
-
-                int leftCol = lastNodeCol - 1;
-                horizontalDistance = Mathf.Abs(toCol - leftCol);
-                if (leftCol >= 0 && horizontalDistance <= verticalDistance)
-                    candidateCols.Add(leftCol);
-
-                int rightCol = lastNodeCol + 1;
-                horizontalDistance = Mathf.Abs(toCol - rightCol);
-                if (rightCol < config.GridWidth && horizontalDistance <= verticalDistance)
-                    candidateCols.Add(rightCol);
-
-                int randomCandidateIndex = Random.Range(0, candidateCols.Count);
-                int candidateCol = candidateCols[randomCandidateIndex];
-                Vector2Int nextPoint = new Vector2Int(candidateCol, row);
-
-                path.Add(nextPoint);
-
-                lastNodeCol = candidateCol;
+                int nextCol = ChooseNextColumn(row, lastNodeCol, toCol, toRow);
+                path.Add(new Vector2Int(nextCol, row));
+                lastNodeCol = nextCol;
             }
 
             path.Add(toPoint);
 
             return path;
+        }
+
+        private static int ChooseNextColumn(int row, int lastNodeCol, int toCol, int toRow)
+        {
+            int rowsLeft = toRow - row;
+            var candidates = new List<int>();
+            AddCandidate(candidates, lastNodeCol, row, toCol, rowsLeft);
+            AddCandidate(candidates, lastNodeCol - 1, row, toCol, rowsLeft);
+            AddCandidate(candidates, lastNodeCol + 1, row, toCol, rowsLeft);
+
+            if (candidates.Count == 0)
+            {
+                foreach (Node node in nodes[row])
+                {
+                    if (Mathf.Abs(toCol - node.point.x) <= rowsLeft)
+                        candidates.Add(node.point.x);
+                }
+            }
+
+            if (candidates.Count == 0)
+            {
+                Node closest = ClosestNode(row, lastNodeCol);
+                return closest != null ? closest.point.x : lastNodeCol;
+            }
+
+            return candidates[Random.Range(0, candidates.Count)];
+        }
+
+        private static void AddCandidate(List<int> candidates, int column, int row, int toCol, int rowsLeft)
+        {
+            if (GetNode(new Vector2Int(column, row)) == null) return;
+            if (Mathf.Abs(toCol - column) <= rowsLeft)
+                candidates.Add(column);
         }
     }
 }
