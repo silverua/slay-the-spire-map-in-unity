@@ -8,6 +8,8 @@ namespace Map
     {
         [Tooltip("Default node for this map layer. If Randomize Nodes is 0, you will get this node 100% of the time")]
         public NodeType nodeType;
+        [Tooltip("Inclusive min and max number of nodes generated on this layer")]
+        [OneLineWithHeader] public IntMinMax numOfNodes = new IntMinMax {min = 1, max = 3};
         [OneLineWithHeader] public FloatMinMax distanceFromPreviousLayer;
         [Tooltip("Distance between the nodes on this layer")]
         public float nodesApartDistance;

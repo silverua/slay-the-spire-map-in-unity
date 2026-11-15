@@ -42,3 +42,7 @@ Upgraded to Unity 2021 on master to:
 
 August 15 2026 Update:
 Thanks to [conradosaud](https://github.com/conradosaud) you can now add this map to your project easier by downloading the [Package.unity](https://github.com/silverua/slay-the-spire-map-in-unity/blob/master/Package.unitypackage) file from the root of the project. Import the package into your Unity project by dropping it into the Project tab or choosing it via Assets/Import Package/Custom Package.
+
+November 9 2026 Update:
+- Each map layer has its own min and max node count (`numOfNodes`)
+- Old `numOfStartingNodes` and `numOfPreBossNodes` values are copied onto the first layer and the layer before the boss the next time that config is saved. Other layers become 1 through the old grid width, and the last layer becomes a single node.
